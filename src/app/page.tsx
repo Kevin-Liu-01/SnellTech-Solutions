@@ -12,48 +12,48 @@ export default async function Home() {
   noStore();
 
   return (
-    <main className="font-inter flex min-h-screen flex-col items-center justify-center dark:text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center font-inter dark:text-white">
       <header className="grid min-h-[calc(100vh-6rem)] w-full sm:grid-cols-2">
-        <div className="relative flex h-full w-full flex-col overflow-hidden p-8 py-16">
+        <div className="3xl:py-16 relative flex h-full w-full flex-col overflow-hidden px-8 py-4 pb-16 2xl:pt-2">
           <h1
-            className={`font-optiker dark:text-primary text-[8rem] font-extrabold tracking-tight`}
+            className={`3xl:text-[8rem] font-optiker text-[2rem] font-extrabold tracking-tight dark:text-primary sm:text-[3rem] 2xl:text-[6rem] `}
           >
             VISION IS OUR
           </h1>
           <h1
-            className={`font-optiker absolute mt-10 flex items-center text-[10rem] font-extrabold tracking-tight text-[hsl(243,100%,65%)] dark:text-[#84aa19]`}
+            className={`absolute flex items-center font-optiker text-[5rem] font-extrabold tracking-tight text-[hsl(243,100%,65%)] dark:text-[#84aa19] sm:text-[7rem] 2xl:mt-10 2xl:text-[10rem]`}
           >
             MISSION
             <EyeIcon className=" size-12 rounded-lg bg-[hsl(243,100%,65%)] p-2 text-white dark:bg-[#84aa19]" />{" "}
           </h1>
-          <div className="mt-12 text-xl">
+          <div className="3xl:mt-12 mt-12 text-sm sm:mt-16 sm:text-base 2xl:mt-24 2xl:text-xl">
             Eye exams are expensive and difficult to arrange in areas where
             professionals are in high demand. Ophthalmologists are often
             overbooked, which leads to long wait times for appointments.
           </div>
-          <div className="border-bg-gray-300/90 dark:border-secondary dark:bg-secondary/30 mt-8 h-full rounded-lg border-2 bg-gray-300/40 p-4">
-            <div className="flex w-[60%] flex-col">
+          <div className="border-bg-gray-300/90 mt-4 h-full rounded-lg border-2 bg-gray-300/40 p-2 dark:border-secondary dark:bg-secondary/30 sm:mt-8 2xl:p-4">
+            <div className="flex w-[80%] flex-col sm:w-[60%]">
               <div
-                className={`font-optiker text-[2rem] font-extrabold tracking-tight `}
+                className={`font-optiker text-xl font-extrabold tracking-tight 2xl:text-[2rem] `}
               >
                 {"We're here to help."}
               </div>
-              <div className="mb-4 text-sm">
+              <div className="mb-4 text-xs 2xl:text-sm">
                 Eye exams are expensive and difficult to arrange in areas where
                 professionals are in high demand. Ophthalmologists are often
                 overbooked, which leads to long wait times for appointments.
               </div>
-              <div className="flex flex-row gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row">
                 <Link
                   href=""
-                  className="focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center whitespace-nowrap rounded-md bg-[hsl(243,100%,65%)] px-6 py-2 text-sm font-medium shadow transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 dark:bg-[#84aa19]"
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-[hsl(243,100%,65%)] px-4 py-2 text-xs font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 dark:bg-[#84aa19] 2xl:px-6 2xl:text-sm"
                 >
                   Take a Digital Eye Exam
                   <MoveRightIcon className="ml-2 size-4" />
                 </Link>
                 <Link
                   href=""
-                  className="focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center whitespace-nowrap rounded-md px-6 py-2 text-sm font-medium shadow transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50"
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-primary px-4 py-2 text-xs font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 2xl:px-6 2xl:text-sm"
                 >
                   Read the Instructions
                 </Link>
@@ -84,7 +84,7 @@ export default async function Home() {
           />
         </div>
       </header>
-      <div className="dark:bg-background flex w-full flex-col items-center justify-center gap-12 px-4 py-16 ">
+      <div className="flex w-full flex-col items-center justify-center gap-12 px-4 py-16 dark:bg-background ">
         <h1 className={`text-xl font-extrabold tracking-tight sm:text-[5rem]`}>
           Not even close to completion
         </h1>

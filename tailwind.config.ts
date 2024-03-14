@@ -16,6 +16,9 @@ export default {
         inter: ["var(--font-inter)"],
         optiker: ["var(--font-optiker)"],
       },
+      screens: {
+        "3xl": "1776px",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
