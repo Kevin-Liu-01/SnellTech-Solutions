@@ -9,7 +9,7 @@ export default async function Test() {
   const hello = await api.post.hello.query({ text: "from tRPC" });
   const session = await getServerAuthSession();
 
-  function createRandomString(length) {
+  function createRandomString(length: number) {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     let result = "";
     for (let i = 0; i < length; i++) {
