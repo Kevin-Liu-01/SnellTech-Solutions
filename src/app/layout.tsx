@@ -12,11 +12,18 @@ import { Theme } from "@radix-ui/themes";
 import { ThemeProvider } from "./_components/theme-provider";
 import { getServerAuthSession } from "~/server/auth";
 
+import localFont from "next/font/local";
+// Font files can be colocated inside of `pages`
+const myFont = localFont({
+  src: "./font/Optiker-K.woff2",
+  variable: "--font-optiker",
+});
+
 import { Navbar } from "~/app/_components/navbar/navbar";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-inter",
 });
 
 export const metadata = {
@@ -30,11 +37,12 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
+      <body className={`${inter.variable} ${myFont.variable}`}>
         <TRPCReactProvider>
           {/* <NextUIProvider> */}
-          <ThemeProvider>
+          <ThemeProvider attribute="class">
             <Theme radius="large">
+              {/* @ts-expect-error: Unreachable code error*/}
               <Navbar session={session} />
               {children}
             </Theme>

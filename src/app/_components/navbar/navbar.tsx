@@ -1,30 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { GitHubLogoIcon, TransformIcon } from "@radix-ui/react-icons";
-import { CircleUserRound } from "lucide-react";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { CircleUserRound, ScanEyeIcon } from "lucide-react";
 
 import { Button, DropdownMenu } from "@radix-ui/themes";
 import { ThemeSwitcher } from "./theme-switcher";
 
-import localFont from "next/font/local";
-
-// Font files can be colocated inside of `pages`
-const myFont = localFont({ src: "../../Optiker-K.woff2" });
-
 export const Navbar = (props: {
-  session: { user: { email: string; id: string; image: string; name: string } };
+  session: {
+    user: { id: string; name: string; email: string; image: string };
+  } | null;
 }) => {
   console.log(props.session);
   return (
     <nav className="flex h-24 flex-row justify-between px-8">
       <Link href="/" className="my-auto flex flex-row gap-x-4">
-        <TransformIcon className="my-auto size-8" />
-        <p className={`hidden text-2xl font-bold sm:block ${myFont.className}`}>
-          SNELLTECH
+        <ScanEyeIcon className="my-auto size-8" />
+        <p className="font-optiker hidden text-2xl font-bold sm:block">
+          SNELLTECH SOLUTIONS
         </p>
       </Link>
-      <div className="flex items-center gap-x-4">
+      <div className="flex items-center gap-x-6">
         <Link
           href="https://github.com/ap-1/json-to-udm"
           target="_blank"
@@ -39,13 +36,14 @@ export const Navbar = (props: {
           <DropdownMenu.Trigger>
             <Button variant="ghost">
               {props.session ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={props.session.user.image}
                   alt="user"
                   className="size-8 rounded-full"
                 />
               ) : (
-                <CircleUserRound className="size-5 transition-all" />
+                <CircleUserRound className="size-8 transition-all" />
               )}
               <span className="sr-only">Toggle theme</span>
             </Button>
@@ -56,7 +54,7 @@ export const Navbar = (props: {
               <>
                 <DropdownMenu.Item>
                   <div className="rounded-full font-semibold no-underline transition">
-                    {props.session?.user?.name}
+                    Welcome, {props.session?.user?.name}
                   </div>
                 </DropdownMenu.Item>
                 <DropdownMenu.Item>
@@ -69,6 +67,13 @@ export const Navbar = (props: {
                     ID: {props.session?.user?.id}
                   </div>
                 </DropdownMenu.Item>
+                <DropdownMenu.Item>
+                  <Link href="/api/auth/signout">
+                    <button className="font-semibold no-underline  transition">
+                      View Profile
+                    </button>
+                  </Link>
+                </DropdownMenu.Item>
                 <DropdownMenu.Separator />
               </>
             )}
@@ -77,7 +82,7 @@ export const Navbar = (props: {
                 href={props.session ? "/api/auth/signout" : "/api/auth/signin"}
               >
                 <button className="rounded-full  font-semibold no-underline  transition">
-                  {props.session ? "Sign out" : "Sign in"}
+                  {props.session ? "Sign Out" : "Sign In"}
                 </button>
               </Link>
             </DropdownMenu.Item>

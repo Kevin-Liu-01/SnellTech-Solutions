@@ -3,11 +3,7 @@ import Link from "next/link";
 
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
-import localFont from "next/font/local";
-
 // Font files can be colocated inside of `pages`
-const myFont = localFont({ src: "../Optiker-K.woff2" });
-
 export default async function Test() {
   noStore();
   const hello = await api.post.hello.query({ text: "from tRPC" });
@@ -28,7 +24,7 @@ export default async function Test() {
     <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-t from-[hsl(243,100%,65%)] to-[#b0bdff] text-white">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <h1
-          className={`text-[192px] font-extrabold tracking-tight sm:text-[5rem] ${myFont.className}`}
+          className={`font-optiker text-[192px] font-extrabold tracking-tight sm:text-[5rem]`}
         >
           SNELLEN{" "}
           <span className={`text-[5.08in] text-[hsl(243,100%,65%)]`}>
@@ -43,7 +39,7 @@ export default async function Test() {
             target="_blank"
           >
             <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
+            <div className="font-optiker text-lg">
               Just the basics - Everything you need to know to set up your
               database and authentication.
             </div>
