@@ -1,10 +1,5 @@
 import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
-
-import { CreatePost } from "~/app/_components/create-post";
-import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
-
 import { Flex, Text, Button, Grid, Box } from "@radix-ui/themes";
 import { EyeIcon, MoveRightIcon } from "lucide-react";
 
@@ -14,19 +9,19 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center font-inter dark:text-white">
       <header className="grid min-h-[calc(100vh-6rem)] w-full sm:grid-cols-2">
-        <div className="3xl:py-16 relative flex h-full w-full flex-col overflow-hidden px-8 py-4 pb-16 2xl:pt-2">
+        <div className="relative flex h-full w-full flex-col overflow-hidden px-8 py-4 pb-16 2xl:pt-2 3xl:py-16">
           <h1
-            className={`3xl:text-[8rem] font-optiker text-[2rem] font-extrabold tracking-tight dark:text-primary sm:text-[3rem] 2xl:text-[6rem] `}
+            className={`font-optiker text-[2rem] font-extrabold tracking-tight dark:text-primary sm:text-[3rem] 2xl:text-[6rem] 3xl:text-[8rem] `}
           >
             VISION IS OUR
           </h1>
           <h1
-            className={`absolute flex items-center font-optiker text-[5rem] font-extrabold tracking-tight text-[hsl(243,100%,65%)] dark:text-[#84aa19] sm:text-[7rem] 2xl:mt-10 2xl:text-[10rem]`}
+            className={`text-snelltechPurple dark:text-snelltechGreen absolute flex items-center font-optiker text-[5rem] font-extrabold tracking-tight sm:text-[7rem] 2xl:mt-10 2xl:text-[10rem]`}
           >
             MISSION
-            <EyeIcon className=" size-12 rounded-lg bg-[hsl(243,100%,65%)] p-2 text-white dark:bg-[#84aa19]" />{" "}
+            <EyeIcon className=" bg-snelltechPurple dark:bg-snelltechGreen size-12 rounded-full p-2 text-white" />{" "}
           </h1>
-          <div className="3xl:mt-12 mt-12 text-sm sm:mt-16 sm:text-base 2xl:mt-24 2xl:text-xl">
+          <div className="mt-12 text-sm sm:mt-16 sm:text-base 2xl:mt-24 2xl:text-xl 3xl:mt-12">
             Eye exams are expensive and difficult to arrange in areas where
             professionals are in high demand. Ophthalmologists are often
             overbooked, which leads to long wait times for appointments.
@@ -45,14 +40,14 @@ export default async function Home() {
               </div>
               <div className="flex flex-col gap-2 sm:flex-row">
                 <Link
-                  href=""
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-[hsl(243,100%,65%)] px-4 py-2 text-xs font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 dark:bg-[#84aa19] 2xl:px-6 2xl:text-sm"
+                  href="/test"
+                  className="bg-snelltechPurple dark:bg-snelltechGreen inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-xs font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 2xl:px-6 2xl:text-sm"
                 >
                   Take a Digital Eye Exam
                   <MoveRightIcon className="ml-2 size-4" />
                 </Link>
                 <Link
-                  href=""
+                  href="/instructions"
                   className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-primary px-4 py-2 text-xs font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 2xl:px-6 2xl:text-sm"
                 >
                   Read the Instructions
@@ -66,7 +61,7 @@ export default async function Home() {
             className="absolute bottom-[-4rem] right-[-4rem] h-1/2 w-1/2 dark:invert"
           />
         </div>
-        <div className="relative ml-auto w-full overflow-hidden rounded-tl-[12rem] bg-gradient-to-t from-[hsl(243,100%,65%)] to-[#b0bdff] dark:from-[#84aa19]">
+        <div className="from-snelltechPurple dark:from-snelltechGreen relative ml-auto w-full overflow-hidden rounded-tl-[12rem] bg-gradient-to-t to-[#b0bdff]">
           <img
             src="/images/neurons.jpg"
             alt="headset"
@@ -84,9 +79,9 @@ export default async function Home() {
           />
         </div>
       </header>
-      <div className="flex w-full flex-col items-center justify-center gap-12 px-4 py-16 dark:bg-background ">
+      <div className="flex w-full flex-col items-center justify-center gap-12 bg-secondary px-4 py-16 dark:bg-background ">
         <h1 className={`text-xl font-extrabold tracking-tight sm:text-[5rem]`}>
-          Not even close to completion
+          Get your Prescription
         </h1>
         <Flex direction="column" gap="2">
           <Text>Hello from Radix Themes :</Text>

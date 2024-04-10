@@ -20,6 +20,8 @@ export default {
         "3xl": "1776px",
       },
       colors: {
+        snelltechPurple: "hsl(243,100%,65%)",
+        snelltechGreen: "#84aa19",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

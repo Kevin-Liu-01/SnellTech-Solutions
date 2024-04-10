@@ -12,13 +12,15 @@ export const Navbar = (props: {
     user: { id: string; name: string; email: string; image: string };
   } | null;
 }) => {
-  console.log(props.session);
   return (
     <nav className="flex h-24 flex-row justify-between px-8">
       <Link href="/" className="my-auto flex flex-row gap-x-4">
         <ScanEyeIcon className="my-auto size-8" />
-        <p className="font-optiker hidden text-2xl font-bold sm:block">
-          SNELLTECH SOLUTIONS
+        <p className="hidden font-optiker text-2xl font-bold sm:block">
+          SNELLTECH{" "}
+          <span className="dark:text-snelltechGreen text-snelltechPurple">
+            SOLUTIONS
+          </span>
         </p>
       </Link>
       <div className="flex items-center gap-x-6">
@@ -43,7 +45,7 @@ export const Navbar = (props: {
                   className="size-8 rounded-full"
                 />
               ) : (
-                <CircleUserRound className="size-8 transition-all" />
+                <CircleUserRound className="text-snelltechPurple dark:text-snelltechGreen size-8 transition-all" />
               )}
               <span className="sr-only">Toggle theme</span>
             </Button>
