@@ -1,4 +1,5 @@
 import "~/styles/globals.css";
+import "@radix-ui/themes/styles.css";
 
 import { Inter } from "next/font/google";
 

@@ -1,9 +1,7 @@
 "use client";
-import Link from "next/link";
 import {
   Button,
   Grid,
-  Slider,
   Checkbox,
   Text,
   Flex,
@@ -11,26 +9,76 @@ import {
   Heading,
 } from "@radix-ui/themes";
 import { useState, useEffect } from "react";
-import { SendIcon, InfoIcon } from "lucide-react";
+import {
+  SendIcon,
+  InfoIcon,
+  ListOrderedIcon,
+  AppWindowMacIcon,
+} from "lucide-react";
 import twMerge from "clsx";
+import Confetti from "react-confetti";
 // Font files can be colocated inside of `pages`b
 export default function Test() {
-  const [state, setState] = useState(false);
-  const [size, setSize] = useState("row1");
+  const [letter, setLetter] = useState("");
+  const [confetti, setConfetti] = useState(false);
+
+  const [submitLetter, setSubmitLetter] = useState(false);
+  const [size, setSize] = useState(1);
   const [userInput, setUserInput] = useState("");
 
   function createRandomString(length: number) {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let result = "";
     for (let i = 0; i < length; i++) {
       result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    return result;
+    setLetter(result);
   }
 
+  useEffect(() => {
+    createRandomString(1);
+  }, [submitLetter]);
+
   function submitHandler() {
-    setState(!state);
+    if (userInput === letter) {
+      setConfetti(true);
+      setTimeout(() => {
+        setConfetti(false);
+      }, 2000);
+    }
+    setSubmitLetter(!submitLetter);
+    setUserInput("");
     return;
+  }
+
+  function submitWrongHandler() {
+    setUserInput("");
+    return;
+  }
+
+  function textSizer() {
+    switch (size) {
+      case 1:
+        return "text-[78.74mm]";
+      case 2:
+        return "text-[68.58mm]";
+      case 3:
+        return "text-[55.88mm]";
+      case 4:
+        return "text-[45.72mm]";
+      case 5:
+        return "text-[33.02mm]";
+      case 6:
+        return "text-[22.86mm]";
+      case 7:
+        return "text-[17.78mm]";
+      case 8:
+        return "text-[10.16mm]";
+      case 9:
+        return "text-[7.62mm]";
+      case 10:
+        return "text-[5.08mm]";
+    }
   }
 
   //CONVERSION RATIO: Font height * 2.54
@@ -39,155 +87,165 @@ export default function Test() {
     <main className="h-[calc(100vh-6rem)] bg-background font-inter text-primary">
       <div className="grid h-full grid-cols-3">
         <section className="flex min-h-full flex-col p-4 pt-0">
-          <div className="h-full rounded-lg border border-border bg-primary-foreground p-4">
-            <h3 className="text-2xl font-bold">Instructions</h3>
-            <div className="font-optiker text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-            <Callout.Root className="mt-full flex items-center">
+          <Flex
+            className="h-full rounded-lg border border-border bg-primary-foreground p-4"
+            direction="column"
+            gap="3"
+          >
+            <Heading className="flex font-inter text-2xl font-bold">
+              <ListOrderedIcon className="my-auto mr-2 size-8" />
+              Instructions
+            </Heading>
+            <Callout.Root className="text-snelltechPurple dark:text-snelltechGreen bg-snelltechPurple/20 dark:bg-snelltechGreen/20 flex items-center font-optiker">
               <Callout.Icon>
                 <InfoIcon className="h-6 w-6" />
               </Callout.Icon>
               <Callout.Text>
-                You will need admin privileges to install and access this
+                You will need at least 10 feet of room to properly use this
                 application.
               </Callout.Text>
             </Callout.Root>
-          </div>
+            <Text size="3">The quick brown fox jumps over the lazy dog.</Text>
+            <Text size="3">The quick brown fox jumps over the lazy dog.</Text>
+            <Text size="3">The quick brown fox jumps over the lazy dog.</Text>
+            <Text size="3">The quick brown fox jumps over the crazy frog.</Text>
+          </Flex>
         </section>
         <section className={`relative flex h-full flex-col overflow-hidden`}>
-          <div className="flex flex-col items-center justify-center rounded-lg border border-border bg-primary-foreground p-4">
-            <div className="relative flex h-[5.08in] w-[3.08in] select-none items-center justify-center rounded-xl border-2 border-dashed border-primary bg-background  xl:border-4">
+          <div className="flex h-full flex-col items-center justify-center rounded-lg border border-border bg-primary-foreground p-4">
+            <div className="absolute h-full w-full">
+              <Confetti numberOfPieces={confetti ? 200 : 0} />
+            </div>
+            <div className="relative flex h-[5.08in] w-[3.08in] select-none items-center justify-center rounded-sm border-2 border-dashed border-primary bg-background  xl:border-4">
               <span
                 className={twMerge(
                   "font-optiker font-extrabold tracking-tight",
-                  size == "row1" && "text-[78.74mm]",
-                  size == "row2" && "text-[68.58mm]",
-                  size == "row3" && "text-[55.88mm]",
-                  size == "row4" && "text-[45.72mm]",
-                  size == "row5" && "text-[33.02mm]",
-                  size == "row6" && "text-[22.86mm]",
-                  size == "row7" && "text-[17.78mm]",
-                  size == "row8" && "text-[10.16mm]",
-                  size == "row9" && "text-[7.62mm]",
-                  size == "row10" && "text-[5.08mm]",
+                  textSizer(),
                 )}
               >
-                {createRandomString(1)}
+                {letter}
               </span>
             </div>
           </div>
-          <Grid columns="6" gap="3" className="relative mt-4 w-full">
-            <form
-              onSubmit={() => {
-                submitHandler();
-              }}
-              className="col-span-4 flex rounded-lg border border-border"
-            >
+          <Grid columns="6" gap="3" className="relative my-4 w-full">
+            <div className="col-span-4 flex rounded-lg border border-border">
               <input
                 type="text"
                 placeholder="Type the Letter..."
+                maxLength={1}
                 className="focus:ring-snelltechPurple dark:focus:ring-snelltechGreen w-full rounded-l-lg bg-gray-100 px-4 py-2 text-gray-900 duration-150 focus:outline-none focus:ring-1 dark:bg-gray-800 dark:text-gray-200"
                 value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
+                onChange={(e) => setUserInput(e.target.value.toUpperCase())}
               />
               <Button
-                type="submit"
+                onClick={() => {
+                  submitHandler();
+                }}
                 color="blue"
-                className="bg-snelltechPurple dark:bg-snelltechGreen flex h-full items-center justify-center rounded-l-none rounded-r-lg text-center text-secondary"
+                className=" bg-snelltechPurple dark:bg-snelltechGreen flex h-full cursor-pointer items-center justify-center rounded-l-none rounded-r-lg text-center text-secondary"
               >
                 <SendIcon className="inline h-5 w-5 " />
               </Button>
-            </form>{" "}
+            </div>
             <Button
               onClick={() => {
-                setState(!state);
+                submitWrongHandler();
               }}
               color={"tomato"}
-              className="col-span-2 h-full rounded-lg"
+              className="col-span-2 h-full cursor-pointer  rounded-lg"
             >
               {"Don't Know"}
             </Button>
           </Grid>
         </section>
-        <section className="h-full px-4 pb-4">
-          <Heading className="font-inter">Control Panel</Heading>
-          <Slider
-            defaultValue={[1]}
-            color="grass"
-            min={0.1}
-            max={1}
-            step={0.1}
+        <section className="h-full px-4 pb-4 ">
+          <Heading className="flex font-inter">
+            <AppWindowMacIcon className="mr-2 size-8" />
+            Control Panel
+          </Heading>
+          <input
+            id="slide"
+            type="range"
+            min={1}
+            max={10}
+            step={1}
+            defaultValue={10}
             onChange={(value) => {
-              // console.log("hi" + value);
-              // setSizeFactor(value[0]);
-              // setSize(value[0]);
+              setSize(parseInt(value?.target?.value));
             }}
-            className="mb-4 w-full"
+            className="accent-snelltechPurple dark:accent-snelltechGreen w-full  cursor-pointer"
           />
+
           <Text as="label" size="2">
             <Flex gap="2">
-              <Checkbox size="1" onClick={() => setSize("row1")} color="blue" />
+              <Checkbox
+                size="1"
+                onClick={() => setSize(1)}
+                color="blue"
+                disabled
+                checked
+              />
               Row 1 (20/70), 31mm
-            </Flex>
-          </Text>
-          <Text as="label" size="2">
-            <Flex gap="2">
-              <Checkbox size="1" onClick={() => setSize("row2")} color="blue" />
-              Row 2 (20/60), 27mm
-            </Flex>
-          </Text>
-          <Text as="label" size="2">
-            <Flex gap="2">
-              <Checkbox size="1" onClick={() => setSize("row3")} color="blue" />
-              Row 3 (20/50), 22mm
-            </Flex>
-          </Text>
-          <Text as="label" size="2">
-            <Flex gap="2">
-              <Checkbox size="1" onClick={() => setSize("row4")} color="blue" />
-              Row 4 (20/40), 18mm
-            </Flex>
-          </Text>
-          <Text as="label" size="2">
-            <Flex gap="2">
-              <Checkbox size="1" onClick={() => setSize("row5")} color="blue" />
-              Row 5 (20/30), 13mm
-            </Flex>
-          </Text>
-          <Text as="label" size="2">
-            <Flex gap="2">
-              <Checkbox size="1" onClick={() => setSize("row6")} color="blue" />
-              Row 6 (20/20), 9mm
-            </Flex>
-          </Text>
-          <Text as="label" size="2">
-            <Flex gap="2">
-              <Checkbox size="1" onClick={() => setSize("row7")} color="blue" />
-              Row 7 (15/20), 7mm
-            </Flex>
-          </Text>
-          <Text as="label" size="2">
-            <Flex gap="2">
-              <Checkbox size="1" onClick={() => setSize("row8")} color="blue" />
-              Row 7 (10/20), 4mm
-            </Flex>
-          </Text>
-          <Text as="label" size="2">
-            <Flex gap="2">
-              <Checkbox size="1" onClick={() => setSize("row9")} color="blue" />
-              Row 7 (7/20), 3mm
             </Flex>
           </Text>
           <Text as="label" size="2">
             <Flex gap="2">
               <Checkbox
                 size="1"
-                onClick={() => setSize("row10")}
-                color="blue"
+                onClick={() => setSize(2)}
+                className="accent-snelltechPurple"
+                disabled
+                checked
               />
-              Row 7 (4/20), 2mm
+              Row 2 (20/60), 27mm
+            </Flex>
+          </Text>
+          <Text as="label" size="2">
+            <Flex gap="2">
+              <Checkbox size="1" onClick={() => setSize(3)} color="blue" />
+              Row 3 (20/50), 22mm
+            </Flex>
+          </Text>
+          <Text as="label" size="2">
+            <Flex gap="2">
+              <Checkbox size="1" onClick={() => setSize(4)} color="blue" />
+              Row 4 (20/40), 18mm
+            </Flex>
+          </Text>
+          <Text as="label" size="2">
+            <Flex gap="2">
+              <Checkbox size="1" onClick={() => setSize(5)} color="blue" />
+              Row 5 (20/30), 13mm
+            </Flex>
+          </Text>
+          <Text as="label" size="2">
+            <Flex gap="2">
+              <Checkbox size="1" onClick={() => setSize(6)} color="blue" />
+              Row 6 (20/20), 9mm
+            </Flex>
+          </Text>
+          <Text as="label" size="2">
+            <Flex gap="2">
+              <Checkbox size="1" onClick={() => setSize(7)} color="blue" />
+              Row 7 (15/20), 7mm
+            </Flex>
+          </Text>
+          <Text as="label" size="2">
+            <Flex gap="2">
+              <Checkbox size="1" onClick={() => setSize(8)} color="blue" />
+              Row 8 (10/20), 4mm
+            </Flex>
+          </Text>
+          <Text as="label" size="2">
+            <Flex gap="2">
+              <Checkbox size="1" onClick={() => setSize(9)} color="blue" />
+              Row 9 (7/20), 3mm
+            </Flex>
+          </Text>
+          <Text as="label" size="2">
+            <Flex gap="2">
+              <Checkbox size="1" onClick={() => setSize(10)} color="blue" />
+              Row 10 (4/20), 2mm
             </Flex>
           </Text>
         </section>
