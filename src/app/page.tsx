@@ -1,6 +1,6 @@
 import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
-import Image from "next/Image";
+import Image from "next/image";
 import { Flex, Text, Button, Box } from "@radix-ui/themes";
 import { EyeIcon, MoveRightIcon } from "lucide-react";
 
