@@ -143,7 +143,7 @@ export default function Test() {
         </section>
         {/* Test Area */}
         <section className={`relative flex h-full flex-col overflow-hidden`}>
-          <div className="flex h-full flex-col items-center justify-center rounded-lg border border-border bg-primary-foreground p-4">
+          <div className="flex h-full flex-col items-center justify-center rounded-lg border border-border bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
             <div className="absolute h-full w-full">
               <Confetti
                 numberOfPieces={confetti ? 200 : 0}

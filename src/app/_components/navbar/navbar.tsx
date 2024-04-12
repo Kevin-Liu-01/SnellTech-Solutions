@@ -42,7 +42,7 @@ export const Navbar = (props: {
       {/* Page Selection */}
       <SegmentedControl.Root
         value={pathname || ""}
-        className=" font-optiker"
+        className="border border-border font-optiker"
         radius="full"
         onValueChange={(value: string) => router.push(value)}
       >

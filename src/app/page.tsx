@@ -1,7 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
 import Image from "next/image";
-import { Flex, Text, Button, Box } from "@radix-ui/themes";
+import { Flex, Text, Button, Box, Separator } from "@radix-ui/themes";
 import { EyeIcon, MoveRightIcon } from "lucide-react";
 
 export default async function Home() {
@@ -10,7 +10,7 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center font-inter dark:text-white">
       <header className="grid min-h-[calc(100vh-6rem)] w-full sm:grid-cols-2">
-        <Box className="relative flex h-full w-full flex-col justify-between overflow-hidden px-8 py-4 pb-16 2xl:pt-2 3xl:py-16">
+        <Box className="relative flex h-full w-full flex-col justify-between px-8 py-4 pb-16 2xl:pt-2 3xl:py-16">
           <Text
             className={`mt-12 font-optiker text-[2rem] font-extrabold leading-[0] tracking-tight dark:text-primary sm:text-[3rem] xl:text-[5rem] 2xl:text-[6rem] `}
           >
@@ -22,20 +22,22 @@ export default async function Home() {
             MISSION
             <EyeIcon className=" ml-2 size-12 rounded-full bg-snelltechPurple p-2 text-white dark:bg-snelltechGreen" />
           </Text>
-          <Text className="mb-8 text-sm sm:text-base 2xl:text-lg 3xl:text-xl ">
+          <Separator my="2" size="4" />
+          <Text className="mb-8 text-sm sm:text-base 2xl:text-lg 3xl:text-xl  ">
             Design, build and test a digital vision acuity exam to provide an
             approximate prescription for corrective lenses where the program
             uses calculation for determining letter height based on user
-            distance
+            distance.
           </Text>
+
           <Box className="h-full rounded-xl border-2 border-border bg-primary-foreground p-2 xl:p-4 3xl:p-8">
             <div className="flex h-full w-[80%] flex-col justify-between sm:w-[60%]">
               <div
-                className={`mb-2 font-optiker text-xl font-extrabold tracking-tight xl:text-[2rem] 3xl:text-[2.5rem]`}
+                className={`mb-2 font-optiker text-xl font-extrabold tracking-tight xl:text-[2.25rem] 3xl:text-[2.5rem]`}
               >
                 {"We're here to help."}
               </div>
-              <div className="mb-4 text-xs xl:text-sm 3xl:text-[1rem]">
+              <div className="mb-4 text-xs xl:text-base 3xl:text-[1rem]">
                 Eye exams are expensive and difficult to arrange in areas where
                 professionals are in high demand. Ophthalmologists are often
                 overbooked, which leads to long wait times for appointments.
@@ -57,11 +59,11 @@ export default async function Home() {
               </div>
             </div>
           </Box>
-          <Box className="absolute bottom-[-4rem] right-[-4rem] h-1/2 w-1/2 dark:invert">
+          <Box className="absolute bottom-[-4rem] right-[-4rem] z-[5] h-1/2 w-1/2 dark:invert">
             <Image src="/images/man-with-stereo.svg" alt="man" fill />
           </Box>
         </Box>
-        <div className="relative ml-auto w-full overflow-hidden rounded-tl-[12rem] bg-gradient-to-t from-snelltechPurple to-[#b0bdff] dark:from-snelltechGreen">
+        <div className="relative ml-auto w-full overflow-hidden rounded-l-full bg-gradient-to-t from-snelltechPurple to-[#b0bdff] dark:from-snelltechGreen">
           <Image
             src="/images/neurons.jpg"
             alt="headset"
@@ -83,7 +85,7 @@ export default async function Home() {
           />
         </div>
       </header>
-      <div className="flex w-full flex-col items-center justify-center gap-12 bg-secondary px-4 py-16 dark:bg-background ">
+      <div className="relative z-10 flex w-full flex-col items-center justify-center gap-12 bg-secondary px-4 py-16 dark:bg-background ">
         <h1 className={`text-xl font-extrabold tracking-tight sm:text-[5rem]`}>
           Get your Prescription
         </h1>

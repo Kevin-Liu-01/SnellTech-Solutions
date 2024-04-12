@@ -3,7 +3,7 @@
 import { useTheme } from "next-themes";
 import { SunIcon, MoonIcon, DesktopIcon } from "@radix-ui/react-icons";
 
-import { Button, DropdownMenu } from "@radix-ui/themes";
+import { Button, DropdownMenu, Box } from "@radix-ui/themes";
 
 const themes = [
   { id: "light", name: "Light", Icon: SunIcon },
@@ -17,9 +17,16 @@ export const ThemeSwitcher = () => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Button variant="ghost">
-          <SunIcon className="size-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <MoonIcon className="size-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <Button
+          color="gray"
+          className="rounded-full bg-snelltechPurple px-[0.25rem] dark:bg-snelltechGreen"
+        >
+          <Box className="rotate-0 scale-100 rounded-full bg-background p-[0.25rem] text-primary transition-all dark:-rotate-90 dark:scale-0">
+            <SunIcon className="size-4" />
+          </Box>
+          <Box className=" rotate-90 scale-0 rounded-full bg-primary p-[0.25rem] transition-all dark:rotate-0 dark:scale-100 dark:text-secondary">
+            <MoonIcon className="size-4" />
+          </Box>
 
           <span className="sr-only">Toggle theme</span>
         </Button>
@@ -28,7 +35,7 @@ export const ThemeSwitcher = () => {
       <DropdownMenu.Content align="end">
         {themes.map((theme) => (
           <DropdownMenu.Item key={theme.id} onClick={() => setTheme(theme.id)}>
-            <theme.Icon className="mr-2 size-4" />
+            <theme.Icon className="size-4" />
             {theme.name}
           </DropdownMenu.Item>
         ))}
