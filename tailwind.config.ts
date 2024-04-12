@@ -17,7 +17,7 @@ export default {
         optiker: ["var(--font-optiker)"],
       },
       screens: {
-        "3xl": "1776px",
+        "3xl": "1600px",
       },
       colors: {
         snelltechPurple: "hsl(243,100%,65%)",

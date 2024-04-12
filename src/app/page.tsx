@@ -1,6 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
-import { Flex, Text, Button, Grid, Box } from "@radix-ui/themes";
+import Image from "next/Image";
+import { Flex, Text, Button, Box } from "@radix-ui/themes";
 import { EyeIcon, MoveRightIcon } from "lucide-react";
 
 export default async function Home() {
@@ -9,31 +10,32 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center font-inter dark:text-white">
       <header className="grid min-h-[calc(100vh-6rem)] w-full sm:grid-cols-2">
-        <div className="relative flex h-full w-full flex-col overflow-hidden px-8 py-4 pb-16 2xl:pt-2 3xl:py-16">
-          <h1
-            className={`font-optiker text-[2rem] font-extrabold tracking-tight dark:text-primary sm:text-[3rem] 2xl:text-[6rem] 3xl:text-[8rem] `}
+        <Box className="relative flex h-full w-full flex-col justify-between overflow-hidden px-8 py-4 pb-16 2xl:pt-2 3xl:py-16">
+          <Text
+            className={`mt-12 font-optiker text-[2rem] font-extrabold leading-[0] tracking-tight dark:text-primary sm:text-[3rem] xl:text-[5rem] 2xl:text-[6rem] `}
           >
             VISION IS OUR
-          </h1>
-          <h1
-            className={`text-snelltechPurple dark:text-snelltechGreen absolute flex items-center font-optiker text-[5rem] font-extrabold tracking-tight sm:text-[7rem] 2xl:mt-10 2xl:text-[10rem]`}
+          </Text>
+          <Text
+            className={`flex items-center font-optiker text-[5rem] font-extrabold leading-none tracking-tight text-snelltechPurple dark:text-snelltechGreen sm:text-[7rem] xl:text-[8rem] 2xl:text-[10rem]`}
           >
             MISSION
-            <EyeIcon className=" bg-snelltechPurple dark:bg-snelltechGreen size-12 rounded-full p-2 text-white" />{" "}
-          </h1>
-          <div className="mt-12 text-sm sm:mt-16 sm:text-base 2xl:mt-24 2xl:text-xl 3xl:mt-12">
-            Eye exams are expensive and difficult to arrange in areas where
-            professionals are in high demand. Ophthalmologists are often
-            overbooked, which leads to long wait times for appointments.
-          </div>
-          <div className="border-bg-gray-300/90 mt-4 h-full rounded-lg border-2 bg-gray-300/40 p-2 dark:border-secondary dark:bg-secondary/30 sm:mt-8 2xl:p-4">
-            <div className="flex w-[80%] flex-col sm:w-[60%]">
+            <EyeIcon className=" ml-2 size-12 rounded-full bg-snelltechPurple p-2 text-white dark:bg-snelltechGreen" />
+          </Text>
+          <Text className="mb-8 text-sm sm:text-base 2xl:text-lg 3xl:text-xl ">
+            Design, build and test a digital vision acuity exam to provide an
+            approximate prescription for corrective lenses where the program
+            uses calculation for determining letter height based on user
+            distance
+          </Text>
+          <Box className="h-full rounded-xl border-2 border-border bg-primary-foreground p-2 xl:p-4 3xl:p-8">
+            <div className="flex h-full w-[80%] flex-col justify-between sm:w-[60%]">
               <div
-                className={`font-optiker text-xl font-extrabold tracking-tight 2xl:text-[2rem] `}
+                className={`mb-2 font-optiker text-xl font-extrabold tracking-tight xl:text-[2rem] 3xl:text-[2.5rem]`}
               >
                 {"We're here to help."}
               </div>
-              <div className="mb-4 text-xs 2xl:text-sm">
+              <div className="mb-4 text-xs xl:text-sm 3xl:text-[1rem]">
                 Eye exams are expensive and difficult to arrange in areas where
                 professionals are in high demand. Ophthalmologists are often
                 overbooked, which leads to long wait times for appointments.
@@ -41,7 +43,7 @@ export default async function Home() {
               <div className="flex flex-col gap-2 sm:flex-row">
                 <Link
                   href="/test"
-                  className="bg-snelltechPurple dark:bg-snelltechGreen inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-xs font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 2xl:px-6 2xl:text-sm"
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-snelltechPurple px-4 py-2 text-xs font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 dark:bg-snelltechGreen 2xl:px-6 2xl:text-sm"
                 >
                   Take a Digital Eye Exam
                   <MoveRightIcon className="ml-2 size-4" />
@@ -54,28 +56,30 @@ export default async function Home() {
                 </Link>
               </div>
             </div>
-          </div>
-          <img
-            src="/images/man-with-stereo.svg"
-            alt="headset"
-            className="absolute bottom-[-4rem] right-[-4rem] h-1/2 w-1/2 dark:invert"
-          />
-        </div>
-        <div className="from-snelltechPurple dark:from-snelltechGreen relative ml-auto w-full overflow-hidden rounded-tl-[12rem] bg-gradient-to-t to-[#b0bdff]">
-          <img
+          </Box>
+          <Box className="absolute bottom-[-4rem] right-[-4rem] h-1/2 w-1/2 dark:invert">
+            <Image src="/images/man-with-stereo.svg" alt="man" fill />
+          </Box>
+        </Box>
+        <div className="relative ml-auto w-full overflow-hidden rounded-tl-[12rem] bg-gradient-to-t from-snelltechPurple to-[#b0bdff] dark:from-snelltechGreen">
+          <Image
             src="/images/neurons.jpg"
             alt="headset"
-            className="z-1 absolute h-full opacity-20"
+            fill
+            className="absolute z-10 h-full opacity-20"
           />
-          <img
+          <Image
             src="/images/abstract.svg"
             alt="headset"
-            className="z-1 absolute h-full opacity-80 dark:invert"
+            fill
+            className="absolute z-20 h-full opacity-80 dark:invert"
           />
-          <img
+          <Image
             src="/images/headset.png"
             alt="headset"
-            className="z-5 relative ml-auto mr-0 h-full"
+            height="2000"
+            width="2000"
+            className="relative z-30 ml-auto mr-0 h-full w-auto"
           />
         </div>
       </header>
@@ -87,7 +91,7 @@ export default async function Home() {
           <Text>Hello from Radix Themes :</Text>
           <Button>Lets go</Button>
         </Flex>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
+        <Box className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
           <Link
             className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
             href="https://create.t3.gg/en/usage/first-steps"
@@ -110,7 +114,7 @@ export default async function Home() {
               deploy it.
             </div>
           </Link>
-        </div>
+        </Box>
       </div>
     </main>
   );

@@ -7,26 +7,29 @@ import { TRPCReactProvider } from "~/trpc/react";
 
 import type { PropsWithChildren } from "react";
 
-import { Theme } from "@radix-ui/themes";
+import { Theme, ScrollArea } from "@radix-ui/themes";
 
 // import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider } from "./_components/theme-provider";
 import { getServerAuthSession } from "~/server/auth";
 
+import { Navbar } from "~/app/_components/navbar/navbar";
+
+//Font management
 import localFont from "next/font/local";
+
 // Font files can be colocated inside of `pages`
 const myFont = localFont({
   src: "./font/Optiker-K.woff2",
   variable: "--font-optiker",
 });
 
-import { Navbar } from "~/app/_components/navbar/navbar";
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
 
+//Metadata for pages
 export const metadata = {
   title: "SnellenTech",
   description:
@@ -34,6 +37,7 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+//Page layout template
 export default async function RootLayout({ children }: PropsWithChildren) {
   const session = await getServerAuthSession();
 
@@ -44,9 +48,10 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           {/* <NextUIProvider> */}
           <ThemeProvider attribute="class">
             <Theme radius="large">
-              {/* @ts-expect-error: Unreachable code error*/}
-              <Navbar session={session} />
-              {children}
+              <ScrollArea className="h-screen">
+                {/* @ts-expect-error: Unreachable code error*/}
+                <Navbar session={session} /> {children}
+              </ScrollArea>
             </Theme>
           </ThemeProvider>
           {/* </NextUIProvider> */}
