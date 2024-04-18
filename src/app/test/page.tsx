@@ -18,6 +18,7 @@ import {
   ListOrderedIcon,
   AppWindowMacIcon,
   TriangleAlertIcon,
+  EyeIcon,
 } from "lucide-react";
 import twMerge from "clsx";
 import dynamic from "next/dynamic";
@@ -25,13 +26,15 @@ const Confetti = dynamic(() => import("react-confetti"), {
   ssr: false,
 });
 
+import List from "../_components/test/list";
+
 export default function Test() {
-  const [letter, setLetter] = useState("");
+  const [letter, setLetter] = useState(" ");
   const [confetti, setConfetti] = useState(false);
   const [submitLetter, setSubmitLetter] = useState(false);
   const [size, setSize] = useState(10);
   const [userInput, setUserInput] = useState("");
-  const [stage, setStage] = useState(0); // Start stage from 0
+  const [level, setLevel] = useState(0); // Start level from 0
   const [correctGuesses, setCorrectGuesses] = useState(0); // Track correct guesses
   const [incorrectGuesses, setIncorrectGuesses] = useState(0);
   const [rightEye, setRightEye] = useState(true);
@@ -39,230 +42,110 @@ export default function Test() {
   const [testCompleted, setTestCompleted] = useState(false); // Track if the test has completed
 
   function createRandomString(length: number) {
-    const chars = "BCDEFGHJKLNOQRSTVWXYZ";
+    const chars = "ABCDEFGHIJKLNOPQRSTUVWXYZ";
     let result = "";
     for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
+      result += chars
+        ?.replace(letter, "")
+        ?.charAt(Math.floor(Math.random() * chars.length));
     }
     setLetter(result);
   }
 
   function startTest() {
     setTestStarted(true);
-    setStage(1); // Start the stage from 1
+    setLevel(1); // Start the level from 1
     setRightEye(true); // Start with the right eye
     setIncorrectGuesses(0);
     createRandomString(1);
   }
 
+  function responseHandler(correctGuessesLimit: number, level: number) {
+    if (correctGuesses == correctGuessesLimit - 1) {
+      setConfetti(true);
+      setTimeout(() => {
+        setConfetti(false);
+      }, 2000);
+      setLevel(level);
+      createRandomString(1);
+      setCorrectGuesses(0);
+      setIncorrectGuesses(0);
+      setSize(size - 1);
+      setUserInput("");
+      return;
+    }
+    setCorrectGuesses(correctGuesses + 1);
+    createRandomString(1);
+  }
+
   function submitHandler() {
+    // Check if the user input matches the letter
     if (userInput === letter) {
-      if (stage === 1) {
-        setConfetti(true);
-        setTimeout(() => {
-          setConfetti(false);
-        }, 2000);
-        setStage(2);
-        createRandomString(1);
-        setCorrectGuesses(0);
-        setIncorrectGuesses(0);
-        setSize(size - 1);
-      }
-      if (stage === 2) {
-        if (correctGuesses === 2) {
+      switch (level) {
+        case 1:
+          responseHandler(1, 2);
+          break;
+        case 2:
+          responseHandler(2, 3);
+          break;
+        case 3:
+          responseHandler(3, 4);
+          break;
+        case 4:
+          responseHandler(4, 5);
+          break;
+        case 5:
+          responseHandler(5, 6);
+          break;
+        case 6:
+          responseHandler(5, 7);
+          break;
+        case 7:
+          responseHandler(5, 8);
+          break;
+        case 8:
+          responseHandler(5, 9);
+          break;
+        case 9:
+          responseHandler(5, 10);
+          break;
+        case 10:
+          responseHandler(5, 11);
+          break;
+        case 11:
           setConfetti(true);
           setTimeout(() => {
             setConfetti(false);
           }, 2000);
-          setStage(3);
-          createRandomString(1);
-          setCorrectGuesses(0);
-          setIncorrectGuesses(0);
-          setSize(size - 1);
-          setUserInput("");
-
+          setTestCompleted(true);
           return;
-        }
-        setCorrectGuesses(correctGuesses + 1);
-        createRandomString(1);
       }
-      if (stage === 3) {
-        if (correctGuesses === 3) {
-          setConfetti(true);
-          setTimeout(() => {
-            setConfetti(false);
-          }, 2000);
-          setStage(4);
-          createRandomString(1);
-          setCorrectGuesses(0);
-          setIncorrectGuesses(0);
-          setSize(size - 1);
-          setUserInput("");
-
-          return;
-        }
-        setCorrectGuesses(correctGuesses + 1);
-        createRandomString(1);
-      }
-      // Continue the pattern for the rest of the stages
-      if (stage === 4) {
-        if (correctGuesses === 4) {
-          setConfetti(true);
-          setTimeout(() => {
-            setConfetti(false);
-          }, 2000);
-          setStage(5);
-          createRandomString(1);
-          setCorrectGuesses(0);
-          setIncorrectGuesses(0);
-          setSize(size - 1);
-          setUserInput("");
-
-          return;
-        }
-        setCorrectGuesses(correctGuesses + 1);
-        createRandomString(1);
-      }
-      if (stage === 5) {
-        if (correctGuesses === 5) {
-          setConfetti(true);
-          setTimeout(() => {
-            setConfetti(false);
-          }, 2000);
-          setStage(6);
-          createRandomString(1);
-          setCorrectGuesses(0);
-          setIncorrectGuesses(0);
-          setSize(size - 1);
-          setUserInput("");
-
-          return;
-        }
-        setCorrectGuesses(correctGuesses + 1);
-        createRandomString(1);
-      }
-      if (stage === 6) {
-        if (correctGuesses === 6) {
-          setConfetti(true);
-          setTimeout(() => {
-            setConfetti(false);
-          }, 2000);
-          setStage(7);
-          createRandomString(1);
-          setCorrectGuesses(0);
-          setIncorrectGuesses(0);
-          setSize(size - 1);
-          setUserInput("");
-
-          return;
-        }
-        setCorrectGuesses(correctGuesses + 1);
-        createRandomString(1);
-      }
-      if (stage === 7) {
-        if (correctGuesses === 7) {
-          setConfetti(true);
-          setTimeout(() => {
-            setConfetti(false);
-          }, 2000);
-          setStage(8);
-          createRandomString(1);
-          setCorrectGuesses(0);
-          setIncorrectGuesses(0);
-          setSize(size - 1);
-          setUserInput("");
-
-          return;
-        }
-        setCorrectGuesses(correctGuesses + 1);
-        createRandomString(1);
-      }
-      if (stage === 8) {
-        if (correctGuesses === 8) {
-          setConfetti(true);
-          setTimeout(() => {
-            setConfetti(false);
-          }, 2000);
-          setStage(9);
-          createRandomString(1);
-          setCorrectGuesses(0);
-          setIncorrectGuesses(0);
-          setSize(size - 1);
-          setUserInput("");
-
-          return;
-        }
-        setCorrectGuesses(correctGuesses + 1);
-        createRandomString(1);
-      }
-      if (stage === 9) {
-        if (correctGuesses === 9) {
-          setConfetti(true);
-          setTimeout(() => {
-            setConfetti(false);
-          }, 2000);
-          setStage(10);
-          createRandomString(1);
-          setCorrectGuesses(0);
-          setIncorrectGuesses(0);
-          setSize(size - 1);
-          setUserInput("");
-
-          return;
-        }
-        setCorrectGuesses(correctGuesses + 1);
-        createRandomString(1);
-      }
-      if (stage === 10) {
-        if (correctGuesses === 10) {
-          setConfetti(true);
-          setTimeout(() => {
-            setConfetti(false);
-          }, 2000);
-          setStage(11);
-          createRandomString(1);
-          setCorrectGuesses(0);
-          setIncorrectGuesses(0);
-          setSize(size - 1);
-          setUserInput("");
-
-          return;
-        }
-        setCorrectGuesses(correctGuesses + 1);
-        createRandomString(1);
-      }
-      if (stage === 11) {
-        setConfetti(true);
-        setTimeout(() => {
-          setConfetti(false);
-        }, 2000);
-        setTestCompleted(true);
-        return;
-      }
+      // If the user input does not match the letter
     } else {
       setIncorrectGuesses(incorrectGuesses + 1);
-      if (incorrectGuesses === 2 || stage === 11) {
+      if (incorrectGuesses === 2 || level === 11) {
         // End the test or display prescription if needed
-        console.log(`Test ended with prescription: ${stage}`);
         setTestCompleted(true);
         return;
       }
     }
+    // Reset the user input
     setSubmitLetter(!submitLetter);
     setUserInput("");
   }
 
   function submitWrongHandler() {
+    // If the user does not know the letter
     setUserInput("");
     setIncorrectGuesses(incorrectGuesses + 1);
-    if (stage === 11 || incorrectGuesses === 2) {
+    if (incorrectGuesses === 2) {
       // End the test or display prescription if needed
-      console.log(`Test ended with prescription: ${stage}`);
+      console.log(`Test ended with prescription: ${level}`);
       setTestStarted(false);
       setLetter("");
       return;
     }
-    setStage(stage + 1);
+    setLevel(level + 1);
   }
   function textSizer() {
     switch (size) {
@@ -298,7 +181,7 @@ export default function Test() {
             direction="column"
             gap="3"
           >
-            <Heading className="flex font-inter text-2xl font-bold">
+            <Heading className="flex font-optiker text-2xl font-bold">
               <ListOrderedIcon className="my-auto mr-2 size-8" />
               Instructions
             </Heading>
@@ -311,63 +194,52 @@ export default function Test() {
                 and should not be used as a replacement for in-office testing.
               </Callout.Text>
             </Callout.Root>
-            <ScrollArea type="always" scrollbars="vertical" className="h-full">
-              <Box p="2" pr="8">
-                <Flex direction="column" gap="4">
-                  <Text size="3">
-                    1. Have patient stand at appropriate marking on floor.
-                  </Text>
-                  <Text size="3">
-                    2. If patient has glasses make sure they are wearing the
-                    proper glasses for distance vision.
-                  </Text>
-                  <Text size="3">
-                    3. Give patient occluder and have them cover the eye not
-                    being tested.
-                  </Text>
-                  <Text size="3">
-                    4. Have patient read the smallest line they can see on the
-                    chart.
-                  </Text>
-                  <Text size="3">
-                    5. If patient reads all 5 letters correctly and there are
-                    more lines below then ask them to try the next line.
-                  </Text>
-                  <Text size="3">6. Repeat steps for opposite eye.</Text>
-                </Flex>
-              </Box>
-            </ScrollArea>
+            <List
+              steps={[
+                "Ensure proper room lighting and set device brightness to 100%.",
+                "Hold the screen 10 feet (3.05 m) from the patient. If the patient has glasses, wear the proper glasses for distance vision.",
+                "Give patient occluder and have them cover the eye not being tested. Each eye will be tested independently.",
+                "Have patient read the smallest line they can see on the chart.",
+                "If patient reads all 5 letters correctly and there are more lines below then ask them to try the next line.",
+                "Repeat steps for opposite eye.",
+              ]}
+            />
           </Flex>
         </section>
         <section className={`flex h-full flex-col overflow-hidden`}>
           <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-lg border border-border bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
             <Confetti
               numberOfPieces={confetti ? 200 : 0}
-              initialVelocityY={10}
-              opacity={0.7}
+              initialVelocityY={20}
             />
+            {!testStarted && (
+              <Flex
+                gap="4"
+                className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12"
+              >
+                <Text className="font-optiker text-3xl">
+                  Visual Acuity Testing
+                </Text>
+                <Callout.Root className="flex items-center bg-snelltechPurple/30 font-optiker text-snelltechPurple dark:bg-snelltechGreen/20 dark:text-snelltechGreen">
+                  <Callout.Icon>
+                    <InfoIcon className="h-6 w-6" />
+                  </Callout.Icon>
+                  <Callout.Text>
+                    You will need at least 10 feet of room to properly use this
+                    application.
+                  </Callout.Text>
+                </Callout.Root>
+
+                <Button
+                  className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
+                  onClick={() => startTest()}
+                >
+                  Start Test
+                </Button>
+              </Flex>
+            )}
+
             <div className="relative flex h-[5.08in] w-[3.08in] select-none items-center justify-center rounded-sm border-2 border-dashed border-primary bg-background  xl:border-4">
-              {!testStarted && (
-                <Box className="flex flex-col p-4">
-                  <Callout.Root className="flex items-center bg-snelltechPurple/20 font-optiker text-snelltechPurple dark:bg-snelltechGreen/20 dark:text-snelltechGreen">
-                    <Callout.Icon>
-                      <InfoIcon className="h-6 w-6" />
-                    </Callout.Icon>
-                    <Callout.Text>
-                      You will need at least 10 feet of room to properly use
-                      this application.
-                    </Callout.Text>
-                  </Callout.Root>
-
-                  <Button
-                    className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
-                    onClick={() => startTest()}
-                  >
-                    Start Test
-                  </Button>
-                </Box>
-              )}
-
               <span
                 className={twMerge(
                   "font-optiker font-extrabold tracking-tight",
@@ -403,14 +275,14 @@ export default function Test() {
                 submitWrongHandler();
               }}
               color={"tomato"}
-              className="col-span-2 h-full cursor-pointer  rounded-lg"
+              className="col-span-2 h-full cursor-pointer rounded-lg font-optiker"
             >
               {"Don't Know"}
             </Button>
           </Grid>
         </section>
         <section className="h-full px-4 pb-4 ">
-          <Heading className="flex font-inter">
+          <Heading className="flex font-optiker">
             <AppWindowMacIcon className="mr-2 size-8" />
             Control Panel
           </Heading>
@@ -437,77 +309,79 @@ export default function Test() {
               </Text>
             </Box>
             <Flex gap="2">
-              <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">{`Stage: ${stage}`}</Box>
+              <Flex
+                gap="2"
+                justify="center"
+                className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary"
+              >
+                <EyeIcon /> Right Eye
+              </Flex>
+              <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">{`Level: ${level}`}</Box>
               <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">{`Correct: ${correctGuesses}`}</Box>
-              {rightEye && (
-                <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">
-                  Right Eye
-                </Box>
-              )}
             </Flex>
             <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">
               <Text as="label" size="2">
                 <Flex gap="2">
                   <Checkbox
                     size="1"
-                    checked={stage > 1}
+                    checked={level > 1}
                     className="accent-snelltechPurple dark:accent-snelltechGreen"
                   />
-                  Row 1 (20/70), 31mm
+                  Level 1 (20/70), 31mm
                 </Flex>
               </Text>
               <Text as="label" size="2">
                 <Flex gap="2">
-                  <Checkbox size="1" checked={stage > 2} />
-                  Row 2 (20/60), 27mm
+                  <Checkbox size="1" checked={level > 2} />
+                  Level 2 (20/60), 27mm
                 </Flex>
               </Text>
               <Text as="label" size="2">
                 <Flex gap="2">
-                  <Checkbox size="1" checked={stage > 3} />
-                  Row 3 (20/50), 22mm
+                  <Checkbox size="1" checked={level > 3} />
+                  Level 3 (20/50), 22mm
                 </Flex>
               </Text>
               <Text as="label" size="2">
                 <Flex gap="2">
-                  <Checkbox size="1" checked={stage > 4} />
-                  Row 4 (20/40), 18mm
+                  <Checkbox size="1" checked={level > 4} />
+                  Level 4 (20/40), 18mm
                 </Flex>
               </Text>
               <Text as="label" size="2">
                 <Flex gap="2">
-                  <Checkbox size="1" checked={stage > 5} />
-                  Row 5 (20/30), 13mm
+                  <Checkbox size="1" checked={level > 5} />
+                  Level 5 (20/30), 13mm
                 </Flex>
               </Text>
               <Text as="label" size="2">
                 <Flex gap="2">
-                  <Checkbox size="1" checked={stage > 6} />
-                  Row 6 (20/20), 9mm
+                  <Checkbox size="1" checked={level > 6} />
+                  Level 6 (20/20), 9mm
                 </Flex>
               </Text>
               <Text as="label" size="2">
                 <Flex gap="2">
-                  <Checkbox size="1" checked={stage > 7} />
-                  Row 7 (15/20), 7mm
+                  <Checkbox size="1" checked={level > 7} />
+                  Level 7 (15/20), 7mm
                 </Flex>
               </Text>
               <Text as="label" size="2">
                 <Flex gap="2">
-                  <Checkbox size="1" checked={stage > 8} />
-                  Row 8 (10/20), 4mm
+                  <Checkbox size="1" checked={level > 8} />
+                  Level 8 (10/20), 4mm
                 </Flex>
               </Text>
               <Text as="label" size="2">
                 <Flex gap="2">
-                  <Checkbox size="1" checked={stage > 9} />
-                  Row 9 (7/20), 3mm
+                  <Checkbox size="1" checked={level > 9} />
+                  Level 9 (7/20), 3mm
                 </Flex>
               </Text>
               <Text as="label" size="2">
                 <Flex gap="2">
-                  <Checkbox size="1" checked={stage > 10} />
-                  Row 10 (4/20), 2mm
+                  <Checkbox size="1" checked={level > 10} />
+                  Level 10 (4/20), 2mm
                 </Flex>
               </Text>
             </Box>
