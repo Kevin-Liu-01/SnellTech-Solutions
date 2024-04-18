@@ -17,20 +17,26 @@ import {
   InfoIcon,
   ListOrderedIcon,
   AppWindowMacIcon,
+  TriangleAlertIcon,
 } from "lucide-react";
 import twMerge from "clsx";
 import Confetti from "react-confetti";
-// Font files can be colocated inside of `pages`b
+
 export default function Test() {
   const [letter, setLetter] = useState("");
   const [confetti, setConfetti] = useState(false);
-
   const [submitLetter, setSubmitLetter] = useState(false);
-  const [size, setSize] = useState(1);
+  const [size, setSize] = useState(10);
   const [userInput, setUserInput] = useState("");
+  const [stage, setStage] = useState(0); // Start stage from 0
+  const [correctGuesses, setCorrectGuesses] = useState(0); // Track correct guesses
+  const [incorrectGuesses, setIncorrectGuesses] = useState(0);
+  const [rightEye, setRightEye] = useState(true);
+  const [testStarted, setTestStarted] = useState(false); // Track if the test has started
+  const [testCompleted, setTestCompleted] = useState(false); // Track if the test has completed
 
   function createRandomString(length: number) {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const chars = "BCDEFGHJKLNOQRSTVWXYZ";
     let result = "";
     for (let i = 0; i < length; i++) {
       result += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -38,13 +44,13 @@ export default function Test() {
     setLetter(result);
   }
 
-  useEffect(() => {
+  function startTest() {
+    setTestStarted(true);
+    setStage(1); // Start the stage from 1
+    setRightEye(true); // Start with the right eye
+    setIncorrectGuesses(0);
     createRandomString(1);
-  }, []);
-
-  useEffect(() => {
-    createRandomString(1);
-  }, [submitLetter]);
+  }
 
   function submitHandler() {
     if (userInput === letter) {
@@ -52,17 +58,170 @@ export default function Test() {
       setTimeout(() => {
         setConfetti(false);
       }, 2000);
+      if (stage === 1) {
+        setStage(2);
+        createRandomString(1);
+        setCorrectGuesses(0);
+        setIncorrectGuesses(0);
+        setSize(size - 1);
+      }
+      if (stage === 2) {
+        if (correctGuesses === 2) {
+          console.log("bi");
+          setStage(3);
+          createRandomString(1);
+          setCorrectGuesses(0);
+          setIncorrectGuesses(0);
+          setSize(size - 1);
+          setUserInput("");
+
+          return;
+        }
+        setCorrectGuesses(correctGuesses + 1);
+        createRandomString(1);
+      }
+      if (stage === 3) {
+        if (correctGuesses === 3) {
+          setStage(4);
+          createRandomString(1);
+          setCorrectGuesses(0);
+          setIncorrectGuesses(0);
+          setSize(size - 1);
+          setUserInput("");
+
+          return;
+        }
+        setCorrectGuesses(correctGuesses + 1);
+        createRandomString(1);
+      }
+      // Continue the pattern for the rest of the stages
+      if (stage === 4) {
+        if (correctGuesses === 4) {
+          setStage(5);
+          createRandomString(1);
+          setCorrectGuesses(0);
+          setIncorrectGuesses(0);
+          setSize(size - 1);
+          setUserInput("");
+
+          return;
+        }
+        setCorrectGuesses(correctGuesses + 1);
+        createRandomString(1);
+      }
+      if (stage === 5) {
+        if (correctGuesses === 5) {
+          setStage(6);
+          createRandomString(1);
+          setCorrectGuesses(0);
+          setIncorrectGuesses(0);
+          setSize(size - 1);
+          setUserInput("");
+
+          return;
+        }
+        setCorrectGuesses(correctGuesses + 1);
+        createRandomString(1);
+      }
+      if (stage === 6) {
+        if (correctGuesses === 6) {
+          setStage(7);
+          createRandomString(1);
+          setCorrectGuesses(0);
+          setIncorrectGuesses(0);
+          setSize(size - 1);
+          setUserInput("");
+
+          return;
+        }
+        setCorrectGuesses(correctGuesses + 1);
+        createRandomString(1);
+      }
+      if (stage === 7) {
+        if (correctGuesses === 7) {
+          setStage(8);
+          createRandomString(1);
+          setCorrectGuesses(0);
+          setIncorrectGuesses(0);
+          setSize(size - 1);
+          setUserInput("");
+
+          return;
+        }
+        setCorrectGuesses(correctGuesses + 1);
+        createRandomString(1);
+      }
+      if (stage === 8) {
+        if (correctGuesses === 8) {
+          setStage(9);
+          createRandomString(1);
+          setCorrectGuesses(0);
+          setIncorrectGuesses(0);
+          setSize(size - 1);
+          setUserInput("");
+
+          return;
+        }
+        setCorrectGuesses(correctGuesses + 1);
+        createRandomString(1);
+      }
+      if (stage === 9) {
+        if (correctGuesses === 9) {
+          setStage(10);
+          createRandomString(1);
+          setCorrectGuesses(0);
+          setIncorrectGuesses(0);
+          setSize(size - 1);
+          setUserInput("");
+
+          return;
+        }
+        setCorrectGuesses(correctGuesses + 1);
+        createRandomString(1);
+      }
+      if (stage === 10) {
+        if (correctGuesses === 10) {
+          setStage(11);
+          createRandomString(1);
+          setCorrectGuesses(0);
+          setIncorrectGuesses(0);
+          setSize(size - 1);
+          setUserInput("");
+
+          return;
+        }
+        setCorrectGuesses(correctGuesses + 1);
+        createRandomString(1);
+      }
+      if (stage === 11) {
+        setTestCompleted(true);
+        return;
+      }
+    } else {
+      setIncorrectGuesses(incorrectGuesses + 1);
+      if (incorrectGuesses === 2 || stage === 11) {
+        // End the test or display prescription if needed
+        console.log(`Test ended with prescription: ${stage}`);
+        setTestCompleted(true);
+        return;
+      }
     }
     setSubmitLetter(!submitLetter);
     setUserInput("");
-    return;
   }
 
   function submitWrongHandler() {
     setUserInput("");
-    return;
+    setIncorrectGuesses(incorrectGuesses + 1);
+    if (stage === 11 || incorrectGuesses === 2) {
+      // End the test or display prescription if needed
+      console.log(`Test ended with prescription: ${stage}`);
+      setTestStarted(false);
+      setLetter("");
+      return;
+    }
+    setStage(stage + 1);
   }
-
   function textSizer() {
     switch (size) {
       case 10:
@@ -88,12 +247,9 @@ export default function Test() {
     }
   }
 
-  //CONVERSION RATIO: Font height * 2.54
-
   return (
     <main className="h-[calc(100vh-6rem)] px-4 font-inter text-primary">
       <div className="grid h-full grid-cols-3">
-        {/* Instructions for Use */}
         <section className="flex min-h-full flex-col p-4 pt-0">
           <Flex
             className="h-full rounded-lg border border-border bg-primary-foreground p-4"
@@ -106,11 +262,11 @@ export default function Test() {
             </Heading>
             <Callout.Root className="flex items-center bg-snelltechPurple/20 font-optiker text-snelltechPurple dark:bg-snelltechGreen/20 dark:text-snelltechGreen">
               <Callout.Icon>
-                <InfoIcon className="h-6 w-6" />
+                <TriangleAlertIcon className="h-6 w-6" />
               </Callout.Icon>
               <Callout.Text>
-                You will need at least 10 feet of room to properly use this
-                application.
+                This test is intended as a convenient screener for visual acuity
+                and should not be used as a replacement for in-office testing.
               </Callout.Text>
             </Callout.Root>
             <ScrollArea type="always" scrollbars="vertical" className="h-full">
@@ -141,7 +297,6 @@ export default function Test() {
             </ScrollArea>
           </Flex>
         </section>
-        {/* Test Area */}
         <section className={`relative flex h-full flex-col overflow-hidden`}>
           <div className="flex h-full flex-col items-center justify-center rounded-lg border border-border bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
             <div className="absolute h-full w-full">
@@ -153,6 +308,27 @@ export default function Test() {
               />
             </div>
             <div className="relative flex h-[5.08in] w-[3.08in] select-none items-center justify-center rounded-sm border-2 border-dashed border-primary bg-background  xl:border-4">
+              {!testStarted && (
+                <Box className="flex flex-col p-4">
+                  <Callout.Root className="flex items-center bg-snelltechPurple/20 font-optiker text-snelltechPurple dark:bg-snelltechGreen/20 dark:text-snelltechGreen">
+                    <Callout.Icon>
+                      <InfoIcon className="h-6 w-6" />
+                    </Callout.Icon>
+                    <Callout.Text>
+                      You will need at least 10 feet of room to properly use
+                      this application.
+                    </Callout.Text>
+                  </Callout.Root>
+
+                  <Button
+                    className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
+                    onClick={() => startTest()}
+                  >
+                    Start Test
+                  </Button>
+                </Box>
+              )}
+
               <span
                 className={twMerge(
                   "font-optiker font-extrabold tracking-tight",
@@ -163,7 +339,6 @@ export default function Test() {
               </span>
             </div>
           </div>
-          {/* Submit Letters */}
           <Grid columns="6" gap="3" className="relative my-4 w-full">
             <div className="col-span-4 flex rounded-lg border border-input">
               <input
@@ -195,7 +370,6 @@ export default function Test() {
             </Button>
           </Grid>
         </section>
-        {/* Control Panel */}
         <section className="h-full px-4 pb-4 ">
           <Heading className="flex font-inter">
             <AppWindowMacIcon className="mr-2 size-8" />
@@ -223,79 +397,81 @@ export default function Test() {
                 </Flex>
               </Text>
             </Box>
-
-            <Text as="label" size="2">
-              <Flex gap="2">
-                <Checkbox
-                  size="1"
-                  onClick={() => setSize(1)}
-                  color="blue"
-                  disabled
-                  checked
-                />
-                Row 1 (20/70), 31mm
-              </Flex>
-            </Text>
-            <Text as="label" size="2">
-              <Flex gap="2">
-                <Checkbox
-                  size="1"
-                  onClick={() => setSize(2)}
-                  className="accent-snelltechPurple"
-                  disabled
-                  checked
-                />
-                Row 2 (20/60), 27mm
-              </Flex>
-            </Text>
-            <Text as="label" size="2">
-              <Flex gap="2">
-                <Checkbox size="1" onClick={() => setSize(3)} color="blue" />
-                Row 3 (20/50), 22mm
-              </Flex>
-            </Text>
-            <Text as="label" size="2">
-              <Flex gap="2">
-                <Checkbox size="1" onClick={() => setSize(4)} color="blue" />
-                Row 4 (20/40), 18mm
-              </Flex>
-            </Text>
-            <Text as="label" size="2">
-              <Flex gap="2">
-                <Checkbox size="1" onClick={() => setSize(5)} color="blue" />
-                Row 5 (20/30), 13mm
-              </Flex>
-            </Text>
-            <Text as="label" size="2">
-              <Flex gap="2">
-                <Checkbox size="1" onClick={() => setSize(6)} color="blue" />
-                Row 6 (20/20), 9mm
-              </Flex>
-            </Text>
-            <Text as="label" size="2">
-              <Flex gap="2">
-                <Checkbox size="1" onClick={() => setSize(7)} color="blue" />
-                Row 7 (15/20), 7mm
-              </Flex>
-            </Text>
-            <Text as="label" size="2">
-              <Flex gap="2">
-                <Checkbox size="1" onClick={() => setSize(8)} color="blue" />
-                Row 8 (10/20), 4mm
-              </Flex>
-            </Text>
-            <Text as="label" size="2">
-              <Flex gap="2">
-                <Checkbox size="1" onClick={() => setSize(9)} color="blue" />
-                Row 9 (7/20), 3mm
-              </Flex>
-            </Text>
-            <Text as="label" size="2">
-              <Flex gap="2">
-                <Checkbox size="1" onClick={() => setSize(10)} color="blue" />
-                Row 10 (4/20), 2mm
-              </Flex>
-            </Text>
+            <Flex gap="2">
+              <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">{`Stage: ${stage}`}</Box>
+              <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">{`Correct: ${correctGuesses}`}</Box>
+              {rightEye && (
+                <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">
+                  Right Eye
+                </Box>
+              )}
+            </Flex>
+            <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox
+                    size="1"
+                    checked={stage > 1}
+                    className="accent-snelltechPurple dark:accent-snelltechGreen"
+                  />
+                  Row 1 (20/70), 31mm
+                </Flex>
+              </Text>
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox size="1" checked={stage > 2} />
+                  Row 2 (20/60), 27mm
+                </Flex>
+              </Text>
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox size="1" checked={stage > 3} />
+                  Row 3 (20/50), 22mm
+                </Flex>
+              </Text>
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox size="1" checked={stage > 4} />
+                  Row 4 (20/40), 18mm
+                </Flex>
+              </Text>
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox size="1" checked={stage > 5} />
+                  Row 5 (20/30), 13mm
+                </Flex>
+              </Text>
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox size="1" checked={stage > 6} />
+                  Row 6 (20/20), 9mm
+                </Flex>
+              </Text>
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox size="1" checked={stage > 7} />
+                  Row 7 (15/20), 7mm
+                </Flex>
+              </Text>
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox size="1" checked={stage > 8} />
+                  Row 8 (10/20), 4mm
+                </Flex>
+              </Text>
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox size="1" checked={stage > 9} />
+                  Row 9 (7/20), 3mm
+                </Flex>
+              </Text>
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox size="1" checked={stage > 10} />
+                  Row 10 (4/20), 2mm
+                </Flex>
+              </Text>
+            </Box>
           </ScrollArea>
         </section>
       </div>

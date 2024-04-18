@@ -63,7 +63,7 @@ export default async function Home() {
             <Image src="/images/man-with-stereo.svg" alt="man" fill />
           </Box>
         </Box>
-        <div className="relative ml-auto w-full overflow-hidden rounded-l-full bg-gradient-to-t from-snelltechPurple to-[#b0bdff] dark:from-snelltechGreen">
+        <div className="relative mb-4 ml-auto w-full overflow-hidden rounded-l-full bg-gradient-to-t from-snelltechPurple to-[#b0bdff] dark:from-snelltechGreen">
           <Image
             src="/images/neurons.jpg"
             alt="headset"

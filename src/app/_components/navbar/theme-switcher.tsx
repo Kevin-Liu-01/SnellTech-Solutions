@@ -19,12 +19,12 @@ export const ThemeSwitcher = () => {
       <DropdownMenu.Trigger>
         <Button
           color="gray"
-          className="rounded-full bg-snelltechPurple px-[0.25rem] dark:bg-snelltechGreen"
+          className="rounded-full bg-yellow-400 px-[0.25rem] shadow-inner transition-all dark:bg-snelltechPurple"
         >
-          <Box className="rotate-0 scale-100 rounded-full bg-background p-[0.25rem] text-primary transition-all dark:-rotate-90 dark:scale-0">
+          <Box className="rotate-0 scale-100 rounded-full bg-background p-[0.25rem] text-primary shadow transition-all dark:-rotate-90 dark:scale-0">
             <SunIcon className="size-4" />
           </Box>
-          <Box className=" rotate-90 scale-0 rounded-full bg-primary p-[0.25rem] transition-all dark:rotate-0 dark:scale-100 dark:text-secondary">
+          <Box className=" rotate-90 scale-0 rounded-full bg-primary p-[0.25rem] shadow transition-all dark:rotate-0 dark:scale-100 dark:text-secondary">
             <MoonIcon className="size-4" />
           </Box>
 
