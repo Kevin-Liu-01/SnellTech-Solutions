@@ -20,7 +20,10 @@ import {
   TriangleAlertIcon,
 } from "lucide-react";
 import twMerge from "clsx";
-import Confetti from "react-confetti";
+import dynamic from "next/dynamic";
+const Confetti = dynamic(() => import("react-confetti"), {
+  ssr: false,
+});
 
 export default function Test() {
   const [letter, setLetter] = useState("");
@@ -54,11 +57,11 @@ export default function Test() {
 
   function submitHandler() {
     if (userInput === letter) {
-      setConfetti(true);
-      setTimeout(() => {
-        setConfetti(false);
-      }, 2000);
       if (stage === 1) {
+        setConfetti(true);
+        setTimeout(() => {
+          setConfetti(false);
+        }, 2000);
         setStage(2);
         createRandomString(1);
         setCorrectGuesses(0);
@@ -67,7 +70,10 @@ export default function Test() {
       }
       if (stage === 2) {
         if (correctGuesses === 2) {
-          console.log("bi");
+          setConfetti(true);
+          setTimeout(() => {
+            setConfetti(false);
+          }, 2000);
           setStage(3);
           createRandomString(1);
           setCorrectGuesses(0);
@@ -82,6 +88,10 @@ export default function Test() {
       }
       if (stage === 3) {
         if (correctGuesses === 3) {
+          setConfetti(true);
+          setTimeout(() => {
+            setConfetti(false);
+          }, 2000);
           setStage(4);
           createRandomString(1);
           setCorrectGuesses(0);
@@ -97,6 +107,10 @@ export default function Test() {
       // Continue the pattern for the rest of the stages
       if (stage === 4) {
         if (correctGuesses === 4) {
+          setConfetti(true);
+          setTimeout(() => {
+            setConfetti(false);
+          }, 2000);
           setStage(5);
           createRandomString(1);
           setCorrectGuesses(0);
@@ -111,6 +125,10 @@ export default function Test() {
       }
       if (stage === 5) {
         if (correctGuesses === 5) {
+          setConfetti(true);
+          setTimeout(() => {
+            setConfetti(false);
+          }, 2000);
           setStage(6);
           createRandomString(1);
           setCorrectGuesses(0);
@@ -125,6 +143,10 @@ export default function Test() {
       }
       if (stage === 6) {
         if (correctGuesses === 6) {
+          setConfetti(true);
+          setTimeout(() => {
+            setConfetti(false);
+          }, 2000);
           setStage(7);
           createRandomString(1);
           setCorrectGuesses(0);
@@ -139,6 +161,10 @@ export default function Test() {
       }
       if (stage === 7) {
         if (correctGuesses === 7) {
+          setConfetti(true);
+          setTimeout(() => {
+            setConfetti(false);
+          }, 2000);
           setStage(8);
           createRandomString(1);
           setCorrectGuesses(0);
@@ -153,6 +179,10 @@ export default function Test() {
       }
       if (stage === 8) {
         if (correctGuesses === 8) {
+          setConfetti(true);
+          setTimeout(() => {
+            setConfetti(false);
+          }, 2000);
           setStage(9);
           createRandomString(1);
           setCorrectGuesses(0);
@@ -167,6 +197,10 @@ export default function Test() {
       }
       if (stage === 9) {
         if (correctGuesses === 9) {
+          setConfetti(true);
+          setTimeout(() => {
+            setConfetti(false);
+          }, 2000);
           setStage(10);
           createRandomString(1);
           setCorrectGuesses(0);
@@ -181,6 +215,10 @@ export default function Test() {
       }
       if (stage === 10) {
         if (correctGuesses === 10) {
+          setConfetti(true);
+          setTimeout(() => {
+            setConfetti(false);
+          }, 2000);
           setStage(11);
           createRandomString(1);
           setCorrectGuesses(0);
@@ -194,6 +232,10 @@ export default function Test() {
         createRandomString(1);
       }
       if (stage === 11) {
+        setConfetti(true);
+        setTimeout(() => {
+          setConfetti(false);
+        }, 2000);
         setTestCompleted(true);
         return;
       }
@@ -297,16 +339,13 @@ export default function Test() {
             </ScrollArea>
           </Flex>
         </section>
-        <section className={`relative flex h-full flex-col overflow-hidden`}>
-          <div className="flex h-full flex-col items-center justify-center rounded-lg border border-border bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
-            <div className="absolute h-full w-full">
-              <Confetti
-                numberOfPieces={confetti ? 200 : 0}
-                initialVelocityY={10}
-                opacity={0.7}
-                wind={5}
-              />
-            </div>
+        <section className={`flex h-full flex-col overflow-hidden`}>
+          <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-lg border border-border bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
+            <Confetti
+              numberOfPieces={confetti ? 200 : 0}
+              initialVelocityY={10}
+              opacity={0.7}
+            />
             <div className="relative flex h-[5.08in] w-[3.08in] select-none items-center justify-center rounded-sm border-2 border-dashed border-primary bg-background  xl:border-4">
               {!testStarted && (
                 <Box className="flex flex-col p-4">
