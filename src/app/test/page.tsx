@@ -1,4 +1,8 @@
 "use client";
+import { useState } from "react";
+// import { useSpeechSynthesis } from "react-speech-kit";
+import { useSpeechRecognition } from "react-speech-kit";
+
 import {
   Button,
   Grid,
@@ -11,7 +15,6 @@ import {
   Box,
   Tooltip,
 } from "@radix-ui/themes";
-import { useState, useEffect } from "react";
 import {
   SendIcon,
   InfoIcon,
@@ -19,14 +22,21 @@ import {
   AppWindowMacIcon,
   TriangleAlertIcon,
   EyeIcon,
+  MicIcon,
+  ALargeSmallIcon,
+  SpellCheckIcon,
 } from "lucide-react";
+import { QuestionMarkIcon } from "@radix-ui/react-icons";
+
 import twMerge from "clsx";
 import dynamic from "next/dynamic";
+import List from "../_components/test/list";
+import Results from "../_components/test/results";
+import Advice from "../_components/test/advice";
+
 const Confetti = dynamic(() => import("react-confetti"), {
   ssr: false,
 });
-
-import List from "../_components/test/list";
 
 export default function Test() {
   const [letter, setLetter] = useState(" ");
@@ -40,6 +50,14 @@ export default function Test() {
   const [rightEye, setRightEye] = useState(true);
   const [testStarted, setTestStarted] = useState(false); // Track if the test has started
   const [testCompleted, setTestCompleted] = useState(false); // Track if the test has completed
+
+  //Speech transcription
+  const [value, setValue] = useState("");
+  const { listen, listening, stop } = useSpeechRecognition({
+    onResult: (result) => {
+      setValue(result);
+    },
+  });
 
   function createRandomString(length: number) {
     const chars = "ABCDEFGHIJKLNOPQRSTUVWXYZ";
@@ -174,14 +192,14 @@ export default function Test() {
 
   return (
     <main className="h-[calc(100vh-6rem)] px-4 font-inter text-primary">
-      <div className="grid h-full grid-cols-3">
-        <section className="flex min-h-full flex-col p-4 pt-0">
+      <div className="grid h-full grid-cols-11">
+        <section className="col-span-3 flex min-h-full flex-col p-4 pt-0">
           <Flex
             className="h-full rounded-lg border border-border bg-primary-foreground p-4"
             direction="column"
             gap="3"
           >
-            <Heading className="flex font-optiker text-2xl font-bold">
+            <Heading className="flex font-optiker text-2xl">
               <ListOrderedIcon className="my-auto mr-2 size-8" />
               Instructions
             </Heading>
@@ -206,11 +224,12 @@ export default function Test() {
             />
           </Flex>
         </section>
-        <section className={`flex h-full flex-col overflow-hidden`}>
+        <section className={`col-span-4 flex h-full flex-col`}>
           <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-lg border border-border bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
             <Confetti
-              numberOfPieces={confetti ? 200 : 0}
-              initialVelocityY={20}
+              numberOfPieces={confetti ? 100 : 0}
+              // initialVelocityY={1}
+              gravity={0.5}
             />
             {!testStarted && (
               <Flex
@@ -220,7 +239,7 @@ export default function Test() {
                 <Text className="font-optiker text-3xl">
                   Visual Acuity Testing
                 </Text>
-                <Callout.Root className="flex items-center bg-snelltechPurple/30 font-optiker text-snelltechPurple dark:bg-snelltechGreen/20 dark:text-snelltechGreen">
+                <Callout.Root className="flex items-center bg-snelltechPurple/25 font-optiker text-snelltechPurple transition-all dark:bg-snelltechGreen/20 dark:text-snelltechGreen">
                   <Callout.Icon>
                     <InfoIcon className="h-6 w-6" />
                   </Callout.Icon>
@@ -250,141 +269,183 @@ export default function Test() {
               </span>
             </div>
           </div>
-          <Grid columns="6" gap="3" className="relative my-4 w-full">
-            <div className="col-span-4 flex rounded-lg border border-input">
+          <Grid columns="8" gap="3" className="relative my-4 w-full">
+            <Box className="col-span-4 flex rounded-lg border border-border">
               <input
                 type="text"
-                placeholder="Type the Letter..."
+                placeholder="Type Letter..."
                 maxLength={1}
-                className="w-full rounded-l-lg bg-gray-100 px-4 py-2 text-gray-900 duration-150 focus:outline-none focus:ring-1 focus:ring-snelltechPurple dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-snelltechGreen"
+                className="w-full rounded-l-lg bg-gray-100 px-4 py-2 text-gray-900 transition-all duration-150 focus:outline-none focus:ring-1 focus:ring-snelltechPurple dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-snelltechGreen"
                 value={userInput}
+                disabled={!testStarted}
                 onChange={(e) => setUserInput(e.target.value.toUpperCase())}
               />
               <Button
                 onClick={() => {
                   submitHandler();
                 }}
-                color="blue"
-                className="flex h-full cursor-pointer items-center justify-center rounded-l-none rounded-r-lg bg-snelltechPurple text-center text-secondary hover:bg-snelltechPurple/90 dark:bg-snelltechGreen hover:dark:bg-snelltechGreen/90"
+                disabled={!testStarted}
+                className="flex h-full cursor-pointer items-center justify-center rounded-l-none rounded-r-lg bg-snelltechPurple text-center font-optiker text-secondary hover:bg-snelltechPurple/90 dark:bg-snelltechGreen hover:dark:bg-snelltechGreen/90"
               >
-                <SendIcon className="inline h-5 w-5 " />
+                <SendIcon className="inline h-5 w-5 " /> Check
               </Button>
-            </div>
+            </Box>
             <Button
               onClick={() => {
                 submitWrongHandler();
               }}
-              color={"tomato"}
+              color="tomato"
+              disabled={!testStarted}
               className="col-span-2 h-full cursor-pointer rounded-lg font-optiker"
             >
-              {"Don't Know"}
+              <QuestionMarkIcon className="h-5 w-5" /> {"Don't Know"}
             </Button>
+            <Box className="col-span-2">
+              <Button
+                className="h-full w-full cursor-pointer rounded-lg font-optiker"
+                onMouseDown={listen}
+                onMouseUp={stop}
+                disabled={!testStarted}
+                color={listening ? "ruby" : "jade"}
+              >
+                <MicIcon className="h-5 w-5" /> {listening ? "Stop" : "Record"}
+              </Button>
+            </Box>
           </Grid>
         </section>
-        <section className="h-full px-4 pb-4 ">
-          <Heading className="flex font-optiker">
+        <section className="col-span-4 flex min-h-[calc(100vh-6rem)] flex-col px-4 pb-4">
+          <Heading className="mb-4 flex font-optiker">
             <AppWindowMacIcon className="mr-2 size-8" />
             Control Panel
           </Heading>
-          <ScrollArea className="h-full py-4">
-            <Box className="truncate rounded-lg border border-border bg-secondary/50 p-4">
-              <Text as="label" size="2">
-                <Flex gap="4">
-                  <Tooltip content="Adjust text size as necessary">
-                    <input
-                      id="slide"
-                      type="range"
-                      min={1}
-                      max={10}
-                      step={1}
-                      defaultValue={1}
-                      onChange={(value) => {
-                        setSize(parseInt(value?.target?.value));
-                      }}
-                      className="w-full cursor-pointer accent-snelltechPurple  dark:accent-snelltechGreen"
-                    />
-                  </Tooltip>
-                  Adjust Size
+          <ScrollArea className="h-full w-full">
+            <Flex gap="2" direction="column" className="h-full">
+              <Grid gap="2" columns="22">
+                <Flex
+                  gap="2"
+                  align="center"
+                  className="col-span-5 truncate rounded-lg border border-border bg-secondary/50 px-4 py-2 text-sm text-primary"
+                >
+                  <EyeIcon className="h-5 w-5" /> Right Eye
                 </Flex>
-              </Text>
-            </Box>
-            <Flex gap="2">
-              <Flex
-                gap="2"
-                justify="center"
-                className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary"
+                <Flex
+                  gap="2"
+                  align="center"
+                  className="col-span-5 truncate  rounded-lg border border-border bg-secondary/50 px-4 py-2 text-sm text-primary"
+                >
+                  <ALargeSmallIcon className="h-5 w-5" /> {`Level: ${level}`}
+                </Flex>
+                <Flex
+                  gap="2"
+                  align="center"
+                  className="col-span-5 truncate  rounded-lg border border-border bg-secondary/50 px-4 py-2 text-sm text-primary"
+                >
+                  <SpellCheckIcon className="h-5 w-5" />{" "}
+                  {`Correct: ${correctGuesses}`}
+                </Flex>
+                {/* <Flex
+                  align="center"
+                  className="rounded-lg border border-border bg-secondary/50 px-4 py-2 text-sm text-primary"
+                >{`Incorrect: ${incorrectGuesses}`}</Flex> */}
+                <Flex
+                  align="center"
+                  className="col-span-7 truncate rounded-lg border border-border bg-secondary/50 p-4"
+                >
+                  <Text as="label" size="2">
+                    <Flex gap="4">
+                      <Tooltip content="Adjust text size as necessary">
+                        <input
+                          id="slide"
+                          type="range"
+                          min={1}
+                          max={10}
+                          step={1}
+                          defaultValue={1}
+                          onChange={(value) => {
+                            setSize(parseInt(value?.target?.value));
+                          }}
+                          className="w-full cursor-pointer accent-snelltechPurple  dark:accent-snelltechGreen"
+                        />
+                      </Tooltip>
+                      Adjust Size
+                    </Flex>
+                  </Text>
+                </Flex>
+              </Grid>
+              <Grid
+                columns="2"
+                className="rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary"
               >
-                <EyeIcon /> Right Eye
-              </Flex>
-              <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">{`Level: ${level}`}</Box>
-              <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">{`Correct: ${correctGuesses}`}</Box>
+                <Flex direction="column" gap="1">
+                  <Text as="label" size="2">
+                    <Flex gap="2">
+                      <Checkbox
+                        size="1"
+                        checked={level > 1}
+                        className="accent-snelltechPurple dark:accent-snelltechGreen"
+                      />
+                      Level 1 (20/70), 31mm
+                    </Flex>
+                  </Text>
+                  <Text as="label" size="2">
+                    <Flex gap="2">
+                      <Checkbox size="1" checked={level > 2} />
+                      Level 2 (20/60), 27mm
+                    </Flex>
+                  </Text>
+                  <Text as="label" size="2">
+                    <Flex gap="2">
+                      <Checkbox size="1" checked={level > 3} />
+                      Level 3 (20/50), 22mm
+                    </Flex>
+                  </Text>
+                  <Text as="label" size="2">
+                    <Flex gap="2">
+                      <Checkbox size="1" checked={level > 4} />
+                      Level 4 (20/40), 18mm
+                    </Flex>
+                  </Text>
+                  <Text as="label" size="2">
+                    <Flex gap="2">
+                      <Checkbox size="1" checked={level > 5} />
+                      Level 5 (20/30), 13mm
+                    </Flex>
+                  </Text>
+                  <Text as="label" size="2">
+                    <Flex gap="2">
+                      <Checkbox size="1" checked={level > 6} />
+                      Level 6 (20/20), 9mm
+                    </Flex>
+                  </Text>
+                  <Text as="label" size="2">
+                    <Flex gap="2">
+                      <Checkbox size="1" checked={level > 7} />
+                      Level 7 (15/20), 7mm
+                    </Flex>
+                  </Text>
+                  <Text as="label" size="2">
+                    <Flex gap="2">
+                      <Checkbox size="1" checked={level > 8} />
+                      Level 8 (10/20), 4mm
+                    </Flex>
+                  </Text>
+                  <Text as="label" size="2">
+                    <Flex gap="2">
+                      <Checkbox size="1" checked={level > 9} />
+                      Level 9 (7/20), 3mm
+                    </Flex>
+                  </Text>
+                  <Text as="label" size="2">
+                    <Flex gap="2">
+                      <Checkbox size="1" checked={level > 10} />
+                      Level 10 (4/20), 2mm
+                    </Flex>
+                  </Text>
+                </Flex>
+                <Results level={level} />
+              </Grid>
+              <Advice />
             </Flex>
-            <Box className="mt-2 rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary">
-              <Text as="label" size="2">
-                <Flex gap="2">
-                  <Checkbox
-                    size="1"
-                    checked={level > 1}
-                    className="accent-snelltechPurple dark:accent-snelltechGreen"
-                  />
-                  Level 1 (20/70), 31mm
-                </Flex>
-              </Text>
-              <Text as="label" size="2">
-                <Flex gap="2">
-                  <Checkbox size="1" checked={level > 2} />
-                  Level 2 (20/60), 27mm
-                </Flex>
-              </Text>
-              <Text as="label" size="2">
-                <Flex gap="2">
-                  <Checkbox size="1" checked={level > 3} />
-                  Level 3 (20/50), 22mm
-                </Flex>
-              </Text>
-              <Text as="label" size="2">
-                <Flex gap="2">
-                  <Checkbox size="1" checked={level > 4} />
-                  Level 4 (20/40), 18mm
-                </Flex>
-              </Text>
-              <Text as="label" size="2">
-                <Flex gap="2">
-                  <Checkbox size="1" checked={level > 5} />
-                  Level 5 (20/30), 13mm
-                </Flex>
-              </Text>
-              <Text as="label" size="2">
-                <Flex gap="2">
-                  <Checkbox size="1" checked={level > 6} />
-                  Level 6 (20/20), 9mm
-                </Flex>
-              </Text>
-              <Text as="label" size="2">
-                <Flex gap="2">
-                  <Checkbox size="1" checked={level > 7} />
-                  Level 7 (15/20), 7mm
-                </Flex>
-              </Text>
-              <Text as="label" size="2">
-                <Flex gap="2">
-                  <Checkbox size="1" checked={level > 8} />
-                  Level 8 (10/20), 4mm
-                </Flex>
-              </Text>
-              <Text as="label" size="2">
-                <Flex gap="2">
-                  <Checkbox size="1" checked={level > 9} />
-                  Level 9 (7/20), 3mm
-                </Flex>
-              </Text>
-              <Text as="label" size="2">
-                <Flex gap="2">
-                  <Checkbox size="1" checked={level > 10} />
-                  Level 10 (4/20), 2mm
-                </Flex>
-              </Text>
-            </Box>
           </ScrollArea>
         </section>
       </div>
