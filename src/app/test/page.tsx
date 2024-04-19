@@ -53,8 +53,9 @@ export default function Test() {
 
   //Speech transcription
   const [value, setValue] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const { listen, listening, stop } = useSpeechRecognition({
-    onResult: (result) => {
+    onResult: (result: string) => {
       setValue(result);
     },
   });
@@ -303,7 +304,9 @@ export default function Test() {
             <Box className="col-span-2">
               <Button
                 className="h-full w-full cursor-pointer rounded-lg font-optiker"
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 onMouseDown={listen}
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 onMouseUp={stop}
                 disabled={!testStarted}
                 color={listening ? "ruby" : "jade"}
