@@ -14,6 +14,7 @@ import {
   ScrollArea,
   Box,
   Tooltip,
+  DropdownMenu,
 } from "@radix-ui/themes";
 import {
   SendIcon,
@@ -44,12 +45,18 @@ export default function Test() {
   const [submitLetter, setSubmitLetter] = useState(false);
   const [size, setSize] = useState(10);
   const [userInput, setUserInput] = useState("");
-  const [level, setLevel] = useState(0); // Start level from 0
+  const [levelRight, setLevelRight] = useState(1); // Start level from 0
+  const [levelLeft, setLevelLeft] = useState(1); // Start level from 0
+
   const [correctGuesses, setCorrectGuesses] = useState(0); // Track correct guesses
   const [incorrectGuesses, setIncorrectGuesses] = useState(0);
-  const [rightEye, setRightEye] = useState(true);
+  const [eye, setEye] = useState("Right");
+
+  //begin/end test logic
+  const [testStages, setTestStages] = useState(0);
   const [testStarted, setTestStarted] = useState(false); // Track if the test has started
   const [testCompleted, setTestCompleted] = useState(false); // Track if the test has completed
+  const [switchScreen, setSwitchScreen] = useState(false);
 
   //Speech transcription
   const [value, setValue] = useState("");
@@ -72,11 +79,33 @@ export default function Test() {
   }
 
   function startTest() {
-    setTestStarted(true);
-    setLevel(1); // Start the level from 1
-    setRightEye(true); // Start with the right eye
-    setIncorrectGuesses(0);
-    createRandomString(1);
+    setTestStages(testStages + 1);
+    if (testCompleted) {
+      setTestCompleted(false);
+      setTestStages(0);
+      setCorrectGuesses(0);
+      setIncorrectGuesses(0);
+      setLevelLeft(0);
+      setLevelRight(0);
+    }
+    if (testStages < 3) {
+      setTestStarted(true);
+      if (testStages == 1) {
+        if (eye == "Right") {
+          setEye("Left"); // Start the level from 1
+        }
+        if (eye == "Left") {
+          setEye("Right");
+        }
+      }
+
+      setSize(10);
+      setCorrectGuesses(0);
+      setIncorrectGuesses(0);
+      createRandomString(1);
+    } else {
+      setTestCompleted(true);
+    }
   }
 
   function responseHandler(correctGuessesLimit: number, level: number) {
@@ -85,12 +114,29 @@ export default function Test() {
       setTimeout(() => {
         setConfetti(false);
       }, 2000);
-      setLevel(level);
+
       createRandomString(1);
       setCorrectGuesses(0);
       setIncorrectGuesses(0);
       setSize(size - 1);
       setUserInput("");
+      if (eye == "Right") {
+        setLevelRight(level); // Start the level from 1
+      }
+      if (eye == "Left") {
+        setLevelLeft(level);
+      }
+
+      if (testStages === 1 && level === 11) {
+        setSwitchScreen(true);
+        setTimeout(() => {
+          setSwitchScreen(false);
+        }, 5000);
+        startTest();
+      } else if (testStages == 2 && level == 11) {
+        setTestCompleted(true);
+      }
+
       return;
     }
     setCorrectGuesses(correctGuesses + 1);
@@ -100,7 +146,7 @@ export default function Test() {
   function submitHandler() {
     // Check if the user input matches the letter
     if (userInput === letter) {
-      switch (level) {
+      switch (eye == "Right" ? levelRight : levelLeft) {
         case 1:
           responseHandler(1, 2);
           break;
@@ -131,18 +177,25 @@ export default function Test() {
         case 10:
           responseHandler(5, 11);
           break;
-        case 11:
-          setConfetti(true);
-          setTimeout(() => {
-            setConfetti(false);
-          }, 2000);
-          setTestCompleted(true);
-          return;
+        // case 11:
+        //   if (testStages == 1) {
+        //     setSwitchScreen(true);
+        //     setTimeout(() => {
+        //       setSwitchScreen(false);
+        //     }, 5000);
+        //     startTest();
+        //   } else {
+        //     setTestCompleted(true);
+        //   }
+        //   break;
       }
       // If the user input does not match the letter
     } else {
       setIncorrectGuesses(incorrectGuesses + 1);
-      if (incorrectGuesses === 2 || level === 11) {
+      if (
+        incorrectGuesses === 2 ||
+        (eye == "Right" ? levelRight === 11 : levelLeft === 11)
+      ) {
         // End the test or display prescription if needed
         setTestCompleted(true);
         return;
@@ -159,13 +212,14 @@ export default function Test() {
     setIncorrectGuesses(incorrectGuesses + 1);
     if (incorrectGuesses === 2) {
       // End the test or display prescription if needed
-      console.log(`Test ended with prescription: ${level}`);
+      // console.log(`Test ended with prescription: ${level}`);
       setTestStarted(false);
       setLetter("");
       return;
     }
-    setLevel(level + 1);
+    // setLevel(level + 1);
   }
+
   function textSizer() {
     switch (size) {
       case 10:
@@ -196,7 +250,7 @@ export default function Test() {
       <div className="grid h-full grid-cols-11">
         <section className="col-span-3 flex min-h-full flex-col p-4 pt-0">
           <Flex
-            className="h-full rounded-lg border border-border bg-primary-foreground p-4"
+            className="h-full rounded-lg border border-primary/20 bg-primary-foreground p-4"
             direction="column"
             gap="3"
           >
@@ -226,9 +280,9 @@ export default function Test() {
           </Flex>
         </section>
         <section className={`col-span-4 flex h-full flex-col`}>
-          <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-lg border border-border bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
+          <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-lg border border-primary/5 bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
             <Confetti
-              numberOfPieces={confetti ? 100 : 0}
+              numberOfPieces={confetti ? 200 : 0}
               // initialVelocityY={1}
               gravity={0.5}
             />
@@ -249,12 +303,65 @@ export default function Test() {
                     application.
                   </Callout.Text>
                 </Callout.Root>
+                <Box className="rounded-lg border-2 border-snelltechPurple/50 font-optiker dark:border-snelltechGreen/50">
+                  <DropdownMenu.Root>
+                    <DropdownMenu.Trigger>
+                      <Button
+                        variant="soft"
+                        className=" font-optiker text-primary"
+                      >
+                        Starting with {eye} Eye
+                        <DropdownMenu.TriggerIcon />
+                      </Button>
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                      <DropdownMenu.Item
+                        shortcut="L"
+                        onClick={() => setEye("Left")}
+                      >
+                        Left Eye
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Item
+                        shortcut="R"
+                        onClick={() => setEye("Right")}
+                      >
+                        Right Eye
+                      </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Root>
+                </Box>
 
                 <Button
                   className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
                   onClick={() => startTest()}
                 >
                   Start Test
+                </Button>
+              </Flex>
+            )}
+
+            {switchScreen && (
+              <Flex
+                gap="4"
+                className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12"
+              >
+                <Text className="font-optiker text-3xl">
+                  Switch to your Left Eye.
+                </Text>
+              </Flex>
+            )}
+
+            {testCompleted && (
+              <Flex
+                gap="4"
+                className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12"
+              >
+                <Text className="font-optiker text-3xl">Test Completed</Text>
+                <Button
+                  className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
+                  onClick={() => startTest()}
+                >
+                  Restart Test
                 </Button>
               </Flex>
             )}
@@ -271,7 +378,7 @@ export default function Test() {
             </div>
           </div>
           <Grid columns="8" gap="3" className="relative my-4 w-full">
-            <Box className="col-span-4 flex rounded-lg border border-border">
+            <Box className="col-span-4 flex rounded-lg border border-primary/20">
               <input
                 type="text"
                 placeholder="Type Letter..."
@@ -286,9 +393,9 @@ export default function Test() {
                   submitHandler();
                 }}
                 disabled={!testStarted}
-                className="flex h-full cursor-pointer items-center justify-center rounded-l-none rounded-r-lg bg-snelltechPurple text-center font-optiker text-secondary hover:bg-snelltechPurple/90 dark:bg-snelltechGreen hover:dark:bg-snelltechGreen/90"
+                className="flex h-full cursor-pointer items-center justify-center rounded-l-none rounded-r-[0.45rem] bg-snelltechPurple text-center font-optiker text-secondary hover:bg-snelltechPurple/90 dark:bg-snelltechGreen hover:dark:bg-snelltechGreen/90"
               >
-                <SendIcon className="inline h-5 w-5 " /> Check
+                <SendIcon className="inline h-4 w-4 " /> Check
               </Button>
             </Box>
             <Button
@@ -299,7 +406,7 @@ export default function Test() {
               disabled={!testStarted}
               className="col-span-2 h-full cursor-pointer rounded-lg font-optiker"
             >
-              <QuestionMarkIcon className="h-5 w-5" /> {"Don't Know"}
+              <QuestionMarkIcon className="h-4 w-4" /> {"Don't Know"}
             </Button>
             <Box className="col-span-2">
               <Button
@@ -311,48 +418,49 @@ export default function Test() {
                 disabled={!testStarted}
                 color={listening ? "ruby" : "jade"}
               >
-                <MicIcon className="h-5 w-5" /> {listening ? "Stop" : "Record"}
+                <MicIcon className="h-4 w-4" /> {listening ? "Stop" : "Record"}
               </Button>
             </Box>
           </Grid>
         </section>
         <section className="col-span-4 flex min-h-[calc(100vh-6rem)] flex-col px-4 pb-4">
-          <Heading className="mb-4 flex font-optiker">
+          <Heading className="mb-3 flex font-optiker">
             <AppWindowMacIcon className="mr-2 size-8" />
             Control Panel
           </Heading>
           <ScrollArea className="h-full w-full">
-            <Flex gap="2" direction="column" className="h-full">
-              <Grid gap="2" columns="22">
+            <Flex gap="3" direction="column" className="h-full">
+              <Grid gap="3" columns="4">
                 <Flex
                   gap="2"
                   align="center"
-                  className="col-span-5 truncate rounded-lg border border-border bg-secondary/50 px-4 py-2 text-sm text-primary"
+                  className="truncate rounded-lg border border-primary/20 bg-secondary/50 px-4 py-2 text-sm text-primary"
                 >
-                  <EyeIcon className="h-5 w-5" /> Right Eye
+                  <EyeIcon className="h-4 w-4" /> {eye} Eye
                 </Flex>
                 <Flex
                   gap="2"
                   align="center"
-                  className="col-span-5 truncate  rounded-lg border border-border bg-secondary/50 px-4 py-2 text-sm text-primary"
+                  className="truncate  rounded-lg border border-primary/20 bg-secondary/50 px-4 py-2 text-sm text-primary"
                 >
-                  <ALargeSmallIcon className="h-5 w-5" /> {`Level: ${level}`}
+                  <ALargeSmallIcon className="h-5 w-5" />{" "}
+                  {`Level: ${levelRight}`}
                 </Flex>
                 <Flex
                   gap="2"
                   align="center"
-                  className="col-span-5 truncate  rounded-lg border border-border bg-secondary/50 px-4 py-2 text-sm text-primary"
+                  className="truncate  rounded-lg border border-primary/20 bg-secondary/50 px-4 py-2 text-sm text-primary"
                 >
                   <SpellCheckIcon className="h-5 w-5" />{" "}
                   {`Correct: ${correctGuesses}`}
                 </Flex>
                 {/* <Flex
                   align="center"
-                  className="rounded-lg border border-border bg-secondary/50 px-4 py-2 text-sm text-primary"
+                  className="rounded-lg border border-primary/20 bg-secondary/50 px-4 py-2 text-sm text-primary"
                 >{`Incorrect: ${incorrectGuesses}`}</Flex> */}
                 <Flex
                   align="center"
-                  className="col-span-7 truncate rounded-lg border border-border bg-secondary/50 p-4"
+                  className="truncate rounded-lg border border-primary/20 bg-secondary/50 p-4"
                 >
                   <Text as="label" size="2">
                     <Flex gap="4">
@@ -370,83 +478,17 @@ export default function Test() {
                           className="w-full cursor-pointer accent-snelltechPurple  dark:accent-snelltechGreen"
                         />
                       </Tooltip>
-                      Adjust Size
+                      Size
                     </Flex>
                   </Text>
                 </Flex>
               </Grid>
-              <Grid
-                columns="2"
-                className="rounded-lg border border-border bg-secondary/50 p-4 text-sm text-primary"
-              >
-                <Flex direction="column" gap="1">
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Checkbox
-                        size="1"
-                        checked={level > 1}
-                        className="accent-snelltechPurple dark:accent-snelltechGreen"
-                      />
-                      Level 1 (20/70), 31mm
-                    </Flex>
-                  </Text>
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Checkbox size="1" checked={level > 2} />
-                      Level 2 (20/60), 27mm
-                    </Flex>
-                  </Text>
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Checkbox size="1" checked={level > 3} />
-                      Level 3 (20/50), 22mm
-                    </Flex>
-                  </Text>
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Checkbox size="1" checked={level > 4} />
-                      Level 4 (20/40), 18mm
-                    </Flex>
-                  </Text>
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Checkbox size="1" checked={level > 5} />
-                      Level 5 (20/30), 13mm
-                    </Flex>
-                  </Text>
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Checkbox size="1" checked={level > 6} />
-                      Level 6 (20/20), 9mm
-                    </Flex>
-                  </Text>
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Checkbox size="1" checked={level > 7} />
-                      Level 7 (15/20), 7mm
-                    </Flex>
-                  </Text>
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Checkbox size="1" checked={level > 8} />
-                      Level 8 (10/20), 4mm
-                    </Flex>
-                  </Text>
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Checkbox size="1" checked={level > 9} />
-                      Level 9 (7/20), 3mm
-                    </Flex>
-                  </Text>
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Checkbox size="1" checked={level > 10} />
-                      Level 10 (4/20), 2mm
-                    </Flex>
-                  </Text>
-                </Flex>
-                <Results level={level} />
-              </Grid>
+              <div className="rounded-lg border border-primary/20 bg-secondary/50 p-4 text-sm text-primary">
+                {value} Stage: {testStages}
+              </div>
+              <Results level={levelRight} eye={"Right"} />
+              <Results level={levelLeft} eye={"Left"} />
+
               <Advice />
             </Flex>
           </ScrollArea>

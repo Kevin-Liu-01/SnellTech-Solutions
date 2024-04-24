@@ -93,26 +93,26 @@ export default function Advice() {
   }
 
   return (
-    <Box className="h-full rounded-lg border border-border bg-secondary/50 text-sm text-primary">
+    <Box className="h-full overflow-hidden rounded-lg border border-primary/20 bg-secondary/50 text-sm text-primary">
       <SegmentedControl.Root
         defaultValue="Next"
         radius="large"
-        className="w-full font-optiker"
+        className="w-full rounded-none border border-b-primary/20 font-optiker dark:border-border"
         onValueChange={(value) => setSelected(value)}
       >
         <SegmentedControl.Item value="Next">
-          <Flex align="center" gap="1">
-            <ChevronsRightIcon className="h-5 w-5" /> Next Steps
+          <Flex align="center" gap="2">
+            <ChevronsRightIcon className="h-4 w-4" /> Next Steps
           </Flex>
         </SegmentedControl.Item>
         <SegmentedControl.Item value="Evidence">
-          <Flex align="center" gap="1">
-            <NotepadTextIcon className="h-5 w-5" /> Evidence
+          <Flex align="center" gap="2">
+            <NotepadTextIcon className="h-4 w-4" /> Evidence
           </Flex>
         </SegmentedControl.Item>
         <SegmentedControl.Item value="Insights">
-          <Flex align="center" gap="1">
-            <ContactRoundIcon className="h-5 w-5" /> Creator
+          <Flex align="center" gap="2">
+            <ContactRoundIcon className="h-4 w-4" /> Creator
           </Flex>
         </SegmentedControl.Item>
       </SegmentedControl.Root>
