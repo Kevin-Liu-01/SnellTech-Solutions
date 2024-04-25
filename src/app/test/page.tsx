@@ -1,12 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import { useSpeechSynthesis } from "react-speech-kit";
 import { useSpeechRecognition } from "react-speech-kit";
 
 import {
   Button,
   Grid,
-  Checkbox,
   Text,
   Flex,
   Callout,
@@ -14,7 +13,6 @@ import {
   ScrollArea,
   Box,
   Tooltip,
-  DropdownMenu,
 } from "@radix-ui/themes";
 import {
   SendIcon,
@@ -34,28 +32,27 @@ import dynamic from "next/dynamic";
 import List from "../_components/test/list";
 import Results from "../_components/test/results";
 import Advice from "../_components/test/advice";
+import Dropdown from "../_components/test/dropdown";
 
 const Confetti = dynamic(() => import("react-confetti"), {
   ssr: false,
 });
 
 export default function Test() {
+  //user state test logic
   const [letter, setLetter] = useState(" ");
   const [confetti, setConfetti] = useState(false);
+  const [enableButton, setEnableButton] = useState(false);
   const [submitLetter, setSubmitLetter] = useState(false);
   const [size, setSize] = useState(10);
   const [userInput, setUserInput] = useState("");
-  const [levelRight, setLevelRight] = useState(1); // Start level from 0
-  const [levelLeft, setLevelLeft] = useState(1); // Start level from 0
-
-  const [correctGuesses, setCorrectGuesses] = useState(0); // Track correct guesses
+  const [level, setLevel] = useState({ right: 1, left: 1 });
+  const [correctGuesses, setCorrectGuesses] = useState(0);
   const [incorrectGuesses, setIncorrectGuesses] = useState(0);
   const [eye, setEye] = useState("Right");
-
-  //begin/end test logic
   const [testStages, setTestStages] = useState(0);
-  const [testStarted, setTestStarted] = useState(false); // Track if the test has started
-  const [testCompleted, setTestCompleted] = useState(false); // Track if the test has completed
+  const [testStarted, setTestStarted] = useState(false);
+  const [testCompleted, setTestCompleted] = useState(false);
   const [switchScreen, setSwitchScreen] = useState(false);
 
   //Speech transcription
@@ -67,160 +64,119 @@ export default function Test() {
     },
   });
 
-  function createRandomString(length: number) {
+  //Test logic
+  useEffect(() => {
+    if (incorrectGuesses === 2) {
+      handleIncorrectGuess();
+    }
+  }, [incorrectGuesses]);
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    const correctGuessesLimit = Math.min(level[eye.toLowerCase()], 5);
+    if (correctGuesses === correctGuessesLimit) {
+      handleCorrectGuess();
+    }
+  }, [correctGuesses, level, eye]);
+
+  const handleIncorrectGuess = () => {
+    if (testStages === 1) {
+      handleTestStageOne();
+    } else if (testStages === 2) {
+      setTestCompleted(true);
+    }
+  };
+
+  const handleCorrectGuess = () => {
+    setConfetti(true);
+    setTimeout(() => {
+      setConfetti(false);
+    }, 2000);
+
+    setCorrectGuesses(0);
+    setIncorrectGuesses(0);
+    setSize(size - 1);
+    setUserInput("");
+
+    const newLevel = eye === "Right" ? level.right + 1 : level.left + 1;
+    setLevel((prevLevel) => ({ ...prevLevel, [eye.toLowerCase()]: newLevel }));
+
+    if (testStages === 1 && newLevel === 11) {
+      setEnableButton(false);
+      setSwitchScreen(true);
+      setTimeout(() => {
+        setSwitchScreen(false);
+        setEnableButton(true);
+        startTest();
+      }, 5000);
+    } else if (testStages === 2 && newLevel === 11) {
+      setTestCompleted(true);
+    }
+
+    createRandomString(1);
+  };
+
+  //Screen for switching eyes
+  const handleTestStageOne = () => {
+    setEnableButton(false);
+    setSwitchScreen(true);
+    setTimeout(() => {
+      setSwitchScreen(false);
+      setEnableButton(true);
+      startTest();
+    }, 5000);
+  };
+
+  const createRandomString = (length) => {
     const chars = "ABCDEFGHIJKLNOPQRSTUVWXYZ";
     let result = "";
     for (let i = 0; i < length; i++) {
-      result += chars
-        ?.replace(letter, "")
-        ?.charAt(Math.floor(Math.random() * chars.length));
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     setLetter(result);
-  }
+  };
 
-  function startTest() {
-    setTestStages(testStages + 1);
+  const startTest = () => {
+    if (testStages == 2) {
+      setTestStages(0);
+    } else if (testStages !== 0) {
+      setEye((prev) => (prev === "Right" ? "Left" : "Right"));
+    }
+    setTestStages((prev) => prev + 1);
+    setTestStarted(true);
+    setEnableButton(true);
+
     if (testCompleted) {
       setTestCompleted(false);
-      setTestStages(0);
+      setTestStages(1);
       setCorrectGuesses(0);
       setIncorrectGuesses(0);
-      setLevelLeft(0);
-      setLevelRight(0);
+      setLevel({ right: 0, left: 0 });
     }
-    if (testStages < 3) {
-      setTestStarted(true);
-      if (testStages == 1) {
-        if (eye == "Right") {
-          setEye("Left"); // Start the level from 1
-        }
-        if (eye == "Left") {
-          setEye("Right");
-        }
-      }
 
-      setSize(10);
-      setCorrectGuesses(0);
-      setIncorrectGuesses(0);
-      createRandomString(1);
-    } else {
-      setTestCompleted(true);
-    }
-  }
-
-  function responseHandler(correctGuessesLimit: number, level: number) {
-    if (correctGuesses == correctGuessesLimit - 1) {
-      setConfetti(true);
-      setTimeout(() => {
-        setConfetti(false);
-      }, 2000);
-
-      createRandomString(1);
-      setCorrectGuesses(0);
-      setIncorrectGuesses(0);
-      setSize(size - 1);
-      setUserInput("");
-      if (eye == "Right") {
-        setLevelRight(level); // Start the level from 1
-      }
-      if (eye == "Left") {
-        setLevelLeft(level);
-      }
-
-      if (testStages === 1 && level === 11) {
-        setSwitchScreen(true);
-        setTimeout(() => {
-          setSwitchScreen(false);
-        }, 5000);
-        startTest();
-      } else if (testStages == 2 && level == 11) {
-        setTestCompleted(true);
-      }
-
-      return;
-    }
-    setCorrectGuesses(correctGuesses + 1);
+    setSize(10);
+    setCorrectGuesses(0);
+    setIncorrectGuesses(0);
     createRandomString(1);
-  }
+  };
 
-  function submitHandler() {
-    // Check if the user input matches the letter
+  const submitHandler = () => {
     if (userInput === letter) {
-      switch (eye == "Right" ? levelRight : levelLeft) {
-        case 1:
-          responseHandler(1, 2);
-          break;
-        case 2:
-          responseHandler(2, 3);
-          break;
-        case 3:
-          responseHandler(3, 4);
-          break;
-        case 4:
-          responseHandler(4, 5);
-          break;
-        case 5:
-          responseHandler(5, 6);
-          break;
-        case 6:
-          responseHandler(5, 7);
-          break;
-        case 7:
-          responseHandler(5, 8);
-          break;
-        case 8:
-          responseHandler(5, 9);
-          break;
-        case 9:
-          responseHandler(5, 10);
-          break;
-        case 10:
-          responseHandler(5, 11);
-          break;
-        // case 11:
-        //   if (testStages == 1) {
-        //     setSwitchScreen(true);
-        //     setTimeout(() => {
-        //       setSwitchScreen(false);
-        //     }, 5000);
-        //     startTest();
-        //   } else {
-        //     setTestCompleted(true);
-        //   }
-        //   break;
-      }
-      // If the user input does not match the letter
+      setCorrectGuesses((prev) => prev + 1);
     } else {
-      setIncorrectGuesses(incorrectGuesses + 1);
-      if (
-        incorrectGuesses === 2 ||
-        (eye == "Right" ? levelRight === 11 : levelLeft === 11)
-      ) {
-        // End the test or display prescription if needed
-        setTestCompleted(true);
-        return;
-      }
+      setIncorrectGuesses((prev) => prev + 1);
     }
-    // Reset the user input
     setSubmitLetter(!submitLetter);
+    createRandomString(1);
     setUserInput("");
-  }
+  };
 
-  function submitWrongHandler() {
-    // If the user does not know the letter
+  const submitWrongHandler = () => {
     setUserInput("");
-    setIncorrectGuesses(incorrectGuesses + 1);
-    if (incorrectGuesses === 2) {
-      // End the test or display prescription if needed
-      // console.log(`Test ended with prescription: ${level}`);
-      setTestStarted(false);
-      setLetter("");
-      return;
-    }
-    // setLevel(level + 1);
-  }
+    setIncorrectGuesses((prev) => prev + 1);
+  };
 
-  function textSizer() {
+  const textSizer = () => {
     switch (size) {
       case 10:
         return "text-[78.74mm]";
@@ -242,8 +198,10 @@ export default function Test() {
         return "text-[7.62mm]";
       case 1:
         return "text-[5.08mm]";
+      default:
+        return "";
     }
-  }
+  };
 
   return (
     <main className="h-[calc(100vh-6rem)] px-4 font-inter text-primary">
@@ -303,34 +261,7 @@ export default function Test() {
                     application.
                   </Callout.Text>
                 </Callout.Root>
-                <Box className="rounded-lg border-2 border-snelltechPurple/50 font-optiker dark:border-snelltechGreen/50">
-                  <DropdownMenu.Root>
-                    <DropdownMenu.Trigger>
-                      <Button
-                        variant="soft"
-                        className=" font-optiker text-primary"
-                      >
-                        Starting with {eye} Eye
-                        <DropdownMenu.TriggerIcon />
-                      </Button>
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                      <DropdownMenu.Item
-                        shortcut="L"
-                        onClick={() => setEye("Left")}
-                      >
-                        Left Eye
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item
-                        shortcut="R"
-                        onClick={() => setEye("Right")}
-                      >
-                        Right Eye
-                      </DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                  </DropdownMenu.Root>
-                </Box>
-
+                <Dropdown eye={eye} setEye={setEye} />
                 <Button
                   className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
                   onClick={() => startTest()}
@@ -346,7 +277,7 @@ export default function Test() {
                 className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12"
               >
                 <Text className="font-optiker text-3xl">
-                  Switch to your Left Eye.
+                  Switch to your {eye == "Right" ? "Left" : "Right"} Eye.
                 </Text>
               </Flex>
             )}
@@ -357,6 +288,8 @@ export default function Test() {
                 className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12"
               >
                 <Text className="font-optiker text-3xl">Test Completed</Text>
+                <Dropdown eye={eye} setEye={setEye} />
+
                 <Button
                   className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
                   onClick={() => startTest()}
@@ -385,14 +318,14 @@ export default function Test() {
                 maxLength={1}
                 className="w-full rounded-l-lg bg-gray-100 px-4 py-2 text-gray-900 transition-all duration-150 focus:outline-none focus:ring-1 focus:ring-snelltechPurple dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-snelltechGreen"
                 value={userInput}
-                disabled={!testStarted}
+                disabled={!enableButton}
                 onChange={(e) => setUserInput(e.target.value.toUpperCase())}
               />
               <Button
                 onClick={() => {
                   submitHandler();
                 }}
-                disabled={!testStarted}
+                disabled={!enableButton}
                 className="flex h-full cursor-pointer items-center justify-center rounded-l-none rounded-r-[0.45rem] bg-snelltechPurple text-center font-optiker text-secondary hover:bg-snelltechPurple/90 dark:bg-snelltechGreen hover:dark:bg-snelltechGreen/90"
               >
                 <SendIcon className="inline h-4 w-4 " /> Check
@@ -403,7 +336,7 @@ export default function Test() {
                 submitWrongHandler();
               }}
               color="tomato"
-              disabled={!testStarted}
+              disabled={!enableButton}
               className="col-span-2 h-full cursor-pointer rounded-lg font-optiker"
             >
               <QuestionMarkIcon className="h-4 w-4" /> {"Don't Know"}
@@ -415,7 +348,7 @@ export default function Test() {
                 onMouseDown={listen}
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 onMouseUp={stop}
-                disabled={!testStarted}
+                disabled={!enableButton}
                 color={listening ? "ruby" : "jade"}
               >
                 <MicIcon className="h-4 w-4" /> {listening ? "Stop" : "Record"}
@@ -444,7 +377,7 @@ export default function Test() {
                   className="truncate  rounded-lg border border-primary/20 bg-secondary/50 px-4 py-2 text-sm text-primary"
                 >
                   <ALargeSmallIcon className="h-5 w-5" />{" "}
-                  {`Level: ${levelRight}`}
+                  {`Stage: ${testStages}`}
                 </Flex>
                 <Flex
                   gap="2"
@@ -484,10 +417,10 @@ export default function Test() {
                 </Flex>
               </Grid>
               <div className="rounded-lg border border-primary/20 bg-secondary/50 p-4 text-sm text-primary">
-                {value} Stage: {testStages}
+                {value}
               </div>
-              <Results level={levelRight} eye={"Right"} />
-              <Results level={levelLeft} eye={"Left"} />
+              <Results level={level.right} eye={"Right"} />
+              <Results level={level.left} eye={"Left"} />
 
               <Advice />
             </Flex>
