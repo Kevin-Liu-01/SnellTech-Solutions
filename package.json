@@ -19,6 +19,7 @@
     "@trpc/next": "^10.45.1",
     "@trpc/react-query": "^10.45.1",
     "@trpc/server": "^10.45.1",
+    "@types/react-speech-recognition": "^3.9.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.356.0",
@@ -29,6 +30,7 @@
     "react-confetti": "^6.1.0",
     "react-dom": "18.2.0",
     "react-speech-kit": "^3.0.1",
+    "react-speech-recognition": "^3.10.0",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
     "zod": "^3.22.4"

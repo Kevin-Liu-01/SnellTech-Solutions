@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 import { useState, useEffect } from "react";
-// import { useSpeechSynthesis } from "react-speech-kit";
-import { useSpeechRecognition } from "react-speech-kit";
 
+import { useSpeechRecognition, useSpeechSynthesis } from "react-speech-kit";
+
+//Component Libraries
 import {
   Button,
   Grid,
@@ -10,7 +13,6 @@ import {
   Flex,
   Callout,
   Heading,
-  ScrollArea,
   Box,
   Tooltip,
 } from "@radix-ui/themes";
@@ -18,25 +20,18 @@ import {
   SendIcon,
   InfoIcon,
   ListOrderedIcon,
-  AppWindowMacIcon,
   TriangleAlertIcon,
-  EyeIcon,
   MicIcon,
-  ALargeSmallIcon,
   // SpellCheckIcon,
 } from "lucide-react";
 import { QuestionMarkIcon } from "@radix-ui/react-icons";
 
-import twMerge from "clsx";
-import dynamic from "next/dynamic";
+//Components
 import List from "../_components/test/list";
-import Results from "../_components/test/results";
-import Advice from "../_components/test/advice";
-import Dropdown from "../_components/test/dropdown";
+import ControlPanel from "../_components/test/control_panel";
+import MainDisplay from "../_components/test/main_display";
 
-const Confetti = dynamic(() => import("react-confetti"), {
-  ssr: false,
-});
+import { createRandomString } from "../_components/test/functions";
 
 export default function Test() {
   //user state test logic
@@ -55,20 +50,25 @@ export default function Test() {
   const [testStarted, setTestStarted] = useState(false);
   const [testCompleted, setTestCompleted] = useState(false);
   const [switchScreen, setSwitchScreen] = useState(false);
+  const [instructionScreen, setInstructionScreen] = useState(false);
 
   //Speech transcription
-  const [value, setValue] = useState("");
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-  const { listen, listening, stop } = useSpeechRecognition({
+  const [transcript, setTranscript] = useState("");
+  const [mic, setMic] = useState(false);
+
+  const { speak, voices } = useSpeechSynthesis();
+  const safeVoices: SpeechSynthesisVoice[] = voices as SpeechSynthesisVoice[];
+
+  const { listen, stop } = useSpeechRecognition({
     onResult: (result: string) => {
-      setValue(result);
+      setTranscript(result);
     },
   });
 
   //Test logic
   useEffect(() => {
     if (incorrectGuesses === 2) {
-      handleIncorrectGuess();
+      handleTooManyIncorrect();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [incorrectGuesses]);
@@ -82,11 +82,37 @@ export default function Test() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [correctGuesses, level, eye]);
 
-  const handleIncorrectGuess = () => {
+  useEffect(() => {
+    if (mic) {
+      listen();
+    } else {
+      stop();
+    }
+  }, [mic, listen, stop]);
+
+  // Effect to handle spoken letters
+  useEffect(() => {
+    if (testStarted) {
+      console.log("trans" + transcript);
+
+      if (transcript == "don't know") {
+        submitWrongHandler();
+      } else if (transcript.length == 1) {
+        // Automatically submit the spoken letter when transcript changes
+        submitHandler();
+      }
+    }
+  }, [transcript]);
+
+  const toggleMic = () => {
+    setMic((prevMic) => !prevMic);
+  };
+
+  const handleTooManyIncorrect = () => {
     if (testStages === 1) {
-      handleTestStageOne();
+      handleTestSwitchEyes();
     } else if (testStages === 2) {
-      setTestCompleted(true);
+      handleTestCompletion();
     }
   };
 
@@ -105,22 +131,24 @@ export default function Test() {
     setLevel((prevLevel) => ({ ...prevLevel, [eye.toLowerCase()]: newLevel }));
 
     if (testStages === 1 && newLevel === 11) {
-      setEnableButton(false);
-      setSwitchScreen(true);
-      setTimeout(() => {
-        setSwitchScreen(false);
-        setEnableButton(true);
-        startTest();
-      }, 5000);
+      handleTestSwitchEyes();
     } else if (testStages === 2 && newLevel === 11) {
-      setTestCompleted(true);
+      handleTestCompletion();
     }
 
-    createRandomString(1);
+    createRandomString(1, setLetter);
+  };
+  const handleTestCompletion = () => {
+    setTestCompleted(true);
+    speak({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      voice: safeVoices[5],
+      text: "The test is now completed. Your visual acuity results are now available.",
+    });
   };
 
   //Screen for switching eyes
-  const handleTestStageOne = () => {
+  const handleTestSwitchEyes = () => {
     setEnableButton(false);
     setSwitchScreen(true);
     setTimeout(() => {
@@ -130,21 +158,13 @@ export default function Test() {
     }, 5000);
   };
 
-  const createRandomString = (length) => {
-    const chars = "ABCDEFGHIJKLNOPQRSTUVWXYZ";
-    let result = "";
-    for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    setLetter(result);
-  };
-
   const startTest = () => {
     if (testStages == 2) {
       setTestStages(0);
     } else if (testStages !== 0) {
       setEye((prev) => (prev === "Right" ? "Left" : "Right"));
     }
+    setInstructionScreen(false);
     setTestStages((prev) => prev + 1);
     setTestStarted(true);
     setEnableButton(true);
@@ -160,120 +180,38 @@ export default function Test() {
     setSize(10);
     setCorrectGuesses(0);
     setIncorrectGuesses(0);
-    createRandomString(1);
+    createRandomString(1, setLetter);
+  };
+
+  const handleInstructions = () => {
+    setInstructionScreen(true);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    speak({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      voice: safeVoices[5],
+      text: `Welcome to SnellTech Solutions. Before we begin, ensure proper room lighting and set device brightness to 100%. 
+      You have chosen to test your ${eye} eye first at a distance of ${distance} feet. To begin, adjust your headset so you can only see out of your ${eye} eye. 
+      Then, calibrate the headset to the testing software by lining up the rectangular slit in the headset to the rectangle present on the screen. 
+      When a letter appears on the screen, say the letter out loud. Upon completion of your first eye, you will be prompted to switch to your other eye. The test is beginning now.`,
+    });
+    setTimeout(() => startTest(), 30000);
   };
 
   const submitHandler = () => {
-    if (userInput === letter) {
+    if (userInput === letter || transcript.charAt(0).toUpperCase() === letter) {
       setCorrectGuesses((prev) => prev + 1);
     } else {
       setIncorrectGuesses((prev) => prev + 1);
     }
     setSubmitLetter(!submitLetter);
-    createRandomString(1);
+    createRandomString(1, setLetter);
     setUserInput("");
   };
 
   const submitWrongHandler = () => {
     setUserInput("");
+    setTranscript("");
     setIncorrectGuesses((prev) => prev + 1);
-  };
-
-  const textSizer = () => {
-    switch (size) {
-      case 10:
-        //distance 2 feet
-        if (distance === 2) return "text-[71.91mm]";
-        //distance 3 feet
-        if (distance === 3) return "text-[72.91mm]";
-        //distance 4 feet
-        if (distance === 4) return "text-[73.91mm]";
-        //distance 5 feet
-        return "text-[78.74mm]";
-      case 9:
-        //distance 2 feet
-        if (distance === 2) return "text-[60.57mm]";
-        //distance 3 feet
-        if (distance === 3) return "text-[65.57mm]";
-        //distance 4 feet
-        if (distance === 4) return "text-[67.21mm]";
-        //distance 5 feet
-        return "text-[68.58mm]";
-      case 8:
-        //distance 2 feet
-        if (distance === 2) return "text-[49.21mm]";
-        //distance 3 feet
-        if (distance === 3) return "text-[52.34mm]";
-        //distance 4 feet
-        if (distance === 4) return "text-[53.91mm]";
-        //distance 5 feet
-        return "text-[55.88mm]";
-      case 7:
-        //distance 2 feet
-        if (distance === 2) return "text-[35.91mm]";
-        //distance 3 feet
-        if (distance === 3) return "text-[38.41mm]";
-        //distance 4 feet
-        if (distance === 4) return "text-[39.47mm]";
-        //distance 5 feet
-        return "text-[45.72mm]";
-      case 6:
-        //distance 2 feet
-        if (distance === 2) return "text-[25.91mm]";
-        //distance 3 feet
-        if (distance === 3) return "text-[27.69mm]";
-        //distance 4 feet
-        if (distance === 4) return "text-[28.51mm]";
-        //distance 5 feet
-        return "text-[33.02mm]";
-      case 5:
-        //distance 2 feet
-        if (distance === 2) return "text-[20.17mm]";
-        //distance 3 feet
-        if (distance === 3) return "text-[21.54mm]";
-        //distance 4 feet
-        if (distance === 4) return "text-[22.24mm]";
-        //distance 5 feet
-        return "text-[22.86mm]";
-      case 4:
-        //distance 2 feet
-        if (distance === 2) return "text-[11.56mm]";
-        //distance 3 feet
-        if (distance === 3) return "text-[12.37mm]";
-        //distance 4 feet
-        if (distance === 4) return "text-[13.19mm]";
-        //distance 5 feet
-        return "text-[17.78mm]";
-      case 3:
-        //distance 2 feet
-        if (distance === 2) return "text-[8.66mm]";
-        //distance 3 feet
-        if (distance === 3) return "text-[9.25mm]";
-        //distance 4 feet
-        if (distance === 4) return "text-[9.76mm]";
-        //distance 5 feet
-        return "text-[10.16mm]";
-      case 2:
-        //distance 2 feet
-        if (distance === 2) return "text-[5.77mm]";
-        //distance 3 feet
-        if (distance === 3) return "text-[6.17mm]";
-        //distance 4 feet
-        if (distance === 4) return "text-[6.55mm]";
-        //distance 5 feet
-        return "text-[7.62mm]";
-      case 1:
-        //distance 2 feet
-        if (distance === 2) return "text-[3.85mm]";
-        //distance 3 feet
-        if (distance === 3) return "text-[4.12mm]";
-        //distance 4 feet
-        if (distance === 4) return "text-[4.38mm]";
-        //distance 5 feet
-        return "text-[5.08mm]";
-      default:
-        return "";
-    }
   };
 
   return (
@@ -314,78 +252,21 @@ export default function Test() {
           </Flex>
         </section>
         <section className={`col-span-4 flex h-full flex-col`}>
-          <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-lg border border-primary/5 bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
-            <Confetti
-              numberOfPieces={confetti ? 100 : 0}
-              // initialVelocityY={1}
-              gravity={0.5}
-            />
-            {!testStarted && (
-              <Flex
-                gap="4"
-                className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12"
-              >
-                <Text className="font-optiker text-3xl">
-                  Visual Acuity Testing
-                </Text>
-                <Callout.Root className="flex items-center bg-snelltechPurple/25 font-optiker text-snelltechPurple transition-all dark:bg-snelltechGreen/20 dark:text-snelltechGreen">
-                  <Callout.Icon>
-                    <InfoIcon className="h-6 w-6" />
-                  </Callout.Icon>
-                  <Callout.Text>
-                    You will need at least 10 feet of room to properly use this
-                    application.
-                  </Callout.Text>
-                </Callout.Root>
-                <Dropdown eye={eye} setEye={setEye} />
-                <Button
-                  className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
-                  onClick={() => startTest()}
-                >
-                  Start Test
-                </Button>
-              </Flex>
-            )}
-
-            {switchScreen && (
-              <Flex
-                gap="4"
-                className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12"
-              >
-                <Text className="font-optiker text-3xl">
-                  Switch to your {eye == "Right" ? "Left" : "Right"} Eye.
-                </Text>
-              </Flex>
-            )}
-
-            {testCompleted && (
-              <Flex
-                gap="4"
-                className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12"
-              >
-                <Text className="font-optiker text-3xl">Test Completed</Text>
-                <Dropdown eye={eye} setEye={setEye} />
-
-                <Button
-                  className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
-                  onClick={() => startTest()}
-                >
-                  Restart Test
-                </Button>
-              </Flex>
-            )}
-
-            <div className="relative flex h-[5.08in] w-[3.08in] select-none items-center justify-center rounded-sm border-2 border-dashed border-primary bg-background  xl:border-4">
-              <span
-                className={twMerge(
-                  "font-optiker font-extrabold tracking-tight",
-                  textSizer(),
-                )}
-              >
-                {letter}
-              </span>
-            </div>
-          </div>
+          <MainDisplay
+            startTest={startTest}
+            testStarted={testStarted}
+            switchScreen={switchScreen}
+            instructionScreen={instructionScreen}
+            confetti={confetti}
+            size={size}
+            distance={distance}
+            letter={letter}
+            eye={eye}
+            testCompleted={testCompleted}
+            transcript={transcript}
+            setEye={setEye}
+            handleInstructions={handleInstructions}
+          />
           <Grid columns="8" gap="3" className="relative my-4 w-full">
             <Box className="col-span-4 flex rounded-lg border border-primary/20">
               <input
@@ -420,76 +301,23 @@ export default function Test() {
             <Box className="col-span-2">
               <Button
                 className="h-full w-full cursor-pointer rounded-lg font-optiker"
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                onMouseDown={listen}
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                onMouseUp={stop}
-                disabled={!enableButton}
-                color={listening ? "ruby" : "jade"}
+                onClick={toggleMic}
+                // disabled={!enableButton}
+                color={mic ? "ruby" : "jade"}
               >
-                <MicIcon className="h-4 w-4" /> {listening ? "Stop" : "Record"}
+                <MicIcon className="h-4 w-4" /> {mic ? "Stop" : "Record"}
               </Button>
             </Box>
           </Grid>
         </section>
-        <section className="col-span-4 flex min-h-[calc(100vh-6rem)] flex-col px-4 pb-4">
-          <Heading className="mb-3 flex font-optiker">
-            <AppWindowMacIcon className="mr-2 size-8" />
-            Control Panel
-          </Heading>
-          <ScrollArea className="h-full w-full">
-            <Flex gap="3" direction="column" className="h-full">
-              <Grid gap="3" columns="4">
-                <Flex
-                  gap="2"
-                  align="center"
-                  className="truncate rounded-lg border border-primary/20 bg-secondary/50 px-4 py-2 text-sm text-primary"
-                >
-                  <EyeIcon className="h-4 w-4" /> {eye} Eye
-                </Flex>
-                <Flex
-                  gap="2"
-                  align="center"
-                  className="truncate  rounded-lg border border-primary/20 bg-secondary/50 px-4 py-2 text-sm text-primary"
-                >
-                  <ALargeSmallIcon className="h-5 w-5" />{" "}
-                  {`Stage: ${testStages}`}
-                </Flex>
-                <Flex
-                  align="center"
-                  className="col-span-2 truncate rounded-lg border border-primary/20 bg-secondary/50 p-4"
-                >
-                  <Text as="label" size="2">
-                    <Flex gap="4">
-                      <Tooltip content="Adjust based on distance from screen.">
-                        <input
-                          id="slide"
-                          type="range"
-                          min={2}
-                          max={5}
-                          step={1}
-                          defaultValue={5}
-                          onChange={(value) => {
-                            setDistance(parseInt(value?.target?.value));
-                          }}
-                          className="slider w-full cursor-pointer accent-snelltechPurple  dark:accent-snelltechGreen"
-                        />
-                      </Tooltip>
-                      Distance: {distance} ft
-                    </Flex>
-                  </Text>
-                </Flex>
-              </Grid>
-              <div className="rounded-lg border border-primary/20 bg-secondary/50 p-4 text-sm text-primary">
-                {value}
-              </div>
-              <Results level={level.right} eye={"Right"} />
-              <Results level={level.left} eye={"Left"} />
-
-              <Advice />
-            </Flex>
-          </ScrollArea>
-        </section>
+        <ControlPanel
+          level={level}
+          testStages={testStages}
+          eye={eye}
+          distance={distance}
+          transcript={transcript}
+          setDistance={setDistance}
+        />
       </div>
     </main>
   );
