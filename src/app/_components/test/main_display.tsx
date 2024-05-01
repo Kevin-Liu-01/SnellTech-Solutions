@@ -2,7 +2,7 @@
 import twMerge from "clsx";
 import dynamic from "next/dynamic";
 
-import { Callout, Flex, Text, Button, Progress } from "@radix-ui/themes";
+import { Callout, Flex, Box, Text, Button, Progress } from "@radix-ui/themes";
 import { InfoIcon } from "lucide-react";
 import { textSizer } from "./functions";
 
@@ -62,18 +62,20 @@ export default function ControlPanel(props: {
       )}
 
       {props.instructionScreen && (
-        <Flex
-          gap="4"
-          className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12"
-        >
-          <Flex className="relative w-full" direction="column" align="center">
+        <Box className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12">
+          <Flex align="center" justify="center" direction="column">
             <Text className="font-optiker" size="5" align="center">
               Listen to the directions playing aloud, or read the instructions
               to the left.
             </Text>
-            <Progress duration="30s" size="3" color="cyan" />
+            <Progress
+              duration="30s"
+              size="3"
+              color="iris"
+              className="mt-4 h-2 w-full dark:invert"
+            />
           </Flex>
-        </Flex>
+        </Box>
       )}
 
       {props.switchScreen && (
