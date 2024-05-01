@@ -23,7 +23,7 @@ import {
   EyeIcon,
   MicIcon,
   ALargeSmallIcon,
-  SpellCheckIcon,
+  // SpellCheckIcon,
 } from "lucide-react";
 import { QuestionMarkIcon } from "@radix-ui/react-icons";
 
@@ -44,6 +44,7 @@ export default function Test() {
   const [confetti, setConfetti] = useState(false);
   const [enableButton, setEnableButton] = useState(false);
   const [submitLetter, setSubmitLetter] = useState(false);
+  const [distance, setDistance] = useState(5);
   const [size, setSize] = useState(10);
   const [userInput, setUserInput] = useState("");
   const [level, setLevel] = useState({ right: 1, left: 1 });
@@ -69,6 +70,7 @@ export default function Test() {
     if (incorrectGuesses === 2) {
       handleIncorrectGuess();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [incorrectGuesses]);
 
   useEffect(() => {
@@ -77,6 +79,7 @@ export default function Test() {
     if (correctGuesses === correctGuessesLimit) {
       handleCorrectGuess();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [correctGuesses, level, eye]);
 
   const handleIncorrectGuess = () => {
@@ -179,24 +182,94 @@ export default function Test() {
   const textSizer = () => {
     switch (size) {
       case 10:
+        //distance 2 feet
+        if (distance === 2) return "text-[71.91mm]";
+        //distance 3 feet
+        if (distance === 3) return "text-[72.91mm]";
+        //distance 4 feet
+        if (distance === 4) return "text-[73.91mm]";
+        //distance 5 feet
         return "text-[78.74mm]";
       case 9:
+        //distance 2 feet
+        if (distance === 2) return "text-[60.57mm]";
+        //distance 3 feet
+        if (distance === 3) return "text-[65.57mm]";
+        //distance 4 feet
+        if (distance === 4) return "text-[67.21mm]";
+        //distance 5 feet
         return "text-[68.58mm]";
       case 8:
+        //distance 2 feet
+        if (distance === 2) return "text-[49.21mm]";
+        //distance 3 feet
+        if (distance === 3) return "text-[52.34mm]";
+        //distance 4 feet
+        if (distance === 4) return "text-[53.91mm]";
+        //distance 5 feet
         return "text-[55.88mm]";
       case 7:
+        //distance 2 feet
+        if (distance === 2) return "text-[35.91mm]";
+        //distance 3 feet
+        if (distance === 3) return "text-[38.41mm]";
+        //distance 4 feet
+        if (distance === 4) return "text-[39.47mm]";
+        //distance 5 feet
         return "text-[45.72mm]";
       case 6:
+        //distance 2 feet
+        if (distance === 2) return "text-[25.91mm]";
+        //distance 3 feet
+        if (distance === 3) return "text-[27.69mm]";
+        //distance 4 feet
+        if (distance === 4) return "text-[28.51mm]";
+        //distance 5 feet
         return "text-[33.02mm]";
       case 5:
+        //distance 2 feet
+        if (distance === 2) return "text-[20.17mm]";
+        //distance 3 feet
+        if (distance === 3) return "text-[21.54mm]";
+        //distance 4 feet
+        if (distance === 4) return "text-[22.24mm]";
+        //distance 5 feet
         return "text-[22.86mm]";
       case 4:
+        //distance 2 feet
+        if (distance === 2) return "text-[11.56mm]";
+        //distance 3 feet
+        if (distance === 3) return "text-[12.37mm]";
+        //distance 4 feet
+        if (distance === 4) return "text-[13.19mm]";
+        //distance 5 feet
         return "text-[17.78mm]";
       case 3:
+        //distance 2 feet
+        if (distance === 2) return "text-[8.66mm]";
+        //distance 3 feet
+        if (distance === 3) return "text-[9.25mm]";
+        //distance 4 feet
+        if (distance === 4) return "text-[9.76mm]";
+        //distance 5 feet
         return "text-[10.16mm]";
       case 2:
+        //distance 2 feet
+        if (distance === 2) return "text-[5.77mm]";
+        //distance 3 feet
+        if (distance === 3) return "text-[6.17mm]";
+        //distance 4 feet
+        if (distance === 4) return "text-[6.55mm]";
+        //distance 5 feet
         return "text-[7.62mm]";
       case 1:
+        //distance 2 feet
+        if (distance === 2) return "text-[3.85mm]";
+        //distance 3 feet
+        if (distance === 3) return "text-[4.12mm]";
+        //distance 4 feet
+        if (distance === 4) return "text-[4.38mm]";
+        //distance 5 feet
         return "text-[5.08mm]";
       default:
         return "";
@@ -228,11 +301,14 @@ export default function Test() {
             <List
               steps={[
                 "Ensure proper room lighting and set device brightness to 100%.",
-                "Hold the screen 10 feet (3.05 m) from the patient. If the patient has glasses, wear the proper glasses for distance vision.",
-                "Give patient occluder and have them cover the eye not being tested. Each eye will be tested independently.",
-                "Have patient read the smallest line they can see on the chart.",
-                "If patient reads all 5 letters correctly and there are more lines below then ask them to try the next line.",
-                "Repeat steps for opposite eye.",
+                "Ensure the mic is enabled and that the website has permission to record audio.",
+                "Wear the headset and adjust the size of the headset to a good fit.",
+                "Select an appropriate distance. Then, choose an eye to test first (left or right). Each eye will be tested independently; this choice is for your convenience.",
+                "Calibrate the headset to the testing software by lining up the rectangular slit in the headset to the rectangle present on the screen. Use the headset to cover the eye you are not testing.",
+                "To begin the test, press the start button manually or say “start”",
+                "The test will begin at the weakest vision level (highest optotype row) If all letters in the level are read correctly, the test will move to one level smaller. If a letter is guessed wrong, the number of wrong letters guessed in that size setting will be recorded. If the user guesses 2 letters incorrectly, the test will be terminated",
+                "After completing all levels for one eye, it will switch to the opposite eye. After test completion, the test will be terminated.",
+                "The visual acuity of the user will then be displayed, along with a brief explanation of the significance of the result. This can be copied for easy reference.",
               ]}
             />
           </Flex>
@@ -240,7 +316,7 @@ export default function Test() {
         <section className={`col-span-4 flex h-full flex-col`}>
           <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-lg border border-primary/5 bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
             <Confetti
-              numberOfPieces={confetti ? 200 : 0}
+              numberOfPieces={confetti ? 100 : 0}
               // initialVelocityY={1}
               gravity={0.5}
             />
@@ -380,38 +456,26 @@ export default function Test() {
                   {`Stage: ${testStages}`}
                 </Flex>
                 <Flex
-                  gap="2"
                   align="center"
-                  className="truncate  rounded-lg border border-primary/20 bg-secondary/50 px-4 py-2 text-sm text-primary"
-                >
-                  <SpellCheckIcon className="h-5 w-5" />{" "}
-                  {`Correct: ${correctGuesses}`}
-                </Flex>
-                {/* <Flex
-                  align="center"
-                  className="rounded-lg border border-primary/20 bg-secondary/50 px-4 py-2 text-sm text-primary"
-                >{`Incorrect: ${incorrectGuesses}`}</Flex> */}
-                <Flex
-                  align="center"
-                  className="truncate rounded-lg border border-primary/20 bg-secondary/50 p-4"
+                  className="col-span-2 truncate rounded-lg border border-primary/20 bg-secondary/50 p-4"
                 >
                   <Text as="label" size="2">
                     <Flex gap="4">
-                      <Tooltip content="Adjust text size as necessary">
+                      <Tooltip content="Adjust based on distance from screen.">
                         <input
                           id="slide"
                           type="range"
-                          min={1}
-                          max={10}
+                          min={2}
+                          max={5}
                           step={1}
-                          defaultValue={1}
+                          defaultValue={5}
                           onChange={(value) => {
-                            setSize(parseInt(value?.target?.value));
+                            setDistance(parseInt(value?.target?.value));
                           }}
-                          className="w-full cursor-pointer accent-snelltechPurple  dark:accent-snelltechGreen"
+                          className="slider w-full cursor-pointer accent-snelltechPurple  dark:accent-snelltechGreen"
                         />
                       </Tooltip>
-                      Size
+                      Distance: {distance} ft
                     </Flex>
                   </Text>
                 </Flex>

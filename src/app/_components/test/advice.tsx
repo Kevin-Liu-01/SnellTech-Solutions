@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Box,
-  SegmentedControl,
-  ScrollArea,
-  Flex,
-  Text,
-  Grid,
-} from "@radix-ui/themes";
+import { Box, SegmentedControl, Flex, Text, Grid } from "@radix-ui/themes";
 import {
   ChevronsRightIcon,
   ContactRoundIcon,
