@@ -47,7 +47,7 @@ export default function ControlPanel(props: {
               <InfoIcon className="h-6 w-6" />
             </Callout.Icon>
             <Callout.Text>
-              You will need at least 10 feet of room to properly use this
+              You will need at least 5 feet of room to properly use this
               application.
             </Callout.Text>
           </Callout.Root>
@@ -72,7 +72,7 @@ export default function ControlPanel(props: {
               duration="30s"
               size="3"
               color="iris"
-              className="mt-4 h-2 w-full dark:invert"
+              className="mt-4 h-2 w-full bg-secondary dark:bg-primary dark:invert"
             />
           </Flex>
         </Box>

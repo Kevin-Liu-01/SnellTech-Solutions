@@ -84,7 +84,9 @@ export default function Test() {
 
   useEffect(() => {
     if (mic) {
-      listen();
+      listen({
+        continuous: true,
+      });
     } else {
       stop();
     }
@@ -93,11 +95,11 @@ export default function Test() {
   // Effect to handle spoken letters
   useEffect(() => {
     if (testStarted) {
-      console.log("trans" + transcript);
+      // console.log("transcript:" + transcript);
 
       if (transcript == "don't know") {
         submitWrongHandler();
-      } else if (transcript.length == 1) {
+      } else if (transcript.charAt(transcript.length - 2) == " ") {
         // Automatically submit the spoken letter when transcript changes
         submitHandler();
       }
@@ -141,7 +143,6 @@ export default function Test() {
   const handleTestCompletion = () => {
     setTestCompleted(true);
     speak({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       voice: safeVoices[5],
       text: "The test is now completed. Your visual acuity results are now available.",
     });
@@ -185,9 +186,7 @@ export default function Test() {
 
   const handleInstructions = () => {
     setInstructionScreen(true);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     speak({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       voice: safeVoices[5],
       text: `Welcome to SnellTech Solutions. Before we begin, ensure proper room lighting and set device brightness to 100%. 
       You have chosen to test your ${eye} eye first at a distance of ${distance} feet. To begin, adjust your headset so you can only see out of your ${eye} eye. 
@@ -198,7 +197,10 @@ export default function Test() {
   };
 
   const submitHandler = () => {
-    if (userInput === letter || transcript.charAt(0).toUpperCase() === letter) {
+    if (
+      userInput === letter ||
+      transcript.charAt(transcript.length - 1).toUpperCase() === letter
+    ) {
       setCorrectGuesses((prev) => prev + 1);
     } else {
       setIncorrectGuesses((prev) => prev + 1);
@@ -210,7 +212,6 @@ export default function Test() {
 
   const submitWrongHandler = () => {
     setUserInput("");
-    setTranscript("");
     setIncorrectGuesses((prev) => prev + 1);
   };
 
@@ -315,7 +316,10 @@ export default function Test() {
           testStages={testStages}
           eye={eye}
           distance={distance}
-          transcript={transcript}
+          confetti={confetti}
+          enableButton={enableButton}
+          correct={correctGuesses}
+          incorrect={incorrectGuesses}
           setDistance={setDistance}
         />
       </div>
