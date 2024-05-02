@@ -83,7 +83,7 @@ export const Navbar = (props: {
                       alt="user"
                       height="36"
                       width="36"
-                      className="rounded-full"
+                      className="size-9 rounded-full"
                     />
                   </Box>
                 </Flex>
@@ -91,7 +91,7 @@ export const Navbar = (props: {
                 <Flex align="center">
                   <Text className="pr-3 font-optiker ">Sign In</Text>
                   <Box>
-                    <CircleUserRound className="size-8 text-snelltechPurple transition-all dark:text-snelltechGreen" />
+                    <CircleUserRound className="size-9 text-snelltechPurple transition-all dark:text-snelltechGreen" />
                   </Box>
                 </Flex>
               )}

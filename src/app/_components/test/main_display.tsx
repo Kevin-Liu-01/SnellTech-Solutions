@@ -2,8 +2,16 @@
 import twMerge from "clsx";
 import dynamic from "next/dynamic";
 
-import { Callout, Flex, Box, Text, Button, Progress } from "@radix-ui/themes";
-import { InfoIcon } from "lucide-react";
+import {
+  Callout,
+  Flex,
+  Box,
+  Text,
+  Button,
+  Progress,
+  Spinner,
+} from "@radix-ui/themes";
+import { InfoIcon, RotateCcwIcon } from "lucide-react";
 import { textSizer } from "./functions";
 
 import Dropdown from "./dropdown";
@@ -28,6 +36,7 @@ export default function ControlPanel(props: {
   transcript: string;
   handleInstructions: () => void;
   setEye: React.Dispatch<React.SetStateAction<string>>;
+  restartHandler: () => void;
 }) {
   return (
     <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-lg border border-primary/5 bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
@@ -36,6 +45,13 @@ export default function ControlPanel(props: {
         // initialVelocityY={1}
         gravity={0.5}
       />
+      <Button
+        onClick={() => props.restartHandler()}
+        color="tomato"
+        className="absolute right-4 top-4 px-2 py-3 font-optiker text-xs shadow"
+      >
+        <RotateCcwIcon className="h-4 w-4" /> Restart
+      </Button>
       {!props.testStarted && (
         <Flex
           gap="4"
@@ -74,6 +90,9 @@ export default function ControlPanel(props: {
               color="iris"
               className="mt-4 h-2 w-full bg-secondary dark:bg-primary dark:invert"
             />
+            <Flex gap="2" align="center" className="mt-2 text-sm italic">
+              <Spinner /> Initializing...
+            </Flex>
           </Flex>
         </Box>
       )}

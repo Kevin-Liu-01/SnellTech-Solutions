@@ -97,7 +97,7 @@ export default function Test() {
     if (testStarted) {
       // console.log("transcript:" + transcript);
 
-      if (transcript == "don't know") {
+      if (transcript.endsWith("don't know")) {
         submitWrongHandler();
       } else if (transcript.charAt(transcript.length - 2) == " ") {
         // Automatically submit the spoken letter when transcript changes
@@ -215,6 +215,11 @@ export default function Test() {
     setIncorrectGuesses((prev) => prev + 1);
   };
 
+  const restartHandler = () => {
+    setTestCompleted(true);
+    startTest();
+  };
+
   return (
     <main className="h-[calc(100vh-6rem)] px-4 font-inter text-primary">
       <div className="grid h-full grid-cols-11">
@@ -267,6 +272,7 @@ export default function Test() {
             transcript={transcript}
             setEye={setEye}
             handleInstructions={handleInstructions}
+            restartHandler={restartHandler}
           />
           <Grid columns="8" gap="3" className="relative my-4 w-full">
             <Box className="col-span-4 flex rounded-lg border border-primary/20">
