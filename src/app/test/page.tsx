@@ -6,19 +6,9 @@ import { useState, useEffect } from "react";
 import { useSpeechRecognition, useSpeechSynthesis } from "react-speech-kit";
 
 //Component Libraries
-import {
-  Button,
-  Grid,
-  Text,
-  Flex,
-  Callout,
-  Heading,
-  Box,
-  Tooltip,
-} from "@radix-ui/themes";
+import { Button, Grid, Flex, Callout, Heading, Box } from "@radix-ui/themes";
 import {
   SendIcon,
-  InfoIcon,
   ListOrderedIcon,
   TriangleAlertIcon,
   MicIcon,
@@ -56,7 +46,7 @@ export default function Test() {
   const [transcript, setTranscript] = useState("");
   const [mic, setMic] = useState(false);
 
-  const { speak, voices } = useSpeechSynthesis();
+  const { speak, speaking, voices, cancel } = useSpeechSynthesis();
   const safeVoices: SpeechSynthesisVoice[] = voices as SpeechSynthesisVoice[];
 
   const { listen, stop } = useSpeechRecognition({
@@ -185,15 +175,23 @@ export default function Test() {
   };
 
   const handleInstructions = () => {
+    cancel(); //this line is necessary to clear the queue and ensure the voiceover begins
     setInstructionScreen(true);
     speak({
       voice: safeVoices[5],
       text: `Welcome to SnellTech Solutions. Before we begin, ensure proper room lighting and set device brightness to 100%. 
-      You have chosen to test your ${eye} eye first at a distance of ${distance} feet. To begin, adjust your headset so you can only see out of your ${eye} eye. 
-      Then, calibrate the headset to the testing software by lining up the rectangular slit in the headset to the rectangle present on the screen. 
-      When a letter appears on the screen, say the letter out loud. Upon completion of your first eye, you will be prompted to switch to your other eye. The test is beginning now.`,
+      You have chosen to test your ${eye} eye first at a distance of ${distance} feet.`,
     });
-    setTimeout(() => startTest(), 30000);
+    speak({
+      voice: safeVoices[5],
+      text: `To begin, adjust your headset so you can only see out of your ${eye} eye. 
+      Then, calibrate the headset to the testing software by lining up the rectangular slit in the headset to the rectangle present on the screen.`,
+    });
+    speak({
+      voice: safeVoices[5],
+      text: `When a letter appears on the screen, say the letter out loud. Upon completion of your first eye, you will be prompted to switch to your other eye. The test is beginning now.`,
+    });
+    setTimeout(() => startTest(), 39000);
   };
 
   const submitHandler = () => {
@@ -273,6 +271,7 @@ export default function Test() {
             setEye={setEye}
             handleInstructions={handleInstructions}
             restartHandler={restartHandler}
+            cancel={cancel}
           />
           <Grid columns="8" gap="3" className="relative my-4 w-full">
             <Box className="col-span-4 flex rounded-lg border border-primary/20">

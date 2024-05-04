@@ -20,10 +20,14 @@ const Confetti = dynamic(() => import("react-confetti"), {
   ssr: false,
 });
 
-type StartTestFunction = () => void;
+type functionType = () => void;
 
 export default function ControlPanel(props: {
-  startTest: StartTestFunction;
+  setEye: React.Dispatch<React.SetStateAction<string>>;
+  handleInstructions: functionType;
+  restartHandler: functionType;
+  cancel: functionType;
+  startTest: functionType;
   testStarted: boolean;
   switchScreen: boolean;
   instructionScreen: boolean;
@@ -34,12 +38,9 @@ export default function ControlPanel(props: {
   letter: string;
   eye: string;
   transcript: string;
-  handleInstructions: () => void;
-  setEye: React.Dispatch<React.SetStateAction<string>>;
-  restartHandler: () => void;
 }) {
   return (
-    <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-lg border border-primary/5 bg-snelltechPurple/50 p-4 dark:bg-snelltechGreen/50">
+    <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-lg border border-primary/5 bg-snelltechPurple/50 p-4 shadow-inner dark:bg-snelltechGreen/50">
       <Confetti
         numberOfPieces={props.confetti ? 100 : 0}
         // initialVelocityY={1}
@@ -93,6 +94,13 @@ export default function ControlPanel(props: {
             <Flex gap="2" align="center" className="mt-2 text-sm italic">
               <Spinner /> Initializing...
             </Flex>
+            <Button
+              variant="outline"
+              className="mt-2 font-optiker"
+              onClick={() => props.cancel}
+            >
+              Skip Instructions
+            </Button>
           </Flex>
         </Box>
       )}
@@ -111,7 +119,7 @@ export default function ControlPanel(props: {
       {props.testCompleted && (
         <Flex
           gap="4"
-          className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12"
+          className="absolute z-20 flex h-full w-full flex-col items-center justify-center bg-secondary/90 p-12 shadow"
         >
           <Text className="font-optiker text-3xl">Test Completed</Text>
           <Dropdown eye={props.eye} setEye={props.setEye} />
