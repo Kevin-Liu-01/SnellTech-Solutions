@@ -65,7 +65,7 @@ export default function ControlPanel(props: {
               align="center"
               justify="center"
               gap="2"
-              className="col-span-2 truncate rounded-lg border border-snelltechPurple/20 bg-snelltechPurple/20 px-2 py-2 text-[0.825rem] text-violet-900 dark:border-snelltechGreen/20 dark:bg-snelltechGreen/30 3xl:text-sm"
+              className="col-span-2 truncate rounded-lg border border-violet-300 bg-violet-300 px-2 py-2 text-[0.825rem] text-violet-900 3xl:text-sm"
             >
               <ArrowDownAZIcon className="h-5 w-5" />
               Distance: {props.distance} ft
@@ -80,7 +80,7 @@ export default function ControlPanel(props: {
                   onChange={(value) => {
                     props.setDistance(parseInt(value?.target?.value));
                   }}
-                  className="w-24 cursor-pointer accent-snelltechPurple dark:accent-snelltechGreen 3xl:w-auto"
+                  className="w-24 cursor-pointer accent-snelltechPurple 3xl:w-auto"
                 />
               </Tooltip>
             </Flex>

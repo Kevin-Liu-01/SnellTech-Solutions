@@ -46,7 +46,7 @@ export default function Test() {
   const [transcript, setTranscript] = useState("");
   const [mic, setMic] = useState(false);
 
-  const { speak, speaking, voices, cancel } = useSpeechSynthesis();
+  const { speak, voices, cancel } = useSpeechSynthesis();
   const safeVoices: SpeechSynthesisVoice[] = voices as SpeechSynthesisVoice[];
 
   const { listen, stop } = useSpeechRecognition({
