@@ -1,30 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
+//State management and mutation functions
 import { useState, useEffect } from "react";
-
+//Speech recognition and transcription functions
 import { useSpeechRecognition, useSpeechSynthesis } from "react-speech-kit";
-
-//Component Libraries
+//Component and Icon Libraries
 import { Button, Grid, Flex, Callout, Heading, Box } from "@radix-ui/themes";
 import {
   SendIcon,
   ListOrderedIcon,
   TriangleAlertIcon,
   MicIcon,
-  // SpellCheckIcon,
 } from "lucide-react";
 import { QuestionMarkIcon } from "@radix-ui/react-icons";
 
-//Components
+//Specially Designed Components
 import List from "../_components/test/list";
 import ControlPanel from "../_components/test/control_panel";
 import MainDisplay from "../_components/test/main_display";
-
 import { createRandomString } from "../_components/test/functions";
 
+//Constructor
 export default function Test() {
-  //user state test logic
+  //User data
   const [letter, setLetter] = useState(" ");
   const [confetti, setConfetti] = useState(false);
   const [enableButton, setEnableButton] = useState(false);
@@ -36,6 +35,8 @@ export default function Test() {
   const [correctGuesses, setCorrectGuesses] = useState(0);
   const [incorrectGuesses, setIncorrectGuesses] = useState(0);
   const [eye, setEye] = useState("Right");
+
+  //Test state logic
   const [testStages, setTestStages] = useState(0);
   const [testStarted, setTestStarted] = useState(false);
   const [testCompleted, setTestCompleted] = useState(false);
@@ -45,9 +46,9 @@ export default function Test() {
   //Speech transcription
   const [transcript, setTranscript] = useState("");
   const [mic, setMic] = useState(false);
-
   const { speak, voices, cancel } = useSpeechSynthesis();
   const safeVoices: SpeechSynthesisVoice[] = voices as SpeechSynthesisVoice[];
+  const voice = safeVoices[1];
 
   const { listen, stop } = useSpeechRecognition({
     onResult: (result: string) => {
@@ -55,7 +56,7 @@ export default function Test() {
     },
   });
 
-  //Test logic
+  //If user guesses a letter wrong, it will trigger the incorrect question handler
   useEffect(() => {
     if (incorrectGuesses === 2) {
       handleTooManyIncorrect();
@@ -63,6 +64,7 @@ export default function Test() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [incorrectGuesses]);
 
+  //If user guesses a letter correctly, it will trigger the correct question handler
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const correctGuessesLimit = Math.min(level[eye.toLowerCase()], 5);
@@ -72,6 +74,7 @@ export default function Test() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [correctGuesses, level, eye]);
 
+  //If user enables/disables the mic, this function will detect it
   useEffect(() => {
     if (mic) {
       listen({
@@ -82,11 +85,9 @@ export default function Test() {
     }
   }, [mic, listen, stop]);
 
-  // Effect to handle spoken letters
+  // Effect to handle spoken letters if user chooses to complete test with voice
   useEffect(() => {
     if (testStarted) {
-      // console.log("transcript:" + transcript);
-
       if (transcript.endsWith("don't know")) {
         submitWrongHandler();
       } else if (transcript.charAt(transcript.length - 2) == " ") {
@@ -94,12 +95,10 @@ export default function Test() {
         submitHandler();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transcript]);
 
-  const toggleMic = () => {
-    setMic((prevMic) => !prevMic);
-  };
-
+  // Function to handle when test ends from too many incorrect
   const handleTooManyIncorrect = () => {
     if (testStages === 1) {
       handleTestSwitchEyes();
@@ -108,7 +107,9 @@ export default function Test() {
     }
   };
 
+  //Function to handle when test should switch states for correct answers
   const handleCorrectGuess = () => {
+    //Logic to reinitialize variables and begin test
     setConfetti(true);
     setTimeout(() => {
       setConfetti(false);
@@ -119,26 +120,31 @@ export default function Test() {
     setSize(size - 1);
     setUserInput("");
 
+    //Determine whether to increment the acuity level
     const newLevel = eye === "Right" ? level.right + 1 : level.left + 1;
     setLevel((prevLevel) => ({ ...prevLevel, [eye.toLowerCase()]: newLevel }));
 
+    //Handle whether to switch eyes or end test
     if (testStages === 1 && newLevel === 11) {
       handleTestSwitchEyes();
     } else if (testStages === 2 && newLevel === 11) {
       handleTestCompletion();
     }
 
+    //Switch the letter at the middle of the screen
     createRandomString(1, setLetter);
   };
+
+  //Handle when the test is completed
   const handleTestCompletion = () => {
     setTestCompleted(true);
     speak({
-      voice: safeVoices[5],
+      voice: voice,
       text: "The test is now completed. Your visual acuity results are now available.",
     });
   };
 
-  //Screen for switching eyes
+  //Enables screen for switching eyes (lasts 5 seconds, makes buttons unusable)
   const handleTestSwitchEyes = () => {
     setEnableButton(false);
     setSwitchScreen(true);
@@ -149,6 +155,7 @@ export default function Test() {
     }, 5000);
   };
 
+  //Logic to begin the test and initialize variables
   const startTest = () => {
     if (testStages == 2) {
       setTestStages(0);
@@ -174,26 +181,28 @@ export default function Test() {
     createRandomString(1, setLetter);
   };
 
+  // Handler to play instructions to user before beginning test
   const handleInstructions = () => {
     cancel(); //this line is necessary to clear the queue and ensure the voiceover begins
     setInstructionScreen(true);
     speak({
-      voice: safeVoices[5],
+      voice: voice,
       text: `Welcome to SnellTech Solutions. Before we begin, ensure proper room lighting and set device brightness to 100%. 
       You have chosen to test your ${eye} eye first at a distance of ${distance} feet.`,
     });
     speak({
-      voice: safeVoices[5],
+      voice: voice,
       text: `To begin, adjust your headset so you can only see out of your ${eye} eye. 
       Then, calibrate the headset to the testing software by lining up the rectangular slit in the headset to the rectangle present on the screen.`,
     });
     speak({
-      voice: safeVoices[5],
+      voice: voice,
       text: `When a letter appears on the screen, say the letter out loud. Upon completion of your first eye, you will be prompted to switch to your other eye. The test is beginning now.`,
     });
     setTimeout(() => startTest(), 39000);
   };
 
+  // Handler to determine behavior after user guesses the letter
   const submitHandler = () => {
     if (
       userInput === letter ||
@@ -208,16 +217,19 @@ export default function Test() {
     setUserInput("");
   };
 
+  //Handler to increment incorrect guesses
   const submitWrongHandler = () => {
     setUserInput("");
     setIncorrectGuesses((prev) => prev + 1);
   };
 
+  //Handler for when the test is restarted
   const restartHandler = () => {
     setTestCompleted(true);
     startTest();
   };
 
+  //TSX code for web design
   return (
     <main className="h-[calc(100vh-6rem)] px-4 font-inter text-primary">
       <div className="grid h-full grid-cols-11">
@@ -307,7 +319,7 @@ export default function Test() {
             <Box className="col-span-2">
               <Button
                 className="h-full w-full cursor-pointer rounded-lg font-optiker"
-                onClick={toggleMic}
+                onClick={() => setMic((prevMic) => !prevMic)}
                 // disabled={!enableButton}
                 color={mic ? "ruby" : "jade"}
               >

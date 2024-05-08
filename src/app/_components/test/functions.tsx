@@ -99,7 +99,7 @@ export function createRandomString(
   length: number,
   setLetter: React.Dispatch<React.SetStateAction<string>>,
 ) {
-  const chars = "ABDFGHIJKLNPQRSUWXY";
+  const chars = "ABDFGHIJKLNPQRSWXY";
   let result = "";
   for (let i = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
