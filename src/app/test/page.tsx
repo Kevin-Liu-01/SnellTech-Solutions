@@ -58,7 +58,7 @@ export default function Test() {
 
   //If user guesses a letter wrong, it will trigger the incorrect question handler
   useEffect(() => {
-    if (incorrectGuesses === 2) {
+    if (incorrectGuesses === 3) {
       handleTooManyIncorrect();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,6 +88,7 @@ export default function Test() {
   // Effect to handle spoken letters if user chooses to complete test with voice
   useEffect(() => {
     if (testStarted) {
+      console.log(transcript);
       if (transcript.endsWith("don't know")) {
         submitWrongHandler();
       } else if (transcript.charAt(transcript.length - 2) == " ") {
@@ -132,7 +133,7 @@ export default function Test() {
     }
 
     //Switch the letter at the middle of the screen
-    createRandomString(1, setLetter);
+    createRandomString(1, letter, setLetter);
   };
 
   //Handle when the test is completed
@@ -178,7 +179,7 @@ export default function Test() {
     setSize(10);
     setCorrectGuesses(0);
     setIncorrectGuesses(0);
-    createRandomString(1, setLetter);
+    createRandomString(1, letter, setLetter);
   };
 
   // Handler to play instructions to user before beginning test
@@ -199,7 +200,7 @@ export default function Test() {
       voice: voice,
       text: `When a letter appears on the screen, say the letter out loud. Upon completion of your first eye, you will be prompted to switch to your other eye. The test is beginning now.`,
     });
-    setTimeout(() => startTest(), 39000);
+    setTimeout(() => startTest(), 3000);
   };
 
   // Handler to determine behavior after user guesses the letter
@@ -213,7 +214,7 @@ export default function Test() {
       setIncorrectGuesses((prev) => prev + 1);
     }
     setSubmitLetter(!submitLetter);
-    createRandomString(1, setLetter);
+    createRandomString(1, letter, setLetter);
     setUserInput("");
   };
 
@@ -259,7 +260,7 @@ export default function Test() {
                 "Wear the headset and adjust the size of the headset to a good fit.",
                 "Select an appropriate distance. Then, choose an eye to test first (left or right). Each eye will be tested independently; this choice is for your convenience.",
                 "Calibrate the headset to the testing software by lining up the rectangular slit in the headset to the rectangle present on the screen. Use the headset to cover the eye you are not testing.",
-                "To begin the test, press the start button manually or say “start”",
+                "To begin the test, press the start button manually or say “start.” Read the letter that you can see on the screen. If the test is not understanding you, saying the word ”letter” before the actual letter helps with recognition.",
                 "The test will begin at the weakest vision level (highest optotype row) If all letters in the level are read correctly, the test will move to one level smaller. If a letter is guessed wrong, the number of wrong letters guessed in that size setting will be recorded. If the user guesses 2 letters incorrectly, the test will be terminated",
                 "After completing all levels for one eye, it will switch to the opposite eye. After test completion, the test will be terminated.",
                 "The visual acuity of the user will then be displayed, along with a brief explanation of the significance of the result. This can be copied for easy reference.",

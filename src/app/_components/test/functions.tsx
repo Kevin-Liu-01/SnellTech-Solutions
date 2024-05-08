@@ -97,12 +97,17 @@ export function textSizer(size, distance) {
 
 export function createRandomString(
   length: number,
+  letter: string,
   setLetter: React.Dispatch<React.SetStateAction<string>>,
 ) {
-  const chars = "ABDFGHIJKLNPQRSWXY";
+  const chars = "ABDFGHIJKLPQRSWXY";
   let result = "";
-  for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
+
+  while (result === "") {
+    result = chars
+      .replace(letter, "")
+      .charAt(Math.floor(Math.random() * chars.length));
   }
+
   setLetter(result);
 }

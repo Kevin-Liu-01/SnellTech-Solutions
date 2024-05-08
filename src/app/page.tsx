@@ -9,6 +9,7 @@ import {
   ALargeSmallIcon,
   ViewIcon,
   GoalIcon,
+  ScanEyeIcon,
 } from "lucide-react";
 
 export default async function Home() {
@@ -75,6 +76,7 @@ export default async function Home() {
             src="/images/neurons.jpg"
             alt="headset"
             fill
+            sizes="ref"
             className="absolute z-10 h-full opacity-20"
           />
           <Image
@@ -101,7 +103,10 @@ export default async function Home() {
           <Heading
             className={`font-optiker text-xl font-extrabold tracking-tight sm:text-[3.5rem]`}
           >
-            Get your VISUAL ACUITY
+            Get your{" "}
+            <Text className="text-snelltechPurple dark:text-snelltechGreen">
+              Visual Acuity
+            </Text>
           </Heading>
           <Flex
             direction="column"
@@ -168,9 +173,9 @@ export default async function Home() {
             className={`font-optiker text-xl font-extrabold tracking-tight sm:text-[3.5rem]`}
           >
             Use the{" "}
-            <span className="text-snelltechPurple dark:text-snelltechGreen">
+            <Text className="text-snelltechPurple dark:text-snelltechGreen">
               SNELLEN
-            </span>{" "}
+            </Text>{" "}
             Test
           </Heading>
           <Flex
@@ -220,6 +225,43 @@ export default async function Home() {
           </Flex>
         </Flex>
       </Flex>
+      <footer className="flex w-full items-center justify-between p-6 md:p-12">
+        <Flex align="center" gap="4">
+          <ScanEyeIcon className="h-8 w-8 " />
+          <Flex
+            direction="column"
+            className="text-sm text-gray-500 dark:text-gray-400"
+          >
+            <Text className="font-optiker text-lg text-snelltechPurple dark:text-snelltechGreen">
+              SNELLTECH SOLUTIONS
+            </Text>
+            <Text className="text-xs">
+              Made by Kevin Liu, Shravani Vedagiri, and Syona Gupta for
+              Engineering Development & Design
+            </Text>
+          </Flex>
+        </Flex>
+        <Flex align="center" gap="4">
+          <Link
+            className="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            href="#"
+          >
+            Privacy
+          </Link>
+          <Link
+            className="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            href="#"
+          >
+            Terms
+          </Link>
+          <Link
+            className="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            href="#"
+          >
+            Contact
+          </Link>
+        </Flex>
+      </footer>
     </main>
   );
 }

@@ -99,7 +99,7 @@ export default function ControlPanel(props: {
               className="mt-2 font-optiker"
               onClick={() => props.cancel}
             >
-              Skip Instructions
+              Stop Narration
             </Button>
           </Flex>
         </Box>

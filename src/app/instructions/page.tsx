@@ -70,7 +70,7 @@ export default function Instructions() {
           "Wear the headset and adjust the size of the headset to a good fit.",
           "Select an appropriate distance. Then, choose an eye to test first (left or right). Each eye will be tested independently; this choice is for your convenience.",
           "Calibrate the headset to the testing software by lining up the rectangular slit in the headset to the rectangle present on the screen. Use the headset to cover the eye you are not testing.",
-          "To begin the test, press the start button manually or say “start”",
+          "To begin the test, press the start button manually or say “start.” Read the letter that you can see on the screen. If the test is not understanding you, saying the word ”letter” before the actual letter helps with recognition.",
           "The test will begin at the weakest vision level (highest optotype row) If all letters in the level are read correctly, the test will move to one level smaller. If a letter is guessed wrong, the number of wrong letters guessed in that size setting will be recorded. If the user guesses 2 letters incorrectly, the test will be terminated",
           "After completing all levels for one eye, it will switch to the opposite eye. After test completion, the test will be terminated.",
           "The visual acuity of the user will then be displayed, along with a brief explanation of the significance of the result. This can be copied for easy reference.",
