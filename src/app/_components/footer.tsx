@@ -1,11 +1,11 @@
 "use client";
-
+import Image from "next/image";
 import { Link, Flex, Text } from "@radix-ui/themes";
 import { ScanEyeIcon } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="flex w-full items-center justify-between p-6 md:p-12">
+    <footer className="relative flex w-full items-center justify-between p-6 md:p-12">
       <Flex align="center" gap="4">
         <ScanEyeIcon className="h-8 w-8 " />
         <Flex
@@ -39,7 +39,14 @@ export default function Footer() {
           href="#"
         >
           Contact
-        </Link>
+        </Link>{" "}
+        <Image
+          src="../images/falling.svg"
+          alt="abstract"
+          className="ml-8 size-24  object-fill dark:invert"
+          height="100"
+          width="100"
+        />
       </Flex>
     </footer>
   );

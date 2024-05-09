@@ -9,13 +9,21 @@ export default function AboutUs() {
   return (
     <>
       <main className="h-[calc(100vh-6rem)] font-inter text-primary">
-        <section className="w-full bg-snelltechPurple/50 px-4 py-24 dark:bg-snelltechGreen/70">
+        <section className="relative w-full overflow-hidden bg-snelltechPurple/50 px-4 py-24 dark:bg-snelltechGreen/70">
+          <Image
+            src="../images/abstract-art-6.svg"
+            alt="abstract"
+            className="absolute left-0 top-0 h-full w-full object-fill opacity-10 dark:invert"
+            height="1000"
+            width="1000"
+          />
+
           <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
             <div className="space-y-4">
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+              <h1 className="font-optiker text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
                 Meet the Team
               </h1>
-              <p className="max-w-[600px] text-lg text-foreground/70">
+              <p className="max-w-[600px] text-xl text-foreground/70">
                 The student team behind Snelltech Solutions.
               </p>
             </div>
@@ -63,7 +71,7 @@ export default function AboutUs() {
           </div>
         </section>
         <section className="w-full px-8 py-24 md:px-16">
-          <div className=" grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
+          <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
             <Flex gap="4" direction="column">
               <h2 className="font-optiker text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
                 Key Features
@@ -91,7 +99,7 @@ export default function AboutUs() {
                 </li>
               </ul>
               <Link
-                className="mt-4 inline-flex h-10 items-center justify-center rounded-lg bg-snelltechPurple px-8 font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-snelltechGreen dark:text-gray-950 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+                className="mr-8 mt-4 inline-flex h-10 items-center justify-center rounded-lg bg-snelltechPurple px-8 font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-snelltechGreen dark:text-gray-950 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
                 href="/test"
               >
                 Try the Test
@@ -128,7 +136,7 @@ export default function AboutUs() {
               />
             </div>
           </div>
-        </section>{" "}
+        </section>
         <Footer />
       </main>
     </>
