@@ -18,7 +18,7 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center overflow-hidden font-inter dark:text-white">
       <header className="grid min-h-[calc(100vh-6rem)] w-full sm:grid-cols-2">
-        <Box className="container relative ml-auto flex h-full w-full flex-col justify-center px-8 py-4 pb-16 2xl:pt-2 3xl:py-16">
+        <Box className=" relative flex h-full w-full flex-col justify-center px-8 py-4 pb-16 2xl:pt-2 3xl:py-16">
           <Text
             className={`mt-12 font-optiker text-[2rem] font-extrabold leading-[0] tracking-tight dark:text-primary sm:text-[3rem] xl:text-[6rem]  `}
           >
@@ -95,7 +95,7 @@ export default async function Home() {
         </div>
       </header>
       <Box className=" relative z-10 grid w-full bg-secondary px-8 py-16 dark:bg-background ">
-        <Grid columns="2" gap="8" className="container mx-auto">
+        <Grid columns="2" gap="8">
           <Flex direction="column" gap="8">
             <Heading
               className={`font-optiker text-xl font-extrabold tracking-tight sm:text-[3.5rem]`}
@@ -155,7 +155,7 @@ export default async function Home() {
         </Grid>
       </Box>
       <Box className=" relative z-10 w-full  px-8 py-16 ">
-        <Flex direction="row" gap="8" className="container mx-auto">
+        <Flex direction="row" gap="8">
           <Image
             src="/images/Snellen_chart.svg"
             alt="headset"

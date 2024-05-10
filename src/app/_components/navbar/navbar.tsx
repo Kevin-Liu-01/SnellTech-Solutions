@@ -27,7 +27,7 @@ export const Navbar = (props: {
   const pathname = usePathname();
 
   return (
-    <nav className="container z-50 mx-auto flex h-24 flex-row items-center justify-between px-8">
+    <nav className=" z-50 flex h-24 flex-row items-center justify-between px-8">
       {/* Website Title */}
       <Link href="/" className="my-auto flex flex-row gap-x-4">
         <ScanEyeIcon className="my-auto size-8" />
