@@ -10,9 +10,9 @@ export default function Instructions() {
     <>
       <Grid
         gap="4"
-        className="h-[calc(100vh-6rem)] px-8 py-4 font-inter text-primary"
+        className="container mx-auto h-[calc(100vh-6rem)] px-8 py-4 font-inter text-primary"
       >
-        <Heading className="flex font-optiker text-2xl">
+        <Heading className="flex items-center font-optiker text-2xl">
           <ListOrderedIcon className="my-auto mr-2 size-8" />
           Instructions
         </Heading>

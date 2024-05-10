@@ -27,7 +27,7 @@ export const Navbar = (props: {
   const pathname = usePathname();
 
   return (
-    <nav className="z-50 flex h-24 flex-row items-center justify-between px-8">
+    <nav className="container z-50 mx-auto flex h-24 flex-row items-center justify-between px-8">
       {/* Website Title */}
       <Link href="/" className="my-auto flex flex-row gap-x-4">
         <ScanEyeIcon className="my-auto size-8" />
@@ -64,7 +64,7 @@ export const Navbar = (props: {
           className="flex"
         >
           <Button variant="ghost">
-            <GitHubLogoIcon className="size-5" />
+            <GitHubLogoIcon className="size-5 text-snelltechPurple transition-all dark:text-snelltechGreen " />
           </Button>
         </Link>
         <ThemeSwitcher />
@@ -88,10 +88,13 @@ export const Navbar = (props: {
                   </Box>
                 </Flex>
               ) : (
-                <Flex align="center">
+                <Flex
+                  align="center"
+                  className=" text-snelltechPurple transition-all dark:text-snelltechGreen "
+                >
                   <Text className="pr-3 font-optiker ">Sign In</Text>
                   <Box>
-                    <CircleUserRound className="size-9 text-snelltechPurple transition-all dark:text-snelltechGreen" />
+                    <CircleUserRound className="size-9" />
                   </Box>
                 </Flex>
               )}

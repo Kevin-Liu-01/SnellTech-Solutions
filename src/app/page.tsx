@@ -18,7 +18,7 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center overflow-hidden font-inter dark:text-white">
       <header className="grid min-h-[calc(100vh-6rem)] w-full sm:grid-cols-2">
-        <Box className="relative flex h-full w-full flex-col justify-center px-8 py-4 pb-16 2xl:pt-2 3xl:py-16">
+        <Box className="container relative ml-auto flex h-full w-full flex-col justify-center px-8 py-4 pb-16 2xl:pt-2 3xl:py-16">
           <Text
             className={`mt-12 font-optiker text-[2rem] font-extrabold leading-[0] tracking-tight dark:text-primary sm:text-[3rem] xl:text-[6rem]  `}
           >
@@ -94,137 +94,134 @@ export default async function Home() {
           />
         </div>
       </header>
-      <Grid
-        columns="2"
-        gap="8"
-        className=" relative z-10 grid w-full bg-secondary px-8 py-16 dark:bg-background "
-      >
-        <Flex direction="column" gap="8">
-          <Heading
-            className={`font-optiker text-xl font-extrabold tracking-tight sm:text-[3.5rem]`}
-          >
-            Get your{" "}
-            <Text className="text-snelltechPurple dark:text-snelltechGreen">
-              Visual Acuity
-            </Text>
-          </Heading>
-          <Flex
-            direction="column"
-            justify="between"
-            gap="4"
-            className="h-full text-sm lg:text-lg "
-          >
-            <Flex
-              direction="row"
-              gap="4"
-              className="h-full rounded-xl border-2 border-border bg-primary-foreground p-4"
+      <Box className=" relative z-10 grid w-full bg-secondary px-8 py-16 dark:bg-background ">
+        <Grid columns="2" gap="8" className="container mx-auto">
+          <Flex direction="column" gap="8">
+            <Heading
+              className={`font-optiker text-xl font-extrabold tracking-tight sm:text-[3.5rem]`}
             >
-              <Box className="h-16 w-16">
-                <ALargeSmallIcon className="h-16 w-16 rounded-lg bg-snelltechPurple p-4 text-secondary dark:bg-snelltechGreen" />
-              </Box>
-              <Box className="">
-                Letter charts are not only used to measure visual acuity, they
-                are also used as targets for subjective refraction. This is the
-                main reason distance acuity is measured more often than near
-                acuity. At a long distance, accommodation is relaxed.
-              </Box>
+              Get your{" "}
+              <Text className="text-snelltechPurple dark:text-snelltechGreen">
+                Visual Acuity
+              </Text>
+            </Heading>
+            <Flex
+              direction="column"
+              justify="between"
+              gap="4"
+              className="h-full text-sm lg:text-lg "
+            >
+              <Flex
+                direction="row"
+                gap="4"
+                className="h-full rounded-xl border-2 border-border bg-primary-foreground p-4"
+              >
+                <Box className="h-16 w-16">
+                  <ALargeSmallIcon className="h-16 w-16 rounded-lg bg-snelltechPurple p-4 text-secondary dark:bg-snelltechGreen" />
+                </Box>
+                <Box className="">
+                  Letter charts are not only used to measure visual acuity, they
+                  are also used as targets for subjective refraction. This is
+                  the main reason distance acuity is measured more often than
+                  near acuity. At a long distance, accommodation is relaxed.
+                </Box>
+              </Flex>
+              <Flex
+                direction="row"
+                gap="4"
+                className="h-full rounded-xl border-2 border-border bg-primary-foreground p-4"
+              >
+                <Box className="h-16 w-16">
+                  <ArrowDownZAIcon className="h-16 w-16 rounded-lg bg-snelltechPurple p-4 text-secondary dark:bg-snelltechGreen" />
+                </Box>
+                <Box className="">
+                  At a longer test distance, the effect of small changes in the
+                  subject’s position is less important and can be ignored. As
+                  today’s exam lanes often are smaller than 20 feet (6 meters),
+                  charts are often designed for shorter distances. This is no
+                  problem for visual acuity measurement, as long as the actual
+                  test distance is accurately accounted for.{" "}
+                </Box>
+              </Flex>
             </Flex>
-            <Flex
-              direction="row"
-              gap="4"
-              className="h-full rounded-xl border-2 border-border bg-primary-foreground p-4"
+          </Flex>
+          <Image
+            src="/images/Snellen_distances.png"
+            alt="headset"
+            height="658"
+            width="981"
+            className="bg-primary-background h-auto w-full rounded-xl border-2 border-dashed border-snelltechPurple/40 p-4 dark:invert"
+          />
+        </Grid>
+      </Box>
+      <Box className=" relative z-10 w-full  px-8 py-16 ">
+        <Flex direction="row" gap="8" className="container mx-auto">
+          <Image
+            src="/images/Snellen_chart.svg"
+            alt="headset"
+            height="406"
+            width="325"
+            className="bg-primary-background rounded-xl border-2 border-dashed border-snelltechPurple/40 dark:invert"
+          />
+          <Flex direction="column" gap="8">
+            <Heading
+              className={`font-optiker text-xl font-extrabold tracking-tight sm:text-[3.5rem]`}
             >
-              <Box className="h-16 w-16">
-                <ArrowDownZAIcon className="h-16 w-16 rounded-lg bg-snelltechPurple p-4 text-secondary dark:bg-snelltechGreen" />
-              </Box>
-              <Box className="">
-                At a longer test distance, the effect of small changes in the
-                subject’s position is less important and can be ignored. As
-                today’s exam lanes often are smaller than 20 feet (6 meters),
-                charts are often designed for shorter distances. This is no
-                problem for visual acuity measurement, as long as the actual
-                test distance is accurately accounted for.{" "}
-              </Box>
+              Use the{" "}
+              <Text className="text-snelltechPurple dark:text-snelltechGreen">
+                SNELLEN
+              </Text>{" "}
+              Test
+            </Heading>
+            <Flex
+              direction="column"
+              justify="between"
+              gap="4"
+              className="h-full text-sm lg:text-lg "
+            >
+              <Flex
+                direction="row"
+                gap="4"
+                className="h-full rounded-xl border-2 border-border bg-primary-foreground p-4"
+              >
+                <Box className="h-16 w-16">
+                  <ViewIcon className="h-16 w-16 rounded-lg bg-snelltechPurple p-4 text-secondary dark:bg-snelltechGreen" />
+                </Box>
+                <Box className="">
+                  It is a persistent urban legend that 20/20 would represent
+                  normal, average or even perfect vision. This is not so.
+                  Snellen deliberately chose his reference standard (5 min of
+                  arc) as a size that is “easily recognized by normal eyes.”
+                  Thus, almost all normal eyes will equal or exceed the
+                  reference standard. If 20/20 equaled average acuity, half of
+                  the population would fall short of 20/20, since that is the
+                  definition of average.
+                </Box>
+              </Flex>
+              <Flex
+                direction="row"
+                gap="4"
+                className="h-full rounded-xl border-2 border-border bg-primary-foreground p-4"
+              >
+                <Box className="h-16 w-16">
+                  <GoalIcon className="h-16 w-16 rounded-lg bg-snelltechPurple p-4 text-secondary dark:bg-snelltechGreen" />
+                </Box>
+                <Box className="">
+                  Visual acuity values are understood best by the following
+                  simple rule. On a Snellen chart we determine the line that the
+                  person can just recognize. If that line is twice as large as
+                  the reference standard (20/20), we state that that person’s
+                  MAgnification Requirement (MAR) is 2x. If the MAgnification
+                  Requirement is 2x, the visual acuity is 1/2 (20/40).
+                  Similarly, if the MAgnification Requirement (MAR) is 5x, the
+                  visual acuity is 1/5 (20/100); if MAR = 10, visual acuity =
+                  1/10 (20/200), and so on.
+                </Box>
+              </Flex>
             </Flex>
           </Flex>
         </Flex>
-        <Image
-          src="/images/Snellen_distances.png"
-          alt="headset"
-          height="658"
-          width="981"
-          className="bg-primary-background h-auto w-full rounded-xl border-2 border-dashed border-snelltechPurple/40 p-4 dark:invert"
-        />
-      </Grid>
-      <Flex
-        direction="row"
-        gap="8"
-        className=" relative z-10 w-full  px-8 py-16 "
-      >
-        <Image
-          src="/images/Snellen_chart.svg"
-          alt="headset"
-          height="406"
-          width="325"
-          className="bg-primary-background rounded-xl border-2 border-dashed border-snelltechPurple/40 dark:invert"
-        />
-        <Flex direction="column" gap="8">
-          <Heading
-            className={`font-optiker text-xl font-extrabold tracking-tight sm:text-[3.5rem]`}
-          >
-            Use the{" "}
-            <Text className="text-snelltechPurple dark:text-snelltechGreen">
-              SNELLEN
-            </Text>{" "}
-            Test
-          </Heading>
-          <Flex
-            direction="column"
-            justify="between"
-            gap="4"
-            className="h-full text-sm lg:text-lg "
-          >
-            <Flex
-              direction="row"
-              gap="4"
-              className="h-full rounded-xl border-2 border-border bg-primary-foreground p-4"
-            >
-              <Box className="h-16 w-16">
-                <ViewIcon className="h-16 w-16 rounded-lg bg-snelltechPurple p-4 text-secondary dark:bg-snelltechGreen" />
-              </Box>
-              <Box className="">
-                It is a persistent urban legend that 20/20 would represent
-                normal, average or even perfect vision. This is not so. Snellen
-                deliberately chose his reference standard (5 min of arc) as a
-                size that is “easily recognized by normal eyes.” Thus, almost
-                all normal eyes will equal or exceed the reference standard. If
-                20/20 equaled average acuity, half of the population would fall
-                short of 20/20, since that is the definition of average.
-              </Box>
-            </Flex>
-            <Flex
-              direction="row"
-              gap="4"
-              className="h-full rounded-xl border-2 border-border bg-primary-foreground p-4"
-            >
-              <Box className="h-16 w-16">
-                <GoalIcon className="h-16 w-16 rounded-lg bg-snelltechPurple p-4 text-secondary dark:bg-snelltechGreen" />
-              </Box>
-              <Box className="">
-                Visual acuity values are understood best by the following simple
-                rule. On a Snellen chart we determine the line that the person
-                can just recognize. If that line is twice as large as the
-                reference standard (20/20), we state that that person’s
-                MAgnification Requirement (MAR) is 2x. If the MAgnification
-                Requirement is 2x, the visual acuity is 1/2 (20/40). Similarly,
-                if the MAgnification Requirement (MAR) is 5x, the visual acuity
-                is 1/5 (20/100); if MAR = 10, visual acuity = 1/10 (20/200), and
-                so on.
-              </Box>
-            </Flex>
-          </Flex>
-        </Flex>
-      </Flex>
+      </Box>
       <Footer />
     </main>
   );

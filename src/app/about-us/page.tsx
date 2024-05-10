@@ -13,12 +13,12 @@ export default function AboutUs() {
           <Image
             src="../images/abstract-art-6.svg"
             alt="abstract"
-            className="absolute left-0 top-0 h-full w-full object-fill opacity-10 dark:invert"
+            className="absolute left-0 top-0 z-[5] h-full w-full object-fill opacity-10 dark:invert"
             height="1000"
             width="1000"
           />
 
-          <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
+          <div className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
             <div className="space-y-4">
               <h1 className="font-optiker text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
                 Meet the Team
