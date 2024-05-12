@@ -2,94 +2,94 @@ export function textSizer(size, distance) {
   switch (size) {
     case 10:
       //distance 2 feet
-      if (distance === 2) return "text-[71.91mm]";
+      if (distance === 2) return "text-[34.92mm]";
       //distance 3 feet
-      if (distance === 3) return "text-[72.91mm]";
+      if (distance === 3) return "text-[52.38mm]";
       //distance 4 feet
-      if (distance === 4) return "text-[73.91mm]";
+      if (distance === 4) return "text-[69.84mm]";
       //distance 5 feet
-      return "text-[78.74mm]";
+      return "text-[87.3mm]";
     case 9:
       //distance 2 feet
-      if (distance === 2) return "text-[60.57mm]";
+      if (distance === 2) return "text-[17.76mm]";
       //distance 3 feet
-      if (distance === 3) return "text-[65.57mm]";
+      if (distance === 3) return "text-[26.64mm]";
       //distance 4 feet
-      if (distance === 4) return "text-[67.21mm]";
+      if (distance === 4) return "text-[35.52mm]";
       //distance 5 feet
-      return "text-[68.58mm]";
+      return "text-[44.4mm]";
     case 8:
       //distance 2 feet
-      if (distance === 2) return "text-[49.21mm]";
+      if (distance === 2) return "text-[12.68mm]";
       //distance 3 feet
-      if (distance === 3) return "text-[52.34mm]";
+      if (distance === 3) return "text-[19.02mm]";
       //distance 4 feet
-      if (distance === 4) return "text-[53.91mm]";
+      if (distance === 4) return "text-[25.36mm]";
       //distance 5 feet
-      return "text-[55.88mm]";
+      return "text-[31.7mm]";
     case 7:
       //distance 2 feet
-      if (distance === 2) return "text-[35.91mm]";
+      if (distance === 2) return "text-[8.88mm]";
       //distance 3 feet
-      if (distance === 3) return "text-[38.41mm]";
+      if (distance === 3) return "text-[13.32mm]";
       //distance 4 feet
-      if (distance === 4) return "text-[39.47mm]";
+      if (distance === 4) return "text-[17.76mm]";
       //distance 5 feet
-      return "text-[45.72mm]";
+      return "text-[22.2mm]";
     case 6:
       //distance 2 feet
-      if (distance === 2) return "text-[25.91mm]";
+      if (distance === 2) return "text-[7.12mm]";
       //distance 3 feet
-      if (distance === 3) return "text-[27.69mm]";
+      if (distance === 3) return "text-[10.68mm]";
       //distance 4 feet
-      if (distance === 4) return "text-[28.51mm]";
+      if (distance === 4) return "text-[14.24mm]";
       //distance 5 feet
-      return "text-[33.02mm]";
+      return "text-[17.8mm]";
     case 5:
       //distance 2 feet
-      if (distance === 2) return "text-[20.17mm]";
+      if (distance === 2) return "text-[5.32mm]";
       //distance 3 feet
-      if (distance === 3) return "text-[21.54mm]";
+      if (distance === 3) return "text-[7.98mm]";
       //distance 4 feet
-      if (distance === 4) return "text-[22.24mm]";
+      if (distance === 4) return "text-[10.64mm]";
       //distance 5 feet
-      return "text-[22.86mm]";
+      return "text-[13.3mm]";
     case 4:
       //distance 2 feet
-      if (distance === 2) return "text-[11.56mm]";
+      if (distance === 2) return "text-[4.44mm]";
       //distance 3 feet
-      if (distance === 3) return "text-[12.37mm]";
+      if (distance === 3) return "text-[6.67mm]";
       //distance 4 feet
-      if (distance === 4) return "text-[13.19mm]";
+      if (distance === 4) return "text-[8.88mm]";
       //distance 5 feet
-      return "text-[17.78mm]";
+      return "text-[11.1mm]";
     case 3:
       //distance 2 feet
-      if (distance === 2) return "text-[8.66mm]";
+      if (distance === 2) return "text-[3.56mm]";
       //distance 3 feet
-      if (distance === 3) return "text-[9.25mm]";
+      if (distance === 3) return "text-[5.34mm]";
       //distance 4 feet
-      if (distance === 4) return "text-[9.76mm]";
+      if (distance === 4) return "text-[7.12mm]";
       //distance 5 feet
-      return "text-[10.16mm]";
+      return "text-[8.9mm]";
     case 2:
       //distance 2 feet
-      if (distance === 2) return "text-[5.77mm]";
+      if (distance === 2) return "text-[2.84mm]";
       //distance 3 feet
-      if (distance === 3) return "text-[6.17mm]";
+      if (distance === 3) return "text-[4.26mm]";
       //distance 4 feet
-      if (distance === 4) return "text-[6.55mm]";
+      if (distance === 4) return "text-[5.68mm]";
       //distance 5 feet
-      return "text-[7.62mm]";
+      return "text-[7.1mm]";
     case 1:
       //distance 2 feet
-      if (distance === 2) return "text-[3.85mm]";
+      if (distance === 2) return "text-[2.24mm]";
       //distance 3 feet
-      if (distance === 3) return "text-[4.12mm]";
+      if (distance === 3) return "text-[3.36mm]";
       //distance 4 feet
-      if (distance === 4) return "text-[4.38mm]";
+      if (distance === 4) return "text-[4.48mm]";
       //distance 5 feet
-      return "text-[5.08mm]";
+      return "text-[5.6mm]";
     default:
       return "";
   }

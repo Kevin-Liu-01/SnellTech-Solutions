@@ -66,17 +66,17 @@ export default function Results(props: { level: number; eye: string }) {
     {
       degree: "20/20",
       equivalent: "Equivalent to 6/6 (non-US)",
-      description: "",
+      description: "Normal vision.",
     },
     {
-      degree: "20/20",
-      equivalent: "Equivalent to 6/6 (non-US)",
-      description: "",
+      degree: "20/15",
+      equivalent: "Equivalent to 6/4.5 (non-US)",
+      description: "Your vision is sharper than average. ",
     },
     {
-      degree: "20/20",
-      equivalent: "Equivalent to 6/6 (non-US)",
-      description: "",
+      degree: "20/10",
+      equivalent: "Equivalent to 6/3 (non-US)",
+      description: "Your vision is sharper than average. ",
     },
   ];
 
@@ -96,61 +96,61 @@ export default function Results(props: { level: number; eye: string }) {
                 checked={props.level > 1}
                 className="accent-snelltechPurple dark:accent-snelltechGreen"
               />
-              Level 1 (20/70), 31mm
+              Level 1 (20/200), (6/60)
             </Flex>
           </Text>
           <Text as="label" size="2">
             <Flex gap="2">
               <Checkbox size="1" checked={props.level > 2} />
-              Level 2 (20/60), 27mm
+              Level 2 (20/100), (6/30)
             </Flex>
           </Text>
           <Text as="label" size="2">
             <Flex gap="2">
               <Checkbox size="1" checked={props.level > 3} />
-              Level 3 (20/50), 22mm
+              Level 3 (20/70), (6/21)
             </Flex>
           </Text>
           <Text as="label" size="2">
             <Flex gap="2">
               <Checkbox size="1" checked={props.level > 4} />
-              Level 4 (20/40), 18mm
+              Level 4 (20/50), (6/15)
             </Flex>
           </Text>
           <Text as="label" size="2">
             <Flex gap="2">
               <Checkbox size="1" checked={props.level > 5} />
-              Level 5 (20/30), 13mm
+              Level 5 (20/40), (6/12)
             </Flex>
           </Text>
           <Text as="label" size="2">
             <Flex gap="2">
               <Checkbox size="1" checked={props.level > 6} />
-              Level 6 (20/20), 9mm
+              Level 6 (20/30), (6/9)
             </Flex>
           </Text>
           <Text as="label" size="2">
             <Flex gap="2">
               <Checkbox size="1" checked={props.level > 7} />
-              Level 7 (15/20), 7mm
+              Level 7 (20/25), (6/7.5)
             </Flex>
           </Text>
           <Text as="label" size="2">
             <Flex gap="2">
               <Checkbox size="1" checked={props.level > 8} />
-              Level 8 (10/20), 4mm
+              Level 8 (20/20), (6/6)
             </Flex>
           </Text>
           <Text as="label" size="2">
             <Flex gap="2">
               <Checkbox size="1" checked={props.level > 9} />
-              Level 9 (7/20), 3mm
+              Level 9 (20/15), (6/4.5)
             </Flex>
           </Text>
           <Text as="label" size="2">
             <Flex gap="2">
               <Checkbox size="1" checked={props.level > 10} />
-              Level 10 (4/20), 2mm
+              Level 10 (20/10), (6/3)
             </Flex>
           </Text>
         </Flex>
