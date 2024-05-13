@@ -125,10 +125,7 @@ export default function ControlPanel(props: {
           <Text className="font-optiker text-3xl">Test Completed</Text>
           <Dropdown eye={props.eye} setEye={props.setEye} />
           <Link href="/profile">
-            <Button
-              className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
-              onClick={() => props.startTest()}
-            >
+            <Button className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen">
               View Results
             </Button>
           </Link>
