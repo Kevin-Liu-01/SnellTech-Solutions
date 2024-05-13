@@ -134,7 +134,7 @@ export default function ControlPanel(props: {
           </Link>
           <Button
             variant="outline"
-            className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
+            className="mt-2 border border-snelltechPurple font-optiker dark:border-snelltechGreen"
             onClick={() => props.startTest()}
           >
             Restart Test
