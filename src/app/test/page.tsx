@@ -153,6 +153,7 @@ export default function Test() {
   //Handle when the test is completed
   const handleTestCompletion = () => {
     setTestCompleted(true);
+    setMic(false);
     speak({
       voice: voice,
       text: "The test is now completed. Your visual acuity results are now available.",
