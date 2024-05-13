@@ -3,15 +3,26 @@
 "use client";
 //State management and mutation functions
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 //Speech recognition and transcription functions
 import { useSpeechRecognition, useSpeechSynthesis } from "react-speech-kit";
 //Component and Icon Libraries
-import { Button, Grid, Flex, Callout, Heading, Box } from "@radix-ui/themes";
+import {
+  Button,
+  Grid,
+  Flex,
+  Callout,
+  Heading,
+  Box,
+  Text,
+  Link,
+} from "@radix-ui/themes";
 import {
   SendIcon,
   ListOrderedIcon,
   TriangleAlertIcon,
   MicIcon,
+  ScanEyeIcon,
 } from "lucide-react";
 import { QuestionMarkIcon } from "@radix-ui/react-icons";
 
@@ -23,6 +34,8 @@ import { createRandomString } from "../_components/test/functions";
 
 //Constructor
 export default function Test() {
+  //Sign-in status
+  const { data: session, status } = useSession();
   //User data
   const [letter, setLetter] = useState(" ");
   const [confetti, setConfetti] = useState(false);
@@ -232,7 +245,38 @@ export default function Test() {
 
   //TSX code for web design
   return (
-    <main className="h-[calc(100vh-6rem)] px-4 font-inter text-primary">
+    <main className="relative h-[calc(100vh-6rem)] px-4 font-inter text-primary">
+      {status == "unauthenticated" && (
+        <Flex
+          justify="center"
+          align="center"
+          className="absolute left-0 top-0 z-50 h-full w-full bg-white/90 text-xl transition-all dark:bg-background/90 "
+        >
+          <Flex
+            justify="center"
+            direction="column"
+            align="center"
+            gap="4"
+            className="mb-12 font-optiker"
+          >
+            <Flex align="center" gap="4">
+              <ScanEyeIcon className="size-12" />
+              <Text>
+                SNELLTECH{" "}
+                <span className="text-snelltechPurple dark:text-snelltechGreen">
+                  SOLUTIONS
+                </span>
+              </Text>
+            </Flex>
+            <Text>Create an account to save your progress.</Text>
+            <Link href={session ? "/api/auth/signout" : "/api/auth/signin"}>
+              <Button className="mt-2 bg-snelltechPurple p-4 font-optiker text-lg dark:bg-snelltechGreen">
+                Sign In
+              </Button>
+            </Link>
+          </Flex>
+        </Flex>
+      )}
       <div className="grid h-full grid-cols-11">
         <section className="col-span-3 flex min-h-full flex-col p-4 pt-0">
           <Flex

@@ -33,6 +33,7 @@
     "react-speech-recognition": "^3.10.0",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
+    "typewriter-effect": "^2.21.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

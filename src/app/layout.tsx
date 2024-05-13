@@ -9,8 +9,8 @@ import type { PropsWithChildren } from "react";
 
 import { Theme, ScrollArea } from "@radix-ui/themes";
 
-// import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider } from "./_components/theme-provider";
+import SessionProvider from "./_components/session-provider";
 import { getServerAuthSession } from "~/server/auth";
 
 import { Navbar } from "~/app/_components/navbar/navbar";
@@ -45,16 +45,16 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <body className={`${inter.variable} ${myFont.variable}`}>
         <TRPCReactProvider>
-          {/* <NextUIProvider> */}
-          <ThemeProvider attribute="class">
-            <Theme radius="large">
-              <ScrollArea className="h-screen">
-                {/* @ts-expect-error: Unreachable code error*/}
-                <Navbar session={session} /> {children}
-              </ScrollArea>
-            </Theme>
-          </ThemeProvider>
-          {/* </NextUIProvider> */}
+          <SessionProvider>
+            <ThemeProvider attribute="class">
+              <Theme radius="large">
+                <ScrollArea className="h-screen">
+                  {/* @ts-expect-error: Unreachable code error*/}
+                  <Navbar session={session} /> {children}
+                </ScrollArea>
+              </Theme>
+            </ThemeProvider>
+          </SessionProvider>
         </TRPCReactProvider>
       </body>
     </html>

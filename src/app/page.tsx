@@ -150,7 +150,7 @@ export default async function Home() {
             alt="headset"
             height="658"
             width="981"
-            className="bg-primary-background h-auto w-full rounded-xl border-2 border-dashed border-snelltechPurple/40 p-4 dark:invert"
+            className="h-auto w-full rounded-xl border-2 border-dashed border-snelltechPurple/40 bg-primary-foreground p-4 dark:bg-primary dark:invert"
           />
         </Grid>
       </Box>
@@ -161,7 +161,7 @@ export default async function Home() {
             alt="headset"
             height="406"
             width="325"
-            className="bg-primary-background rounded-xl border-2 border-dashed border-snelltechPurple/40 dark:invert"
+            className="rounded-xl border-2 border-dashed border-snelltechPurple/40 dark:invert"
           />
           <Flex direction="column" gap="8">
             <Heading
