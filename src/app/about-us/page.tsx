@@ -27,7 +27,7 @@ export default function AboutUs() {
               >
                 <Image
                   alt="Syona Gupta"
-                  className="aspect-[200/200] rounded-full bg-gray-50/30 bg-snelltechPurple object-cover"
+                  className="aspect-[200/200] rounded-full bg-gray-50/30 object-cover"
                   height="200"
                   src="/images/about/SyonaPortrait1.png"
                   width="200"
@@ -44,7 +44,7 @@ export default function AboutUs() {
               >
                 <Image
                   alt="Kevin Liu"
-                  className="aspect-[200/200] rounded-full bg-gray-50/30 bg-snelltechPurple object-cover"
+                  className="aspect-[200/200] rounded-full bg-gray-50/30 object-cover"
                   height="200"
                   src="/images/about/KevinPortrait1.png"
                   width="200"
@@ -61,7 +61,7 @@ export default function AboutUs() {
               >
                 <Image
                   alt="Shravani Vedagiri"
-                  className="aspect-[200/200] rounded-full bg-gray-50/30 bg-snelltechPurple object-cover"
+                  className="aspect-[200/200] rounded-full bg-gray-50/30 object-cover"
                   height="200"
                   src="/images/about/ShravaniPortrait1.png"
                   width="200"
