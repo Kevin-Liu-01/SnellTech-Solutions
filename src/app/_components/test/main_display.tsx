@@ -10,6 +10,7 @@ import {
   Button,
   Progress,
   Spinner,
+  Link,
 } from "@radix-ui/themes";
 import { InfoIcon, RotateCcwIcon } from "lucide-react";
 import { textSizer } from "./functions";
@@ -97,7 +98,7 @@ export default function ControlPanel(props: {
             <Button
               variant="outline"
               className="mt-2 font-optiker"
-              onClick={() => props.cancel}
+              onClick={() => props.cancel()}
             >
               Stop Narration
             </Button>
@@ -123,8 +124,16 @@ export default function ControlPanel(props: {
         >
           <Text className="font-optiker text-3xl">Test Completed</Text>
           <Dropdown eye={props.eye} setEye={props.setEye} />
-
+          <Link href="/profile">
+            <Button
+              className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
+              onClick={() => props.startTest()}
+            >
+              View Results
+            </Button>
+          </Link>
           <Button
+            variant="outline"
             className="mt-2 bg-snelltechPurple font-optiker dark:bg-snelltechGreen"
             onClick={() => props.startTest()}
           >
