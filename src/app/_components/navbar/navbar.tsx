@@ -98,7 +98,7 @@ export const Navbar = (props: {
                   align="center"
                   className=" text-snelltechPurple transition-all dark:text-snelltechGreen "
                 >
-                  <Text className="pr-3 font-optiker ">Sign In</Text>
+                  <Text className="pr-3 font-optiker ">Guest</Text>
                   <Box>
                     <CircleUserRound className="size-9" />
                   </Box>
@@ -140,7 +140,7 @@ export const Navbar = (props: {
               <Link
                 href={props.session ? "/api/auth/signout" : "/api/auth/signin"}
               >
-                <button className="rounded-full font-inter font-semibold no-underline transition">
+                <button className="rounded-full font-optiker no-underline transition">
                   {props.session ? "Sign Out" : "Sign In"}
                 </button>
               </Link>

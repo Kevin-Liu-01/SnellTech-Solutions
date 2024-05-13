@@ -1,6 +1,12 @@
 "use client";
-import { Heading, Callout, Grid, Box } from "@radix-ui/themes";
-import { ListOrderedIcon, TriangleAlertIcon } from "lucide-react";
+import { Heading, Callout, Grid, Box, Flex } from "@radix-ui/themes";
+import {
+  ListOrderedIcon,
+  TriangleAlertIcon,
+  ViewIcon,
+  GlassesIcon,
+  SquareSigmaIcon,
+} from "lucide-react";
 import List from "../_components/test/list";
 import Footer from "../_components/footer";
 
@@ -36,9 +42,10 @@ export default function Instructions() {
         </Callout.Root>
         <Grid columns="3" gap="4" className="font-inter text-sm">
           <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Heading className="mb-2 font-optiker">
-              Visual Acuity Testing
-            </Heading>
+            <Flex className="mb-2 " align="center" gap="2">
+              <ViewIcon className="size-8" />
+              <Heading className="font-optiker">Visual Acuity Testing</Heading>
+            </Flex>
             {`During the Covid-19 pandemic, home visual acuity testing became an
           important part of telemedicine for eye care. A variety of home tests
           are available in print, on smartphone apps or the internet. These
@@ -47,9 +54,12 @@ export default function Instructions() {
           test. There is no discomfort. `}
           </Box>
           <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Heading className="mb-2 font-optiker">
-              Why the Test is Performed
-            </Heading>
+            <Flex className="mb-2 " align="center" gap="2">
+              <GlassesIcon className="size-8" />
+              <Heading className="font-optiker">
+                Why the Test is Performed
+              </Heading>
+            </Flex>
             The visual acuity test is a routine part of an eye examination or
             general physical examination, particularly if there is a change in
             vision or a problem with vision. In children, the test is performed
@@ -58,7 +68,10 @@ export default function Instructions() {
             lead to permanent vision damage.
           </Box>
           <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Heading className="mb-2 font-optiker">Normal Results</Heading>
+            <Flex className="mb-2 " align="center" gap="2">
+              <SquareSigmaIcon className="size-8" />
+              <Heading className="font-optiker">Normal Results</Heading>
+            </Flex>
             Visual acuity is expressed as a fraction. The top number refers to
             the distance you stand from the chart. The bottom number indicates
             the distance at which a person with normal eyesight could read the

@@ -1,5 +1,5 @@
 "use client";
-import { Link, Flex } from "@radix-ui/themes";
+import { Link, Flex, Grid, Box, Text } from "@radix-ui/themes";
 import Footer from "../_components/footer";
 import { CheckIcon } from "lucide-react";
 import Image from "next/image";
@@ -9,34 +9,42 @@ export default function AboutUs() {
   return (
     <>
       <main className="h-[calc(100vh-6rem)] font-inter text-primary">
-        <section className="relative w-full overflow-hidden bg-snelltechPurple/50 px-4 py-12 dark:bg-snelltechGreen/70">
-          <div className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
-            <div className="space-y-4">
-              <h1 className="font-optiker text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
+        <section className="relative w-full overflow-hidden bg-snelltechPurple/60 px-4 py-20 dark:bg-snelltechGreen">
+          <Box className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
+            <Box className="space-y-4">
+              <Text className="font-optiker text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
                 Meet the Team
-              </h1>
-              <p className="max-w-[600px] text-xl text-foreground/70">
+              </Text>
+              <p className="max-w-[600px] text-xl text-foreground/80">
                 The student team behind Snelltech Solutions.
               </p>
-            </div>
-            <div className="grid grid-cols-3 gap-8">
-              <div className="space-y-2 text-center">
+            </Box>
+            <Grid gap="8" columns="3">
+              <Flex
+                direction="column"
+                align="center"
+                className="space-y-2 text-center"
+              >
                 <Image
                   alt="Syona Gupta"
-                  className="aspect-[200/200] rounded-full object-cover"
+                  className="aspect-[200/200] rounded-full bg-gray-50/30 bg-snelltechPurple object-cover"
                   height="200"
-                  src="/images/about/SyonaPortrait1.jpeg"
+                  src="/images/about/SyonaPortrait1.png"
                   width="200"
                 />
                 <h3 className="text-lg font-semibold">Syona Gupta</h3>
                 <p className="text-sm text-foreground/70">
                   Project Lead, 3D Modelling/Printing
                 </p>
-              </div>
-              <div className="space-y-2 text-center">
+              </Flex>
+              <Flex
+                direction="column"
+                align="center"
+                className="space-y-2 text-center"
+              >
                 <Image
                   alt="Kevin Liu"
-                  className="aspect-[200/200] rounded-full bg-snelltechPurple object-cover dark:bg-snelltechGreen"
+                  className="aspect-[200/200] rounded-full bg-gray-50/30 bg-snelltechPurple object-cover"
                   height="200"
                   src="/images/about/KevinPortrait1.png"
                   width="200"
@@ -45,11 +53,15 @@ export default function AboutUs() {
                 <p className="text-sm text-foreground/70">
                   Software Development, Research, UI/UX
                 </p>
-              </div>
-              <div className="space-y-2 text-center">
+              </Flex>
+              <Flex
+                direction="column"
+                align="center"
+                className="space-y-2 text-center"
+              >
                 <Image
                   alt="Shravani Vedagiri"
-                  className="aspect-[200/200] rounded-full object-cover"
+                  className="aspect-[200/200] rounded-full bg-gray-50/30 bg-snelltechPurple object-cover"
                   height="200"
                   src="/images/about/ShravaniPortrait1.png"
                   width="200"
@@ -58,12 +70,12 @@ export default function AboutUs() {
                 <p className="text-sm text-foreground/70">
                   Design, Prototyping, Documentation
                 </p>
-              </div>
-            </div>
-          </div>
+              </Flex>
+            </Grid>
+          </Box>
         </section>
         <section className="w-full px-8 py-24 md:px-16">
-          <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
+          <Box className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
             <Flex gap="4" direction="column">
               <h2 className="font-optiker text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
                 Key Features
@@ -97,7 +109,7 @@ export default function AboutUs() {
                 Try the Test
               </Link>
             </Flex>
-            <div className="grid grid-cols-2 gap-4">
+            <Grid gap="4" columns="2">
               <Image
                 alt="headset"
                 className="aspect-[300/300] rounded-xl object-cover"
@@ -126,8 +138,8 @@ export default function AboutUs() {
                 src="/images/about/about_tech.png"
                 width="300"
               />
-            </div>
-          </div>
+            </Grid>
+          </Box>
         </section>
         <Footer />
       </main>
