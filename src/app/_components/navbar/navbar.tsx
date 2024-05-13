@@ -74,17 +74,23 @@ export const Navbar = (props: {
               {props.session ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <Flex align="center">
-                  <Text className="pr-3 font-optiker ">
+                  <Text className="pr-3 font-optiker text-snelltechPurple transition-all dark:text-snelltechGreen ">
                     {props.session?.user?.name}
                   </Text>
                   <Box>
-                    <Image
-                      src={props.session.user.image}
-                      alt="user"
-                      height="36"
-                      width="36"
-                      className="size-9 rounded-full"
-                    />
+                    {props.session.user.image ? (
+                      <Image
+                        src={props.session.user.image}
+                        alt="user"
+                        height="36"
+                        width="36"
+                        className="size-9 rounded-full"
+                      />
+                    ) : (
+                      <Box>
+                        <CircleUserRound className="size-9" />
+                      </Box>
+                    )}
                   </Box>
                 </Flex>
               ) : (
@@ -121,7 +127,7 @@ export const Navbar = (props: {
                   </div>
                 </DropdownMenu.Item>
                 <DropdownMenu.Item>
-                  <Link href="/api/auth/signout">
+                  <Link href="/profile">
                     <button className="font-semibold no-underline  transition">
                       View Profile
                     </button>

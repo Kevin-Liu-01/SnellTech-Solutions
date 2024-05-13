@@ -3,6 +3,7 @@
 "use client";
 //State management and mutation functions
 import { useState, useEffect } from "react";
+//User session and authentication
 import { useSession } from "next-auth/react";
 //Speech recognition and transcription functions
 import { useSpeechRecognition, useSpeechSynthesis } from "react-speech-kit";
@@ -250,7 +251,7 @@ export default function Test() {
         <Flex
           justify="center"
           align="center"
-          className="absolute left-0 top-0 z-50 h-full w-full bg-white/90 text-xl transition-all dark:bg-background/90 "
+          className="absolute left-0 top-0 z-50 h-full w-full bg-white/90 text-xl transition-all dark:bg-[#111113]/90 "
         >
           <Flex
             justify="center"

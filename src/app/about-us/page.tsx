@@ -30,7 +30,7 @@ export default function AboutUs() {
             <div className="grid grid-cols-3 gap-8">
               <div className="space-y-2 text-center">
                 <Image
-                  alt="John Doe"
+                  alt="Syona Gupta"
                   className="aspect-[200/200] rounded-full object-cover"
                   height="200"
                   src="/images/about/SyonaPortrait1.jpeg"
@@ -43,7 +43,7 @@ export default function AboutUs() {
               </div>
               <div className="space-y-2 text-center">
                 <Image
-                  alt="John Doe"
+                  alt="Kevin Liu"
                   className="aspect-[200/200] rounded-full bg-snelltechPurple object-cover dark:bg-snelltechGreen"
                   height="200"
                   src="/images/about/KevinPortrait1.png"
@@ -56,10 +56,10 @@ export default function AboutUs() {
               </div>
               <div className="space-y-2 text-center">
                 <Image
-                  alt="John Doe"
+                  alt="Shravani Vedagiri"
                   className="aspect-[200/200] rounded-full object-cover"
                   height="200"
-                  src="/images/about/ShravaniPortrait.jpeg"
+                  src="/images/about/ShravaniPortrait1.png"
                   width="200"
                 />
                 <h3 className="text-lg font-semibold">Shravani Vedagiri</h3>

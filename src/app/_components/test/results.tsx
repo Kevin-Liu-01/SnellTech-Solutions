@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Flex,
   Text,
@@ -10,6 +8,9 @@ import {
   Tooltip,
 } from "@radix-ui/themes";
 import { CopyIcon } from "lucide-react";
+//Cookie storage
+import { setCookie } from "cookies-next";
+
 export default function Results(props: { level: number; eye: string }) {
   const results = [
     {
@@ -79,6 +80,10 @@ export default function Results(props: { level: number; eye: string }) {
       description: "Your vision is sharper than average. ",
     },
   ];
+
+  //set cookie for visual acuity level for both eyes
+  const degree = results[props.level] ?? ""; // Using default value if it's undefined
+  setCookie(props.eye, degree);
 
   return (
     <Grid
