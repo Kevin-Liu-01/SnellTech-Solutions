@@ -9,15 +9,7 @@ export default function AboutUs() {
   return (
     <>
       <main className="h-[calc(100vh-6rem)] font-inter text-primary">
-        <section className="relative w-full overflow-hidden bg-snelltechPurple/50 px-4 py-24 dark:bg-snelltechGreen/70">
-          <Image
-            src="../images/abstract-art-6.svg"
-            alt="abstract"
-            className="absolute left-0 top-0 z-[5] h-full w-full object-fill opacity-10 dark:invert"
-            height="1000"
-            width="1000"
-          />
-
+        <section className="relative w-full overflow-hidden bg-snelltechPurple/50 px-4 py-12 dark:bg-snelltechGreen/70">
           <div className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
             <div className="space-y-4">
               <h1 className="font-optiker text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
@@ -37,7 +29,7 @@ export default function AboutUs() {
                   width="200"
                 />
                 <h3 className="text-lg font-semibold">Syona Gupta</h3>
-                <p className="text-foreground/70 dark:text-gray-300">
+                <p className="text-sm text-foreground/70">
                   Project Lead, 3D Modelling/Printing
                 </p>
               </div>
@@ -50,7 +42,7 @@ export default function AboutUs() {
                   width="200"
                 />
                 <h3 className="text-lg font-semibold">Kevin Liu</h3>
-                <p className="text-foreground/70">
+                <p className="text-sm text-foreground/70">
                   Software Development, Research, UI/UX
                 </p>
               </div>
@@ -63,7 +55,7 @@ export default function AboutUs() {
                   width="200"
                 />
                 <h3 className="text-lg font-semibold">Shravani Vedagiri</h3>
-                <p className="text-foreground/70">
+                <p className="text-sm text-foreground/70">
                   Design, Prototyping, Documentation
                 </p>
               </div>
