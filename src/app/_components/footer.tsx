@@ -5,7 +5,7 @@ import { ScanEyeIcon } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="relative flex w-full items-center justify-between p-6 md:p-12">
+    <footer className="relative z-50 flex w-full items-center justify-between p-6 md:p-12">
       <Flex align="center" gap="4">
         <ScanEyeIcon className="h-8 w-8 " />
         <Flex

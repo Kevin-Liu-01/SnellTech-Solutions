@@ -43,7 +43,7 @@ export default function Profile() {
           <Flex
             justify="center"
             align="center"
-            className="absolute left-0 top-0 z-50 h-full w-full bg-white text-xl transition-all dark:bg-[#111113] "
+            className="absolute left-0 top-0 z-50 h-full w-full bg-white/90 text-xl transition-all dark:bg-[#111113]/90 "
           >
             <Flex
               justify="center"
@@ -70,131 +70,133 @@ export default function Profile() {
             </Flex>
           </Flex>
         ) : (
-          <>
-            <section className="relative w-full overflow-hidden bg-snelltechPurple/50 px-4 py-8 dark:bg-snelltechGreen/70">
-              <Image
-                src="../images/abstract.svg"
-                alt="abstract"
-                className="absolute left-0 top-0 z-[5] h-full w-full object-fill opacity-10 dark:invert"
-                height="1000"
-                width="1000"
-              />
-
-              <div className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
-                <div className="space-y-4">
-                  <h1 className="font-optiker text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
-                    Welcome, {session?.user?.name ?? "User"}
-                  </h1>
-                  <p className="max-w-[600px] text-xl text-foreground/70">
-                    View your results below.
-                  </p>
-                </div>
-
-                <Flex justify="center" align="center" direction="column">
-                  {session?.user?.image ? (
-                    <Image
-                      src={session?.user?.image}
-                      alt="user"
-                      height="200"
-                      width="200"
-                      className="aspect-[200/200] rounded-full bg-snelltechPurple object-cover dark:bg-snelltechGreen"
-                    />
-                  ) : (
-                    <Box>
-                      <CircleUserRound
-                        height="200"
-                        width="200"
-                        className="aspect-[200/200] rounded-full bg-snelltechPurple object-cover text-white dark:bg-snelltechGreen"
-                      />
-                    </Box>
-                  )}
-
-                  <h3 className="text-lg font-semibold">
-                    Email: {session?.user?.email ?? "None"}
-                  </h3>
-                  <p className="text-foreground/70">
-                    ID: {session?.user?.id ?? "None"}{" "}
-                  </p>
-                </Flex>
-              </div>
-            </section>
-            <section className="w-full px-8 py-12 md:px-16">
-              <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
-                <Flex
-                  direction="column"
-                  className="relative h-full rounded-lg border-2 border-dashed border-primary/20 bg-background p-4 font-inter text-sm text-primary dark:bg-secondary"
-                >
-                  <Text className="font-optiker text-4xl">Left Eye</Text>
-                  <Separator my="2" size="4" />
-                  <Tooltip content="Copy visual acuity">
-                    <IconButton
-                      size="1"
-                      aria-label="Copy value"
-                      color="gray"
-                      variant="ghost"
-                      onClick={() =>
-                        navigator.clipboard.writeText(left?.degree ?? "")
-                      }
-                      className="absolute right-0 top-0 m-4"
-                    >
-                      <CopyIcon />
-                    </IconButton>
-                  </Tooltip>
-
-                  <Text className="font-optiker text-4xl font-extrabold">
-                    {left?.degree ?? "0/20"}
-                  </Text>
-                  <Text className="font-optiker">Visual Acuity</Text>
-                  <Separator my="2" size="4" />
-                  <Text className="text-sm">
-                    {left?.equivalent ?? "No data"}
-                  </Text>
-                  <Separator my="2" size="4" />
-                  <Text className="text-xs">
-                    {left?.description ??
-                      "Take the test to get your visual acuity for your left eye!"}
-                  </Text>
-                </Flex>
-                <Flex
-                  direction="column"
-                  className="relative h-full rounded-lg border-2 border-dashed border-primary/20 bg-background p-4 font-inter text-sm text-primary dark:bg-secondary"
-                >
-                  <Text className="font-optiker text-4xl">Right Eye</Text>
-                  <Separator my="2" size="4" />
-                  <Tooltip content="Copy visual acuity">
-                    <IconButton
-                      size="1"
-                      aria-label="Copy value"
-                      color="gray"
-                      variant="ghost"
-                      onClick={() =>
-                        navigator.clipboard.writeText(right?.degree ?? "")
-                      }
-                      className="absolute right-0 top-0 m-4"
-                    >
-                      <CopyIcon />
-                    </IconButton>
-                  </Tooltip>
-
-                  <Text className="font-optiker text-4xl font-extrabold">
-                    {right?.degree ?? "0/20"}
-                  </Text>
-                  <Text className="font-optiker">Visual Acuity</Text>
-                  <Separator my="2" size="4" />
-                  <Text className="text-sm">
-                    {right?.equivalent ?? "No data"}
-                  </Text>
-                  <Separator my="2" size="4" />
-                  <Text className="text-xs">
-                    {right?.description ??
-                      "Take the test to get your visual acuity for your left eye!"}
-                  </Text>
-                </Flex>
-              </div>
-            </section>
-            <Footer />
-          </>
+          <></>
         )}
+        <section className="relative w-full overflow-hidden bg-snelltechPurple/50 px-4 py-8 dark:bg-snelltechGreen/70">
+          <Flex
+            gap="8"
+            align="center"
+            className="container relative z-10 mx-auto px-4 md:px-6"
+          >
+            {session?.user?.image ? (
+              <Image
+                src={session?.user?.image}
+                alt="user"
+                height="200"
+                width="200"
+                className="aspect-[200/200] rounded-full bg-snelltechPurple object-cover dark:bg-snelltechGreen"
+              />
+            ) : (
+              <Box>
+                <CircleUserRound
+                  height="200"
+                  width="200"
+                  className="aspect-[200/200] rounded-full bg-snelltechPurple object-cover text-white dark:bg-snelltechGreen"
+                />
+              </Box>
+            )}
+            <Flex direction="column" className="space-y-4">
+              <Flex
+                direction="column"
+                className="font-optiker text-3xl font-bold tracking-tight"
+              >
+                Welcome,
+                <Text className="text-5xl  sm:text-6xl md:text-7xl">
+                  {session?.user?.name ?? "User"}
+                </Text>
+              </Flex>
+              <Flex
+                direction="column"
+                gap="2"
+                className="max-w-[600px] text-lg font-semibold text-foreground/70"
+              >
+                <Text className="">
+                  Email: {session?.user?.email ?? "None"}
+                </Text>
+                <Text className="">ID: {session?.user?.id ?? "None"} </Text>
+              </Flex>
+            </Flex>
+            <Box className="rotate absolute right-[4rem] z-[5] dark:invert">
+              <Image
+                src="/images/surreal-flying-bulbs.svg"
+                height="500"
+                width="500"
+                alt="freelancer"
+              />
+            </Box>
+          </Flex>
+        </section>
+        <section className="w-full px-8 py-12 md:px-16">
+          <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
+            <Flex
+              direction="column"
+              className="relative h-full rounded-lg border-2 border-dashed border-primary/20 bg-background p-4 font-inter text-sm text-primary dark:bg-secondary"
+            >
+              <Text className="font-optiker text-4xl">Left Eye</Text>
+              <Separator my="2" size="4" />
+              <Tooltip content="Copy visual acuity">
+                <IconButton
+                  size="1"
+                  aria-label="Copy value"
+                  color="gray"
+                  variant="ghost"
+                  onClick={() =>
+                    navigator.clipboard.writeText(left?.degree ?? "")
+                  }
+                  className="absolute right-0 top-0 m-4"
+                >
+                  <CopyIcon />
+                </IconButton>
+              </Tooltip>
+
+              <Text className="font-optiker text-5xl font-extrabold">
+                {left?.degree ?? "0/20"}
+              </Text>
+              <Text className="font-optiker text-2xl">Visual Acuity</Text>
+              <Separator my="2" size="4" />
+              <Text className="text-lg">{left?.equivalent ?? "No data"}</Text>
+              <Separator my="2" size="4" />
+              <Text className="text-base">
+                {left?.description ??
+                  "Take the test to get your visual acuity for your left eye!"}
+              </Text>
+            </Flex>
+            <Flex
+              direction="column"
+              className="relative h-full rounded-lg border-2 border-dashed border-primary/20 bg-background p-4 font-inter text-sm text-primary dark:bg-secondary"
+            >
+              <Text className="font-optiker text-4xl">Right Eye</Text>
+              <Separator my="2" size="4" />
+              <Tooltip content="Copy visual acuity">
+                <IconButton
+                  size="1"
+                  aria-label="Copy value"
+                  color="gray"
+                  variant="ghost"
+                  onClick={() =>
+                    navigator.clipboard.writeText(right?.degree ?? "")
+                  }
+                  className="absolute right-0 top-0 m-4"
+                >
+                  <CopyIcon />
+                </IconButton>
+              </Tooltip>
+
+              <Text className="font-optiker text-5xl font-extrabold">
+                {right?.degree ?? "0/20"}
+              </Text>
+              <Text className="font-optiker text-2xl">Visual Acuity</Text>
+              <Separator my="2" size="4" />
+              <Text className="text-lg">{right?.equivalent ?? "No data"}</Text>
+              <Separator my="2" size="4" />
+              <Text className="text-base">
+                {right?.description ??
+                  "Take the test to get your visual acuity for your left eye!"}
+              </Text>
+            </Flex>
+          </div>
+        </section>
+        <Footer />
       </main>
     </>
   );
