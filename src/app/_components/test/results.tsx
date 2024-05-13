@@ -9,7 +9,7 @@ import {
 } from "@radix-ui/themes";
 import { CopyIcon } from "lucide-react";
 //Cookie storage
-import { setCookie, getCookie } from "cookies-next";
+import { setCookie } from "cookies-next";
 
 export default function Results(props: { level: number; eye: string }) {
   const results = [
@@ -84,7 +84,6 @@ export default function Results(props: { level: number; eye: string }) {
   //set cookie for visual acuity level for both eyes
   const degree = results[props.level] ?? ""; // Using default value if it's undefined
   setCookie(props.eye, degree);
-  console.log(getCookie(props.eye));
 
   return (
     <Grid

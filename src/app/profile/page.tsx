@@ -26,20 +26,15 @@ interface CookieData {
 export default function Profile() {
   const { data: session, status } = useSession();
 
-  const leftCookie = getCookie("left");
+  const leftCookie = getCookie("Left");
   const left: CookieData | null = leftCookie
     ? (JSON.parse(leftCookie) as CookieData)
     : null;
 
-  const rightCookie = getCookie("right");
+  const rightCookie = getCookie("Right");
   const right: CookieData | null = rightCookie
     ? (JSON.parse(rightCookie) as CookieData)
     : null;
-
-  console.log(left);
-  console.log(right);
-
-  console.log(session);
 
   return (
     <>
