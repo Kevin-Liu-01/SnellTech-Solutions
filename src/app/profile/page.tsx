@@ -36,6 +36,11 @@ export default function Profile() {
     ? (JSON.parse(rightCookie) as CookieData)
     : null;
 
+  console.log(left);
+  console.log(right);
+
+  console.log(session);
+
   return (
     <>
       <main className="relative h-[calc(100vh-6rem)] font-inter text-primary">
