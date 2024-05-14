@@ -8,7 +8,7 @@ import Image from "next/image";
 export default function Error() {
   return (
     <>
-      <main className="relative h-[calc(100vh-6rem)] font-inter text-primary">
+      <main className="relative h-[calc(100vh-6rem)] px-4 font-inter text-primary md:px-8">
         <Flex
           justify="center"
           align="center"

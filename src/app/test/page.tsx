@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
@@ -75,17 +76,17 @@ export default function Test() {
     if (incorrectGuesses === 3) {
       handleTooManyIncorrect();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [incorrectGuesses]);
 
   //If user guesses a letter correctly, it will trigger the correct question handler
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    const correctGuessesLimit = Math.min(level[eye.toLowerCase()], 5);
-    if (correctGuesses === correctGuessesLimit) {
-      handleCorrectGuess();
+    if (eye !== undefined) {
+      const eyeKey = eye.toLowerCase() as keyof typeof level;
+      const correctGuessesLimit = Math.min(level[eyeKey], 5);
+      if (correctGuesses === correctGuessesLimit) {
+        handleCorrectGuess();
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [correctGuesses, level, eye]);
 
   //If user enables/disables the mic, this function will detect it
@@ -102,7 +103,6 @@ export default function Test() {
   // Effect to handle spoken letters if user chooses to complete test with voice
   useEffect(() => {
     if (testStarted) {
-      console.log(transcript);
       if (transcript.endsWith("don't know")) {
         submitWrongHandler();
       } else if (transcript.charAt(transcript.length - 2) == " ") {
@@ -110,7 +110,6 @@ export default function Test() {
         submitHandler();
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transcript]);
 
   // Function to handle when test ends from too many incorrect
@@ -215,7 +214,7 @@ export default function Test() {
       voice: voice,
       text: `When a letter appears on the screen, say the letter out loud. Upon completion of your first eye, you will be prompted to switch to your other eye. The test is beginning now.`,
     });
-    setTimeout(() => startTest(), 3000);
+    setTimeout(() => startTest(), 33000);
   };
 
   // Handler to determine behavior after user guesses the letter
@@ -248,7 +247,7 @@ export default function Test() {
   //TSX code for web design
   return (
     <main className="relative h-[calc(100vh-6rem)] px-4 font-inter text-primary">
-      {status == "unauthenticated" && (
+      {status !== "authenticated" && (
         <Flex
           justify="center"
           align="center"
