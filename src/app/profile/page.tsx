@@ -39,7 +39,7 @@ export default function Profile() {
   return (
     <>
       <main className="relative h-[calc(100vh-6rem)] font-inter text-primary">
-        {status == "unauthenticated" ? (
+        {status !== "authenticated" ? (
           <Flex
             justify="center"
             align="center"
@@ -72,7 +72,7 @@ export default function Profile() {
         ) : (
           <></>
         )}
-        <Flex direction="column" justify="between" className="h-full">
+        <Flex direction="column" justify="start" className="h-full">
           <section className="relative w-full overflow-hidden bg-snelltechPurple/50 px-4 py-8 dark:bg-snelltechGreen/70">
             <Flex
               gap="8"
@@ -198,9 +198,9 @@ export default function Profile() {
                 </Text>
               </Flex>
             </div>
-          </section>{" "}
-          <Footer />
+          </section>
         </Flex>
+        <Footer />
       </main>
     </>
   );
