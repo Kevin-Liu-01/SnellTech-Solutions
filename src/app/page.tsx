@@ -85,13 +85,15 @@ export default async function Home() {
             fill
             className="absolute z-20 h-full opacity-80 dark:invert"
           />
-          <Image
-            src="/images/headset.png"
-            alt="headset"
-            height="2000"
-            width="2000"
-            className="relative z-30 ml-auto mr-0 h-full w-auto"
-          />
+          <Box className="h-full">
+            <Image
+              src="/images/headset_model.png"
+              alt="headset"
+              height="2000"
+              width="2000"
+              className="relative z-30 ml-auto mr-12 h-full w-auto"
+            />
+          </Box>
         </div>
       </header>
       <Box className=" relative z-10 grid w-full bg-secondary px-8 py-16 dark:bg-background ">
