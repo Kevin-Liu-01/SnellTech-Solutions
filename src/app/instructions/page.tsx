@@ -1,14 +1,9 @@
 "use client";
-import { Heading, Callout, Grid, Box, Flex } from "@radix-ui/themes";
-import {
-  ListOrderedIcon,
-  TriangleAlertIcon,
-  ViewIcon,
-  GlassesIcon,
-  SquareSigmaIcon,
-} from "lucide-react";
+import { Heading, Callout, Grid, Flex, Separator } from "@radix-ui/themes";
+import { ListOrderedIcon, TriangleAlertIcon } from "lucide-react";
 import List from "../_components/test/list";
 import Footer from "../_components/footer";
+import { ImageCard } from "../_components/image-card";
 
 // Font files can be colocated inside of `pages`b
 export default function Instructions() {
@@ -16,11 +11,14 @@ export default function Instructions() {
     <>
       <Grid
         gap="4"
-        className="h-[calc(100vh-6rem)] px-8 py-4 font-inter text-primary"
+        className="min-h-[calc(100vh-6rem)] px-8 py-4 font-inter text-primary"
       >
-        <Heading className="flex items-center font-optiker text-2xl">
-          <ListOrderedIcon className="my-auto mr-2 size-8" />
-          Instructions
+        <Heading className="flex flex-col font-optiker text-xl">
+          <Flex>
+            <ListOrderedIcon className="my-auto mr-2 size-8" />
+            Headset Instructions
+          </Flex>
+          <Separator mt="2" size="4" />
         </Heading>
         <Callout.Root className="flex items-center bg-snelltechPurple/20 font-optiker text-snelltechPurple dark:bg-snelltechGreen/20 dark:text-snelltechGreen">
           <Callout.Icon>
@@ -40,46 +38,61 @@ export default function Instructions() {
           possible.`}
           </Callout.Text>
         </Callout.Root>
-        <Grid columns="3" gap="4" className="font-inter text-sm">
-          <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Flex className="mb-2 " align="center" gap="2">
-              <ViewIcon className="size-8" />
-              <Heading className="font-optiker">Visual Acuity Testing</Heading>
-            </Flex>
-            {`During the Covid-19 pandemic, home visual acuity testing became an
-          important part of telemedicine for eye care. A variety of home tests
-          are available in print, on smartphone apps or the internet. These
-          tests have been found to be almost as accurate as a test performed in
-          a provider's office. No special preparation is necessary for this
-          test. There is no discomfort. `}
-          </Box>
-          <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Flex className="mb-2 " align="center" gap="2">
-              <GlassesIcon className="size-8" />
-              <Heading className="font-optiker">
-                Why the Test is Performed
-              </Heading>
-            </Flex>
-            The visual acuity test is a routine part of an eye examination or
-            general physical examination, particularly if there is a change in
-            vision or a problem with vision. In children, the test is performed
-            to screen for vision problems. Vision problems in young children can
-            often be corrected or improved. Undetected or untreated problems may
-            lead to permanent vision damage.
-          </Box>
-          <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Flex className="mb-2 " align="center" gap="2">
-              <SquareSigmaIcon className="size-8" />
-              <Heading className="font-optiker">Normal Results</Heading>
-            </Flex>
-            Visual acuity is expressed as a fraction. The top number refers to
-            the distance you stand from the chart. The bottom number indicates
-            the distance at which a person with normal eyesight could read the
-            same line you correctly read. Even if you miss one or two letters on
-            the smallest line you can read, you are still considered to have
-            vision equal to that line.
-          </Box>
+
+        <Grid
+          columns="4"
+          gap="4"
+          className="mx-auto w-full rounded-lg bg-secondary p-4 font-inter text-sm"
+        >
+          <ImageCard
+            step={1}
+            text="Gather all the necessary components to assemble the headset."
+            imageLink="/images/instructions/step1.png"
+          />
+          <ImageCard
+            step={2}
+            text="Take the head strap and wrap it around the side plates."
+            imageLink="/images/instructions/step2.png"
+          />
+          <ImageCard
+            step={3}
+            text="Insert the cylindrical dowels into the attachment plate."
+            imageLink="/images/instructions/step3.png"
+          />
+          <ImageCard
+            step={4}
+            text="Affix the calibration wheels to the dowels."
+            imageLink="/images/instructions/step4.png"
+          />
+          <ImageCard
+            step={5}
+            text="Attach the front plate to the dowels. "
+            imageLink="/images/instructions/step5.png"
+          />
+          <ImageCard
+            step={6}
+            text="Align the faceplate to the calibration apparatus as shown."
+            imageLink="/images/instructions/step6.png"
+          />
+          <ImageCard
+            step={7}
+            text="Attach the faceplate and apparatus onto one of the side plates."
+            imageLink="/images/instructions/step7.png"
+          />
+          <ImageCard
+            step={8}
+            text="Attach the other side plate to the other side of the headset."
+            imageLink="/images/instructions/step8.png"
+          />
         </Grid>
+
+        <Heading className="flex flex-col font-optiker text-xl">
+          <Flex>
+            <ListOrderedIcon className="my-auto mr-2 size-8" />
+            Digital Eye Exam Instructions
+          </Flex>
+          <Separator mt="2" size="4" />
+        </Heading>
         <List
           steps={[
             "Ensure proper room lighting and set device brightness to 100%.",

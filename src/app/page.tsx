@@ -9,6 +9,7 @@ import {
   ALargeSmallIcon,
   ViewIcon,
   GoalIcon,
+  CheckIcon,
 } from "lucide-react";
 import Footer from "./_components/footer";
 
@@ -17,7 +18,7 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center overflow-hidden font-inter dark:text-white">
-      <header className="grid min-h-[calc(100vh-6rem)] w-full sm:grid-cols-2">
+      <header className="grid min-h-[calc(100vh-6rem)] w-full overflow-hidden sm:grid-cols-2">
         <Box className=" relative flex h-full w-full flex-col justify-center px-8 py-4 pb-16 2xl:pt-2 3xl:py-16">
           <Text
             className={`mt-12 font-optiker text-[2rem] font-extrabold leading-[0] tracking-tight dark:text-primary sm:text-[3rem] xl:text-[6rem]  `}
@@ -85,17 +86,89 @@ export default async function Home() {
             fill
             className="absolute z-20 h-full opacity-80 dark:invert"
           />
-          <Box className="h-full">
+          <Box className="h-full w-full">
             <Image
               src="/images/headset_model.png"
               alt="headset"
               height="2000"
               width="2000"
-              className="relative z-30 ml-auto mr-12 h-full w-auto"
+              className="relative z-30 ml-auto mr-12 h-full w-auto object-cover"
             />
           </Box>
         </div>
       </header>
+      <section className="w-full bg-snelltechPurple/50 py-12 pr-8 dark:bg-snelltechGreen md:pr-16">
+        <Box className="grid grid-cols-1 items-center gap-8 rounded-r-full bg-primary-foreground px-8 py-4 md:grid-cols-2 md:px-12">
+          <Flex gap="4" direction="column">
+            <h2 className="font-optiker text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+              QUALITY{" "}
+              <Text className="text-snelltechPurple dark:text-snelltechGreen">
+                TESTING
+              </Text>
+            </h2>
+            <Separator mt="0" mb="4" size="4" />
+
+            <p className="max-w-[600px] text-lg text-gray-500 dark:text-gray-400">
+              SnellTech not only offers a digital exam but calibration solutions
+              to ensure reliable results. Why choose the SnellTech headset?
+            </p>
+            <ul className="grid gap-4 text-lg">
+              <li className="flex items-center gap-2">
+                <CheckIcon className="h-5 w-5 text-gray-900 dark:text-gray-50" />
+                Ensures more accurate results with Snelltech test
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckIcon className="h-5 w-5 text-gray-900 dark:text-gray-50" />
+                Adjustable head strap offers a comfortable fit
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckIcon className="h-5 w-5 text-gray-900 dark:text-gray-50" />
+                4 different distance calibration settings: 2ft, 3ft, 4ft, 5ft
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckIcon className="h-5 w-5 text-gray-900 dark:text-gray-50" />
+                Simple assembly and durable, lightweight construction
+              </li>
+            </ul>
+            <Link
+              className="mr-8 mt-4 inline-flex h-10 items-center justify-center rounded-lg bg-snelltechPurple px-8 font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-snelltechGreen dark:text-gray-950 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+              href="/test"
+            >
+              Try the Test Right Now
+            </Link>
+          </Flex>
+          <Grid gap="4" columns="2">
+            <Image
+              alt="headset"
+              className="aspect-[300/300] w-full rounded-xl object-cover"
+              height="300"
+              src="/images/home/headset_iso.png"
+              width="300"
+            />
+            <Image
+              alt="control_panel"
+              className="aspect-[300/300] w-full rounded-xl object-cover"
+              height="300"
+              src="/images/home/adjusting_headset.png"
+              width="300"
+            />
+            <Image
+              alt="test_ui"
+              className="aspect-[300/300] w-full rounded-xl object-cover"
+              height="300"
+              src="/images/home/wearing_headset.png"
+              width="300"
+            />
+            <Image
+              alt="testing"
+              className="aspect-[300/300] w-full rounded-xl object-cover "
+              height="300"
+              src="/images/home/testing.png"
+              width="300"
+            />
+          </Grid>
+        </Box>
+      </section>
       <Box className=" relative z-10 grid w-full bg-secondary px-8 py-16 dark:bg-background ">
         <Grid columns="2" gap="8">
           <Flex direction="column" gap="8">
