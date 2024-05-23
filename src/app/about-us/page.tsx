@@ -1,14 +1,5 @@
 "use client";
-import {
-  Link,
-  Flex,
-  Grid,
-  Box,
-  Text,
-  Separator,
-  Heading,
-} from "@radix-ui/themes";
-import Footer from "../_components/footer";
+import { Link, Flex, Grid, Box, Text, Separator } from "@radix-ui/themes";
 import {
   CheckIcon,
   BookPlusIcon,
@@ -20,12 +11,22 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
+import Footer from "../_components/footer";
+import AdCard from "../_components/advertisement-card";
+
 // Font files can be colocated inside of `pages`b
 export default function AboutUs() {
   return (
     <>
       <main className="h-[calc(100vh-6rem)] font-inter text-primary">
-        <section className="relative w-full overflow-hidden bg-snelltechPurple/60 px-4 pt-20 dark:bg-snelltechGreen">
+        <section className="relative w-full overflow-hidden bg-gradient-to-t from-snelltechPurple/70 to-[#b0bdff] px-4 pt-20 dark:from-snelltechGreen ">
+          <Image
+            src="/images/neurons.jpg"
+            alt="headset"
+            fill
+            sizes="ref"
+            className="absolute z-10 w-full object-cover opacity-20"
+          />
           <Box className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">
             <Box className="space-y-4 pb-20">
               <Text className="font-optiker text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
@@ -97,75 +98,36 @@ export default function AboutUs() {
           gap="4"
           className="mx-auto w-full bg-secondary px-8 py-12 font-inter text-sm md:px-16"
         >
-          <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Flex className="mb-2 " align="center" gap="2">
-              <BookPlusIcon className="size-8" />
-              <Heading className="font-optiker">PROBLEM STATEMENT</Heading>
-            </Flex>
-            {`Limited accessibility to affordable eye examinations presents significant challenges, stemming from financial, geographical, and demographic barriers. These impediments impede individuals' access to essential vision care, particularly among marginalized populations. Consequently, the persistence and exacerbation of visual impairments contribute to the perpetuation of disparities in vision health outcomes. `}
-          </Box>
-          <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Flex className="mb-2 " align="center" gap="2">
-              <BookTypeIcon className="size-8" />
-              <Heading className="font-optiker">JUSTIFICATION</Heading>
-            </Flex>
-            Accessing eye exams can be challenging due to various socioeconomic
-            barriers. Studies have shown that financial barriers prevent many
-            people from seeking necessary eye care; in a study of 380 patients
-            with vision impairments, 53% of individuals reported insurance as a
-            barrier, with more than 31% out of the 55% of patients who were
-            insured still reporting that insurance was a financial burden.
-          </Box>
-          <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Flex className="mb-2 " align="center" gap="2">
-              <BookCheckIcon className="size-8" />
-              <Heading className="font-optiker">PROBLEM RESEARCH</Heading>
-            </Flex>
-            The main metric for to identify visual impairment is visual acuity
-            (VA), which expresses the level of ability with respect to the
-            spatial resolution of the eye, and it is the first test in the
-            analysis of visual function. In its evidence-based clinical practice
-            guidelines, the American Optometric Association suggests the use of
-            letter charts, such as the Snellen Chart, to diagnose visual acuity.
-          </Box>
-          <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Flex className="mb-2 " align="center" gap="2">
-              <ViewIcon className="size-8" />
-              <Heading className="font-optiker">Visual Acuity Testing</Heading>
-            </Flex>
-            {`During the Covid-19 pandemic, home visual acuity testing became an
-          important part of telemedicine for eye care. A variety of home tests
-          are available in print, on smartphone apps or the internet. These
-          tests have been found to be almost as accurate as a test performed in
-          a provider's office. No special preparation is necessary for this
-          test. There is no discomfort. `}
-          </Box>
-          <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Flex className="mb-2 " align="center" gap="2">
-              <GlassesIcon className="size-8" />
-              <Heading className="font-optiker">
-                Why the Test is Performed
-              </Heading>
-            </Flex>
-            The visual acuity test is a routine part of an eye examination or
-            general physical examination, particularly if there is a change in
-            vision or a problem with vision. In children, the test is performed
-            to screen for vision problems. Vision problems in young children can
-            often be corrected or improved. Undetected or untreated problems may
-            lead to permanent vision damage.
-          </Box>
-          <Box className="rounded-lg border border-primary/20 bg-primary-foreground p-4">
-            <Flex className="mb-2 " align="center" gap="2">
-              <SquareSigmaIcon className="size-8" />
-              <Heading className="font-optiker">Normal Results</Heading>
-            </Flex>
-            Visual acuity is expressed as a fraction. The top number refers to
-            the distance you stand from the chart. The bottom number indicates
-            the distance at which a person with normal eyesight could read the
-            same line you correctly read. Even if you miss one or two letters on
-            the smallest line you can read, you are still considered to have
-            vision equal to that line.
-          </Box>
+          <AdCard
+            title="Problem Statement"
+            icon={BookPlusIcon}
+            description={`Limited accessibility to affordable eye examinations presents significant challenges, stemming from financial, geographical, and demographic barriers. These impediments impede individuals' access to essential vision care, particularly among marginalized populations. Consequently, the persistence and exacerbation of visual impairments contribute to the perpetuation of disparities in vision health outcomes. `}
+          />
+          <AdCard
+            title="Justification"
+            icon={BookTypeIcon}
+            description="Accessing eye exams can be challenging due to various socioeconomic barriers. Studies have shown that financial barriers prevent many people from seeking necessary eye care; in a study of 380 patients with vision impairments, 53% of individuals reported insurance as a barrier, with more than 31% out of the 55% of patients who were insured still reporting that insurance was a financial burden."
+          />
+          <AdCard
+            title="Problem Research"
+            icon={BookCheckIcon}
+            description="The main metric for identifying visual impairment is visual acuity (VA), which expresses the level of ability with respect to the spatial resolution of the eye, and it is the first test in the analysis of visual function. In its evidence-based clinical practice guidelines, the American Optometric Association suggests the use of letter charts, such as the Snellen Chart, to diagnose visual acuity."
+          />
+          <AdCard
+            title="Visual Acuity Testing"
+            icon={ViewIcon}
+            description="During the Covid-19 pandemic, home visual acuity testing became an important part of telemedicine for eye care. A variety of home tests are available in print, on smartphone apps or the internet. These tests have been found to be almost as accurate as a test performed in a provider's office. No special preparation is necessary for this test. There is no discomfort."
+          />
+          <AdCard
+            title="Why the Test is Performed"
+            icon={GlassesIcon}
+            description="The visual acuity test is a routine part of an eye examination or general physical examination, particularly if there is a change in vision or a problem with vision. In children, the test is performed to screen for vision problems. Vision problems in young children can often be corrected or improved. Undetected or untreated problems may lead to permanent vision damage."
+          />
+          <AdCard
+            title="Normal Results"
+            icon={SquareSigmaIcon}
+            description="Visual acuity is expressed as a fraction. The top number refers to the distance you stand from the chart. The bottom number indicates the distance at which a person with normal eyesight could read the same line you correctly read. Even if you miss one or two letters on the smallest line you can read, you are still considered to have vision equal to that line."
+          />
         </Grid>
         <section className="w-full px-8 py-24 md:px-16">
           <Box className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-6">

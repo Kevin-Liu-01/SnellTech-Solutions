@@ -58,7 +58,7 @@ export default function Test() {
   const [switchScreen, setSwitchScreen] = useState(false);
   const [instructionScreen, setInstructionScreen] = useState(false);
 
-  //Speech transcription
+  //Speech transcription and robovoice
   const [transcript, setTranscript] = useState("");
   const [mic, setMic] = useState(false);
   const { speak, voices, cancel } = useSpeechSynthesis();
@@ -202,17 +202,20 @@ export default function Test() {
     setInstructionScreen(true);
     speak({
       voice: voice,
-      text: `Welcome to SnellTech Solutions. Before we begin, ensure proper room lighting and set device brightness to 100%. 
-      You have chosen to test your ${eye} eye first at a distance of ${distance} feet.`,
+      text: `Welcome to SnellTech Solutions. Before we begin, ensure proper room lighting 
+      and set device brightness to 100%. You have chosen to test your ${eye} eye first at 
+      a distance of ${distance} feet.`,
     });
     speak({
       voice: voice,
       text: `To begin, adjust your headset so you can only see out of your ${eye} eye. 
-      Then, calibrate the headset to the testing software by lining up the rectangular slit in the headset to the rectangle present on the screen.`,
+      Then, calibrate the headset to the testing software by lining up the rectangular slit 
+      in the headset to the rectangle present on the screen.`,
     });
     speak({
       voice: voice,
-      text: `When a letter appears on the screen, say the letter out loud. Upon completion of your first eye, you will be prompted to switch to your other eye. The test is beginning now.`,
+      text: `When a letter appears on the screen, say the letter out loud. Upon completion 
+      of your first eye, you will be prompted to switch to your other eye. The test is beginning now.`,
     });
     setTimeout(() => startTest(), 33000);
   };

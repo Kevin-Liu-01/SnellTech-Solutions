@@ -15,7 +15,6 @@ import Footer from "./_components/footer";
 
 export default async function Home() {
   noStore();
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center overflow-hidden font-inter dark:text-white">
       <header className="grid min-h-[calc(100vh-6rem)] w-full overflow-hidden sm:grid-cols-2">
@@ -90,9 +89,8 @@ export default async function Home() {
             <Image
               src="/images/headset_model.png"
               alt="headset"
-              height="2000"
-              width="2000"
-              className="relative z-30 ml-auto mr-12 h-full w-auto object-cover"
+              fill
+              className="relative z-30 ml-auto mr-8 object-cover px-16"
             />
           </Box>
         </div>
@@ -220,25 +218,27 @@ export default async function Home() {
               </Flex>
             </Flex>
           </Flex>
-          <Image
-            src="/images/Snellen_distances.png"
-            alt="headset"
-            height="658"
-            width="981"
-            className="h-auto w-full rounded-xl border-2 border-dashed border-snelltechPurple/40 bg-primary-foreground p-4 dark:bg-primary dark:invert"
-          />
+          <Box className="relative">
+            <Image
+              src="/images/Snellen_distances.png"
+              alt="headset"
+              fill
+              className="rounded-xl border-2 border-dashed border-snelltechPurple/40 bg-primary-foreground object-contain p-4 dark:bg-primary dark:invert"
+            />
+          </Box>
         </Grid>
       </Box>
       <Box className=" relative z-10 w-full  px-8 py-16 ">
-        <Flex direction="row" gap="8">
-          <Image
-            src="/images/Snellen_chart.svg"
-            alt="headset"
-            height="406"
-            width="325"
-            className="rounded-xl border-2 border-dashed border-snelltechPurple/40 dark:invert"
-          />
-          <Flex direction="column" gap="8">
+        <Grid columns="3" gap="8">
+          <Box className="relative">
+            <Image
+              src="/images/Snellen_chart.svg"
+              alt="headset"
+              fill
+              className="rounded-xl border-2 border-dashed border-snelltechPurple/40 object-contain dark:invert"
+            />
+          </Box>
+          <Flex direction="column" gap="8" className="col-span-2">
             <Heading
               className={`font-optiker text-xl font-extrabold tracking-tight sm:text-[3.5rem]`}
             >
@@ -295,7 +295,7 @@ export default async function Home() {
               </Flex>
             </Flex>
           </Flex>
-        </Flex>
+        </Grid>
       </Box>
       <Footer />
     </main>
