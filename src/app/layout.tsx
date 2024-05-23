@@ -31,7 +31,7 @@ const inter = Inter({
 
 //Metadata for pages
 export const metadata = {
-  title: "SnellTech Soutions",
+  title: "SnellTech Solutions",
   description:
     "SnellTech Solutions offers a digital eye exam and web platform for patients to get their eyes checked from the comfort of their own home.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],

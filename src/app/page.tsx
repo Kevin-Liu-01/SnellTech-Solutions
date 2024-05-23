@@ -218,24 +218,24 @@ export default async function Home() {
               </Flex>
             </Flex>
           </Flex>
-          <Box className="relative">
+          <Box className="relative rounded-xl border-2 border-dashed border-snelltechPurple bg-white dark:border-snelltechGreen dark:bg-black">
             <Image
               src="/images/Snellen_distances.png"
               alt="headset"
               fill
-              className="rounded-xl border-2 border-dashed border-snelltechPurple/40 bg-primary-foreground object-contain p-4 dark:bg-primary dark:invert"
+              className=" object-contain p-4 dark:invert"
             />
           </Box>
         </Grid>
       </Box>
       <Box className=" relative z-10 w-full  px-8 py-16 ">
         <Grid columns="3" gap="8">
-          <Box className="relative">
+          <Box className="relative rounded-xl border-2 border-dashed border-snelltechPurple bg-white dark:border-snelltechGreen dark:bg-black">
             <Image
               src="/images/Snellen_chart.svg"
               alt="headset"
               fill
-              className="rounded-xl border-2 border-dashed border-snelltechPurple/40 object-contain dark:invert"
+              className="object-contain dark:invert"
             />
           </Box>
           <Flex direction="column" gap="8" className="col-span-2">
