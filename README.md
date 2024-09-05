@@ -1,12 +1,16 @@
 # SnellTech Solutions Digital Visual Acuity Test
 ![Logo](https://github.com/user-attachments/assets/990ce415-8ca8-4155-872d-2922f5e774fe | height=200)
 ![LogoLettering](https://github.com/user-attachments/assets/c8191f7f-1fb2-497a-8ed1-8523de36bb3f)
-Engineering Design and Development Team #3: Syona Gupta, Kevin Liu, Shravani Vedagiri
-Mentors: Ms. Linda Grunthaner and Dr. Raymond Eng
-May 22nd, 2024
 
-Engineering Report: [Engineering Report](https://docs.google.com/document/d/1AmpvEGR3PewN9iaoyoyTxuwxXjvl8BO3cJVlN-qihik/edit)
+\[!] Engineering Design and Development Team #3: Syona Gupta, Kevin Liu, Shravani Vedagiri
 
+\[!] Mentors: Ms. Linda Grunthaner and Dr. Raymond Eng
+
+\[!] May 22nd, 2024
+
+\[!] Read our [Engineering Report](https://docs.google.com/document/d/1AmpvEGR3PewN9iaoyoyTxuwxXjvl8BO3cJVlN-qihik/edit)
+
+\[!] Winner of HTHS Provisional Patent Award
 
 Note: This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
