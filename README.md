@@ -1,8 +1,8 @@
 # SnellTech Solutions Digital Visual Acuity Test
 
-<div style="display: flex; align-items: center;">
+<div style="display: flex; justify-items: center;">
   <img src="https://github.com/user-attachments/assets/990ce415-8ca8-4155-872d-2922f5e774fe" alt="Logo" style="height: 100px; width: auto;">
-  <img src="https://github.com/user-attachments/assets/c8191f7f-1fb2-497a-8ed1-8523de36bb3f" alt="LogoLettering" style="height: 100px; width: auto;">
+  <img src="https://github.com/user-attachments/assets/c8191f7f-1fb2-497a-8ed1-8523de36bb3f" alt="LogoLettering" style="height: auto; width: auto;">
 </div>
 
 # SnellTech Solutions - Digital Visual Acuity Test
