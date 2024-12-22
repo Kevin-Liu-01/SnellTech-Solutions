@@ -5,8 +5,6 @@
   <img src="https://github.com/user-attachments/assets/c8191f7f-1fb2-497a-8ed1-8523de36bb3f" alt="LogoLettering" style="height: auto; width: auto;">
 </div>
 
-# SnellTech Solutions - Digital Visual Acuity Test
-
 SnellTech Solutions offers a low-cost digital vision exam and a calibration headset to assess a user's visual acuity. This solution is aimed at ophthalmologists and visually impaired patients, providing an accessible, quick, and reliable eye test experience.
 
 **[Live Demo](https://snelltech.vercel.app)**  
