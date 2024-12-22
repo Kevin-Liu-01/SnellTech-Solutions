@@ -1,6 +1,6 @@
 # SnellTech Solutions Digital Visual Acuity Test
 
-![Logo](https://github.com/user-attachments/assets/990ce415-8ca8-4155-872d-2922f5e774fe)
+<img src="https://github.com/user-attachments/assets/990ce415-8ca8-4155-872d-2922f5e774fe" alt="Logo" style="height: 100px; width: auto;">
 
 ![LogoLettering](https://github.com/user-attachments/assets/c8191f7f-1fb2-497a-8ed1-8523de36bb3f)
 
